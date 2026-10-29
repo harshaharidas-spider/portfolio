@@ -154,16 +154,25 @@ export default function Elsewhere() {
                 <div
                   className={`relative w-full h-[300px] ${card.bg} rounded-[12px] p-4 flex flex-col justify-between overflow-hidden shadow-sm`}
                 >
-                  {/* Embedded Video */}
+                  {/* Embedded Video with Production Autoplay & Mobile Support */}
                   {card.mediaType === "video" && (
                     <video
-                      src={card.mediaSrc}
+                      ref={(el) => {
+                        if (el) {
+                          el.muted = true;
+                          el.play().catch(() => {});
+                        }
+                      }}
                       autoPlay
                       loop
                       muted
                       playsInline
+                      preload="auto"
+                      webkit-playsinline="true"
                       className="absolute inset-0 w-full h-full object-cover rounded-[12px] z-0"
-                    />
+                    >
+                      <source src={card.mediaSrc} type="video/mp4" />
+                    </video>
                   )}
 
                   {/* Embedded Image */}
