@@ -78,7 +78,7 @@ export default function Faq() {
               Got other questions?{" "}
               <Link
                 href="#contact"
-                className="text-[#1c1f1d] hover:text-[#436156] transition-colors underline underline-offset-4 decoration-[#85A596] font-medium"
+                className="text-[#1c1f1d] hover:text-[#436156] transition-colors  decoration-[#85A596] font-medium"
               >
                 Talk to Tony directly.
               </Link>

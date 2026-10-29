@@ -214,16 +214,7 @@ export default function Timeline() {
             onPointerMove={handleMobilePointerMove}
             onPointerUp={handleMobilePointerUp}
           >
-            <div
-              className="absolute rounded-full border-[2.5px] border-[#0e1b1d] z-[2] pointer-events-none"
-              style={{
-                width: "540px",
-                height: "540px",
-                left: "calc(50% - 270px)",
-                top: "78px",
-              }}
-            />
-
+            {/* Glow Background Layer on Mobile - concentric behind wheel rim at 12 o'clock */}
             <div
               className="absolute pointer-events-none z-[3]"
               style={{
@@ -231,14 +222,38 @@ export default function Timeline() {
                 height: "684px",
                 left: "calc(50% - 342px)",
                 top: "6px",
-                transform: `rotate(${mobileDialRotation}deg)`,
+                transform: "rotate(-90deg)",
                 transformOrigin: "342px 342px",
+              }}
+            >
+              <div className="relative w-full h-full">
+                <Image
+                  src="/nwglow.png"
+                  alt="Wheel Glow Background"
+                  fill
+                  className="object-contain select-none"
+                  draggable={false}
+                  priority
+                />
+              </div>
+            </div>
+
+            {/* Rotatable Wheel Layer on Mobile - 100% concentric with glow */}
+            <div
+              className="absolute pointer-events-none z-[4]"
+              style={{
+                width: "720px",
+                height: "720px",
+                left: "calc(50% - 360px)",
+                top: "-12px",
+                transform: `rotate(${mobileDialRotation}deg)`,
+                transformOrigin: "360px 360px",
                 transition: "transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1)",
               }}
             >
               <div className="relative w-full h-full">
                 <Image
-                  src="/wheel.png"
+                  src="/nwwheel.png"
                   alt="Rotatable Wheel"
                   fill
                   className="object-contain select-none"
@@ -248,26 +263,7 @@ export default function Timeline() {
               </div>
             </div>
 
-            <div
-              className="absolute pointer-events-none z-[4]"
-              style={{
-                width: "684px",
-                height: "684px",
-                left: "calc(50% - 342px)",
-                top: "6px",
-              }}
-            >
-              <Image
-                src="/wheelglow.png"
-                alt="Wheel Glow"
-                fill
-                className="object-contain select-none"
-                draggable={false}
-                priority
-              />
-            </div>
-
-            {/* Mobile Pointer Badge (Cleaned with no lines) */}
+            {/* Mobile Pointer Badge */}
             <div
               className="absolute z-[10] pointer-events-none select-none flex items-center justify-center"
               style={{
@@ -278,7 +274,7 @@ export default function Timeline() {
               }}
             >
               <div className="absolute -inset-1 rounded-full border border-dashed border-[#d8e4c6]/40 pointer-events-none" />
-              <div className="w-full h-full rounded-full bg-[#d8e4c6] border-[2.5px] border-[#1d2d30] shadow-[0_4px_14px_rgba(0,0,0,0.35)]" />
+              <div className="w-full h-full rounded-full bg-[#d8e4c6] border-[2.5px] border-[#1d2d30] shadow-[0_4px_14px_rgba(0,0,0,0.35)] flex items-center justify-center" />
             </div>
 
             <div
@@ -368,23 +364,12 @@ export default function Timeline() {
             style={{
               width: "1520px",
               height: "1520px",
-              left: "-1020px",
+              left: "-920px",
               top: "calc(50% - 760px)",
             }}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
           >
-            {/* Inner Thin Circle Border */}
-            <div
-              className="absolute rounded-full border border-black/40 z-[1] pointer-events-none"
-              style={{
-                width: "1200px",
-                height: "1200px",
-                left: "160px",
-                top: "160px",
-              }}
-            />
-
             <div
               className="absolute z-[3] flex flex-col justify-center pointer-events-none select-none max-w-[320px] px-2"
               style={{
@@ -405,17 +390,36 @@ export default function Timeline() {
               </span>
             </div>
 
+            {/* Fixed Glow Background Layer on Desktop - perfectly concentric behind wheel rim */}
+            <div className="absolute inset-0 w-[1520px] h-[1520px] pointer-events-none z-[4]">
+              <div className="relative w-[1520px] h-[1520px]">
+                <Image
+                  src="/nwglow.png"
+                  alt="Wheel Glow Background"
+                  fill
+                  className="object-contain select-none"
+                  draggable={false}
+                  priority
+                />
+              </div>
+            </div>
+
+            {/* Rotatable Wheel Layer on Desktop - 100% concentric with glow */}
             <div
-              className="absolute inset-0 w-[1520px] h-[1520px] pointer-events-none z-[4]"
+              className="absolute pointer-events-none z-[5]"
               style={{
+                width: "1600px",
+                height: "1600px",
+                left: "-40px",
+                top: "-40px",
                 transform: `rotate(${dialRotation}deg)`,
-                transformOrigin: "760px 760px",
+                transformOrigin: "800px 800px",
                 transition: "transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1)",
               }}
             >
-              <div className="relative w-[1520px] h-[1520px]">
+              <div className="relative w-[1600px] h-[1600px]">
                 <Image
-                  src="/wheel.png"
+                  src="/nwwheel.png"
                   alt="Rotatable Timeline Dial"
                   fill
                   className="object-contain select-none"
@@ -423,7 +427,17 @@ export default function Timeline() {
                   priority
                 />
               </div>
+            </div>
 
+            {/* Rotatable SVG Milestone Markers and Dashed Arc on Desktop */}
+            <div
+              className="absolute inset-0 w-[1520px] h-[1520px] pointer-events-none z-[6]"
+              style={{
+                transform: `rotate(${dialRotation}deg)`,
+                transformOrigin: "760px 760px",
+                transition: "transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1)",
+              }}
+            >
               <svg
                 viewBox="0 0 1520 1520"
                 className="absolute inset-0 w-full h-full pointer-events-none"
@@ -434,9 +448,9 @@ export default function Timeline() {
                   cy="760"
                   r="760"
                   fill="none"
-                  stroke="rgba(255, 255, 255, 0.16)"
+                  stroke="rgba(255, 255, 255, 0.2)"
                   strokeWidth="1"
-                  strokeDasharray="2 4"
+                  strokeDasharray="3 5"
                 />
 
                 {chapters.map((chap, idx) => {
@@ -470,38 +484,29 @@ export default function Timeline() {
                         stroke={isCurrent ? "#d8e4c6" : "rgba(255, 255, 255, 0.35)"}
                         strokeWidth={isCurrent ? "2.5" : "1.2"}
                       />
-                      <text
-                        x={lx}
-                        y={ly}
-                        fill={isCurrent ? "#ffffff" : "#98b3ad"}
-                        fontSize="12"
-                        fontWeight={isCurrent ? "600" : "400"}
-                        letterSpacing="0.08em"
-                        dominantBaseline="central"
-                        textAnchor="start"
-                        transform={`rotate(${angle + 90}, ${lx}, ${ly})`}
-                        className="select-none transition-colors duration-150"
-                      >
-                        {chap.year}
-                      </text>
+                      {!isCurrent && (
+                        <text
+                          x={lx}
+                          y={ly}
+                          fill="#98b3ad"
+                          fontSize="12"
+                          fontWeight="400"
+                          letterSpacing="0.08em"
+                          dominantBaseline="central"
+                          textAnchor="start"
+                          transform={`rotate(${angle + 90}, ${lx}, ${ly})`}
+                          className="select-none transition-colors duration-150 hover:fill-white"
+                        >
+                          {chap.year}
+                        </text>
+                      )}
                     </g>
                   );
                 })}
               </svg>
             </div>
 
-            <div className="absolute inset-0 w-[1520px] h-[1520px] pointer-events-none z-[5]">
-              <Image
-                src="/wheelglow.png"
-                alt="Wheel Glow Shadow"
-                fill
-                className="object-contain select-none"
-                draggable={false}
-                priority
-              />
-            </div>
-
-            {/* Pointer Badge at 3 o'clock position */}
+            {/* Pointer Badge dashed outer ring at 3 o'clock position */}
             <div
               className="absolute z-[9] rounded-full border border-dashed border-[#d8e4c6]/40 pointer-events-none select-none"
               style={{
@@ -513,9 +518,9 @@ export default function Timeline() {
               aria-hidden="true"
             />
 
-            {/* Desktop Pointer Badge (Cleaned with no lines) */}
+            {/* Desktop Pointer Badge without icon */}
             <div
-              className="absolute z-[10] pointer-events-none select-none w-[84px] h-[84px] rounded-full bg-[#d8e4c6] border-[3px] border-[#18272a] shadow-[0_6px_24px_rgba(0,0,0,0.5)]"
+              className="absolute z-[10] pointer-events-none select-none w-[84px] h-[84px] rounded-full bg-[#d8e4c6] border-[3px] border-[#18272a] shadow-[0_6px_24px_rgba(0,0,0,0.5)] flex items-center justify-center"
               style={{
                 left: "1398px",
                 top: "718px",
@@ -523,6 +528,7 @@ export default function Timeline() {
               title="Active Milestone Pointer"
             />
 
+            {/* Horizontal Guideline to Chapter title */}
             <div
               className="absolute z-[8] h-[1px] bg-white/40 pointer-events-none select-none"
               style={{

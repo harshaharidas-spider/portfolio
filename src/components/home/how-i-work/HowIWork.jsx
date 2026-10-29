@@ -111,11 +111,11 @@ export default function HowIWork() {
                 ease: [0.21, 0.47, 0.32, 0.98],
               }}
               whileHover={{ y: -4, transition: { duration: 0.2 } }}
-              className={`pt-8 border-t transition-colors ${
-                step.isActive ? "border-[#85A596]" : "border-[#dedcd4]"
+              className={`pt-8 border-t-[2px] transition-colors ${
+                step.isActive ? "border-[#85A596]" : "border-[#85A596]"
               }`}
             >
-              <span className="text-[#4d7868] text-[40px] sm:text-[46px] font-medium leading-none block">
+              <span className="text-[#8EB9A4] text-[56px] font-medium leading-none tracking-[-0.04em] block">
                 {step.number}
               </span>
               <h3 className="text-[#1c1f1d] text-[18px] sm:text-[19px] font-semibold mt-4 sm:mt-5 tracking-tight">
