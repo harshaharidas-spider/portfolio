@@ -48,14 +48,14 @@ export default function HowIWork() {
             transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
             className="lg:col-span-7 flex flex-col items-start"
           >
-            <p className="text-[12px] uppercase tracking-[0.1em] font-medium text-[#777a78] mb-6 sm:mb-8">
+            <p className="text-[12px] uppercase tracking-[0.1em] font-medium text-[#5e6360] mb-6 sm:mb-8">
               HOW I WORK
             </p>
             <h2 className="text-[32px] sm:text-[38px] lg:text-[44px] font-bold leading-[1.12] tracking-[-0.03em] max-w-[560px]">
               <span className="text-[#1c1f1d] block">
                 From first brief to hands-on,
               </span>
-              <span className="text-[#a3a3a0] block mt-1">step by step.</span>
+              <span className="text-[#616663] block mt-1">step by step.</span>
             </h2>
           </motion.div>
 
@@ -115,13 +115,13 @@ export default function HowIWork() {
                 step.isActive ? "border-[#85A596]" : "border-[#dedcd4]"
               }`}
             >
-              <span className="text-[#85A596] text-[40px] sm:text-[46px] font-medium leading-none block">
+              <span className="text-[#4d7868] text-[40px] sm:text-[46px] font-medium leading-none block">
                 {step.number}
               </span>
               <h3 className="text-[#1c1f1d] text-[18px] sm:text-[19px] font-semibold mt-4 sm:mt-5 tracking-tight">
                 {step.title}
               </h3>
-              <p className="text-[#555a57] text-[13.5px] leading-[1.65] mt-3">
+              <p className="text-[#3b423f] text-[13.5px] leading-[1.65] mt-3">
                 {step.description}
               </p>
             </motion.div>

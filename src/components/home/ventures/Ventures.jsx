@@ -15,10 +15,10 @@ export default function Ventures() {
   return (
     <section
       id="ventures"
-      className="relative w-full bg-[#22363A] overflow-hidden py-16 sm:py-20 lg:py-28 min-h-[640px] flex flex-col justify-between"
+      className="relative w-full bg-[#22363A] overflow-hidden isolate py-16 sm:py-20 lg:py-28 min-h-[640px] flex flex-col justify-between"
     >
       <span id="spiderworks" className="-top-20 relative block" aria-hidden="true" />
-      {/* Background Grain Texture Overlay */}
+      {/* Background Grain Texture Overlay set to 14% opacity */}
       <div
         className="absolute inset-0 pointer-events-none z-0"
         style={{
@@ -26,7 +26,7 @@ export default function Ventures() {
           backgroundRepeat: "repeat",
           backgroundSize: "256px 256px",
           mixBlendMode: "overlay",
-          opacity: 0.8,
+          opacity: 0.14,
         }}
         aria-hidden="true"
       />
@@ -45,13 +45,13 @@ export default function Ventures() {
             {/* Main Headline */}
             <h2 className="text-[34px] sm:text-[42px] lg:text-[48px] font-bold leading-[1.12] tracking-tight">
               <span className="text-white block">One idea.</span>
-              <span className="text-[#96aca7] block mt-1">
+              <span className="text-[#b4c8c3] block mt-1">
                 A world of possibilities.
               </span>
             </h2>
 
             {/* Description Paragraph */}
-            <p className="mt-8 text-[14.5px] sm:text-[15.5px] text-[#93a7a3] leading-[1.7] max-w-[480px]">
+            <p className="mt-8 text-[14.5px] sm:text-[15.5px] text-[#c0d2cd] leading-[1.7] max-w-[480px]">
               SpiderWorks grew out of years spent understanding how the web works.
               Today, it brings technology, creativity and marketing together to
               help businesses grow from Kochi, for clients across India, the UAE
@@ -164,7 +164,7 @@ export default function Ventures() {
               <span className="text-[#aecfbf] font-semibold text-[15px] sm:text-[16px] tracking-tight">
                 {v.name}
               </span>
-              <span className="text-[#6d8480] text-[12px] uppercase tracking-wider mt-1 font-medium">
+              <span className="text-[#9bb7b1] text-[12px] uppercase tracking-wider mt-1 font-medium">
                 {v.meta}
               </span>
             </motion.div>

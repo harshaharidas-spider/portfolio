@@ -6,8 +6,8 @@ import { motion } from "framer-motion";
 
 export default function Hero() {
   return (
-    <section className="relative w-full bg-[#2b3d3f] overflow-hidden min-h-[calc(100vh-50px)] lg:min-h-[720px] flex items-center">
-      {/* Background Grain Texture Overlay */}
+    <section className="relative w-full bg-[#2b3d3f] overflow-hidden isolate min-h-[calc(100vh-50px)] lg:min-h-[720px] flex items-center">
+      {/* Background Grain Texture Overlay set to 14% opacity */}
       <div
         className="absolute inset-0 pointer-events-none z-0"
         style={{
@@ -15,7 +15,7 @@ export default function Hero() {
           backgroundRepeat: "repeat",
           backgroundSize: "256px 256px",
           mixBlendMode: "overlay",
-          opacity: 0.8,
+          opacity: 0.14,
         }}
         aria-hidden="true"
       />
@@ -23,24 +23,24 @@ export default function Hero() {
       <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-[60px] xl:px-[75px] py-12 lg:py-0">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8 w-full relative">
           {/* Left Column: Heading, Subtitle & Buttons */}
-          <div className="w-full lg:w-[680px] xl:w-[720px] flex-none flex flex-col justify-center z-10">
+          <div className="w-full lg:w-[720px] xl:w-[760px] flex-none flex flex-col justify-center z-10">
             {/* Main Headline */}
             <motion.h1
               initial={{ opacity: 0, y: 25 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
-              className="text-[#eef0ec] font-bold text-[38px] sm:text-[60px] md:text-[76px] lg:text-[84px] xl:text-[96px] leading-[100%] tracking-[-0.04em] lg:whitespace-nowrap"
+              className="text-[#eef0ec] font-bold text-[38px] sm:text-[60px] md:text-[76px] lg:text-[84px] xl:text-[96px] leading-[100%] tracking-[-0.05em] lg:whitespace-nowrap"
             >
               <span className="block lg:inline">Hi, I am </span>
               <span className="block lg:inline">Tony John</span>
             </motion.h1>
 
-            {/* Subtitle description with increased top margin for more gap from heading */}
+            {/* Subtitle description with balanced gap from heading */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.18, ease: [0.21, 0.47, 0.32, 0.98] }}
-              className="mt-8 sm:mt-10 lg:mt-12 text-[15px] sm:text-[16px] text-[#c1ccc9] leading-[150%] tracking-[-0.02em] font-normal max-w-[620px]"
+              className="mt-10 sm:mt-12 lg:mt-14 text-[15px] sm:text-[16px] text-[#c1ccc9] leading-[150%] tracking-[-0.03em] font-normal max-w-[620px]"
             >
               Twenty-four years in IT - engineer, e-commerce consultant, digital marketer.{" "}
               <span className="block sm:inline">
@@ -48,12 +48,12 @@ export default function Hero() {
               </span>
             </motion.p>
 
-            {/* Action Buttons with increased top margin for more gap from description */}
+            {/* Action Buttons with balanced gap from description */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.3, ease: [0.21, 0.47, 0.32, 0.98] }}
-              className="mt-10 sm:mt-12 lg:mt-14 flex flex-col sm:flex-row items-stretch sm:items-center gap-5 sm:gap-8 w-full sm:w-auto"
+              className="mt-12 sm:mt-14 lg:mt-16 flex flex-col sm:flex-row items-stretch sm:items-center gap-5 sm:gap-8 w-full sm:w-auto"
             >
               {/* Primary Consultation Button */}
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
@@ -92,22 +92,22 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* Right Column: Hero Image Alignment & Scaling */}
+          {/* Right Column: Hero Image with exact Figma dimensions (638px x 475px) */}
           <motion.div
             initial={{ opacity: 0, x: 40, scale: 0.96 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="w-full lg:flex-1 flex justify-center lg:justify-end items-center relative"
           >
-            <div className="relative w-full max-w-[440px] sm:max-w-[620px] lg:max-w-[700px] xl:max-w-[760px] flex-none select-none">
+            <div className="relative w-full max-w-[638px] flex-none select-none">
               <div className="relative z-10 w-full select-none block leading-none">
                 <Image
                   src="/Portraitnw.png"
                   alt="Tony John working at laptop on phone call"
-                  width={760}
-                  height={600}
+                  width={638}
+                  height={475}
                   priority
-                  className="w-full h-auto object-contain block select-none pointer-events-none"
+                  className="w-full h-auto max-h-[475px] object-contain block select-none pointer-events-none"
                 />
               </div>
             </div>

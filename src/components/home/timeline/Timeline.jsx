@@ -160,11 +160,11 @@ export default function Timeline() {
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       onPointerUp={handlePointerUp}
       onPointerLeave={handlePointerUp}
-      className="relative w-full bg-[#22363A] overflow-hidden min-h-[680px] lg:min-h-[760px] py-10 lg:py-14 flex flex-col justify-between select-none"
+      className="relative w-full bg-[#22363A] overflow-hidden isolate min-h-[680px] lg:min-h-[760px] py-10 lg:py-14 flex flex-col justify-between select-none"
     >
       <span id="about-tony" className="-top-20 relative block" aria-hidden="true" />
 
-      {/* Background Grain Texture Overlay */}
+      {/* Background Grain Texture Overlay set to 14% opacity */}
       <div
         className="absolute inset-0 pointer-events-none z-0"
         style={{
@@ -172,7 +172,7 @@ export default function Timeline() {
           backgroundRepeat: "repeat",
           backgroundSize: "256px 256px",
           mixBlendMode: "overlay",
-          opacity: 0.8,
+          opacity: 0.14,
         }}
         aria-hidden="true"
       />
@@ -290,7 +290,7 @@ export default function Timeline() {
               }}
             >
               <span
-                className={`font-extralight text-[#455f5c] transition-all duration-150 leading-none select-none tracking-tight ${
+                className={`font-extralight text-[#93b7b1] transition-all duration-150 leading-none select-none tracking-tight ${
                   currentChapter.dialYear.length <= 4
                     ? "text-[58px] sm:text-[68px]"
                     : "text-[38px] sm:text-[48px]"
@@ -298,7 +298,7 @@ export default function Timeline() {
               >
                 {currentChapter.dialYear}
               </span>
-              <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-medium text-[#678480] mt-1.5 transition-all duration-150 select-none">
+              <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-medium text-[#aecbc6] mt-1.5 transition-all duration-150 select-none">
                 {currentChapter.dialLabel}
               </span>
             </div>
@@ -311,13 +311,13 @@ export default function Timeline() {
             transition={{ duration: 0.3 }}
             className="w-full mt-4 flex flex-col text-left"
           >
-            <p className="text-[11px] uppercase tracking-[0.2em] font-medium text-[#7e938f] mb-2">
+            <p className="text-[11px] uppercase tracking-[0.2em] font-medium text-[#a8c4be] mb-2">
               {currentChapter.chapterNum}
             </p>
             <h3 className="text-white font-semibold text-[32px] sm:text-[38px] leading-[1.1] tracking-tight whitespace-pre-line">
               {currentChapter.title}
             </h3>
-            <p className="text-[#8ea29e] text-[14.5px] sm:text-[15.5px] leading-[1.6] mt-3 max-w-[420px]">
+            <p className="text-[#c2d4cf] text-[14.5px] sm:text-[15.5px] leading-[1.6] mt-3 max-w-[420px]">
               {currentChapter.description}
             </p>
 
@@ -394,13 +394,13 @@ export default function Timeline() {
               }}
             >
               <span
-                className={`font-extralight leading-none tracking-tight text-[#455f5c] transition-all duration-150 truncate ${getDesktopDialYearClass(
+                className={`font-extralight leading-none tracking-tight text-[#93b7b1] transition-all duration-150 truncate ${getDesktopDialYearClass(
                   currentChapter.dialYear
                 )}`}
               >
                 {currentChapter.dialYear}
               </span>
-              <span className="text-[10px] xl:text-[11px] uppercase tracking-[0.2em] font-medium text-[#678480] mt-2.5 transition-all duration-150 truncate max-w-[280px]">
+              <span className="text-[10px] xl:text-[11px] uppercase tracking-[0.2em] font-medium text-[#aecbc6] mt-2.5 transition-all duration-150 truncate max-w-[280px]">
                 {currentChapter.dialLabel}
               </span>
             </div>
@@ -473,7 +473,7 @@ export default function Timeline() {
                       <text
                         x={lx}
                         y={ly}
-                        fill={isCurrent ? "#ffffff" : "#6f8883"}
+                        fill={isCurrent ? "#ffffff" : "#98b3ad"}
                         fontSize="12"
                         fontWeight={isCurrent ? "600" : "400"}
                         letterSpacing="0.08em"
@@ -542,7 +542,7 @@ export default function Timeline() {
             transition={{ duration: 0.35, ease: "easeOut" }}
             className="w-full lg:w-[480px] xl:w-[540px] pl-2 sm:pl-6 lg:pl-0 mt-4 lg:mt-0 flex flex-col justify-center ml-auto relative z-10"
           >
-            <p className="text-[11px] sm:text-[12px] uppercase tracking-[0.2em] font-medium text-[#7e938f] mb-3">
+            <p className="text-[11px] sm:text-[12px] uppercase tracking-[0.2em] font-medium text-[#a8c4be] mb-3">
               {currentChapter.chapterNum}
             </p>
 
@@ -550,7 +550,7 @@ export default function Timeline() {
               {currentChapter.title}
             </h3>
 
-            <p className="text-[#8ea29e] text-[15px] sm:text-[16.5px] leading-[1.65] mt-4 max-w-[420px] transition-all duration-150">
+            <p className="text-[#c2d4cf] text-[15px] sm:text-[16.5px] leading-[1.65] mt-4 max-w-[420px] transition-all duration-150">
               {currentChapter.description}
             </p>
 
@@ -631,7 +631,7 @@ export default function Timeline() {
 
                 <span
                   className={`text-[9.5px] sm:text-[13px] font-semibold tracking-wider uppercase transition-colors duration-150 truncate ${
-                    isActive ? "text-white" : "text-[#697f7b] group-hover:text-[#a0b5b1]"
+                    isActive ? "text-white" : "text-[#8ea8a2] group-hover:text-white"
                   }`}
                 >
                   {chap.year}
@@ -639,7 +639,7 @@ export default function Timeline() {
 
                 <span
                   className={`hidden sm:block text-[12px] sm:text-[13px] leading-snug mt-1 transition-colors duration-150 ${
-                    isActive ? "text-[#d8e4c6] font-medium" : "text-[#7a908c] group-hover:text-white"
+                    isActive ? "text-[#d8e4c6] font-medium" : "text-[#a8c2bc] group-hover:text-white"
                   }`}
                 >
                   {chap.bottomLabel}

@@ -43,9 +43,9 @@ export default function Footer() {
   return (
     <footer
       id="contact"
-      className="relative w-full bg-[#22363A] overflow-hidden min-h-0 lg:min-h-[1226px] lg:h-[1226px] flex flex-col justify-between pt-16 sm:pt-20 pb-0"
+      className="relative w-full bg-[#22363A] overflow-hidden isolate min-h-0 lg:min-h-[1226px] lg:h-[1226px] flex flex-col justify-between pt-16 sm:pt-20 pb-0"
     >
-      {/* Background Grain Texture Overlay */}
+      {/* Background Grain Texture Overlay set to 14% opacity */}
       <div
         className="absolute inset-0 pointer-events-none z-0"
         style={{
@@ -53,7 +53,7 @@ export default function Footer() {
           backgroundRepeat: "repeat",
           backgroundSize: "256px 256px",
           mixBlendMode: "overlay",
-          opacity: 0.8,
+          opacity: 0.14,
         }}
         aria-hidden="true"
       />
@@ -87,7 +87,7 @@ export default function Footer() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, delay: 0.2, ease: [0.21, 0.47, 0.32, 0.98] }}
-            className="text-[14.5px] sm:text-[16px] text-[#a0aca9] leading-[1.6] max-w-[580px] mt-5"
+            className="text-[14.5px] sm:text-[16px] text-[#c2d2ce] leading-[1.6] max-w-[580px] mt-5"
           >
             Leave your IT-related headaches to me from office setup to everything
             online and focus on your business.
@@ -143,7 +143,7 @@ export default function Footer() {
             transition={{ duration: 0.5, delay: 0.4, ease: [0.21, 0.47, 0.32, 0.98] }}
             className="mt-6 space-y-1 text-center"
           >
-            <p className="text-[#8da09d] text-[13px]">
+            <p className="text-[#b3c7c2] text-[13px]">
               Email:{" "}
               <a
                 href="mailto:tony@spiderworks.in"
@@ -152,7 +152,7 @@ export default function Footer() {
                 tony@spiderworks.in
               </a>
             </p>
-            <p className="text-[#6e807c] text-[11px] uppercase tracking-[0.12em]">
+            <p className="text-[#91a8a3] text-[11px] uppercase tracking-[0.12em]">
               SPIDERWORKS TECHNOLOGIES, KOCHI, KERALA
             </p>
           </motion.div>
@@ -172,7 +172,7 @@ export default function Footer() {
               <h3 className="text-white font-bold text-[19px] tracking-tight">
                 Tony John
               </h3>
-              <p className="text-[#8a9996] text-[13.5px] leading-relaxed mt-2.5 max-w-[280px]">
+              <p className="text-[#b3c5c1] text-[13.5px] leading-relaxed mt-2.5 max-w-[280px]">
                 Technology consultant from Kerala, India.
                 <br />
                 Founder &amp; CEO, SpiderWorks.
@@ -193,7 +193,7 @@ export default function Footer() {
                     ease: [0.21, 0.47, 0.32, 0.98],
                   }}
                 >
-                  <p className="text-[11.5px] uppercase tracking-[0.1em] font-medium text-[#8a9996] mb-3">
+                  <p className="text-[11.5px] uppercase tracking-[0.1em] font-medium text-[#b3c5c1] mb-3">
                     {col.title}
                   </p>
                   <ul className="space-y-2">
@@ -225,20 +225,20 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Copyright & Back to Top Bar */}
+        {/* Copyright & Back to Top Bar (Divider line removed) */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 mt-10"
+          className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 mt-10"
         >
-          <p className="text-[#72827f] text-[11px] uppercase tracking-[0.08em]">
+          <p className="text-[#91a6a2] text-[11px] uppercase tracking-[0.08em]">
             &copy; 2026 TONY JOHN. ALL RIGHTS RESERVED.
           </p>
           <a
             href="#hero"
-            className="text-[#72827f] hover:text-white text-[11px] uppercase tracking-[0.08em] transition-colors"
+            className="text-[#91a6a2] hover:text-white text-[11px] uppercase tracking-[0.08em] transition-colors"
           >
             BACK TO TOP &uarr;
           </a>

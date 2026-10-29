@@ -95,12 +95,12 @@ export default function CaseStudies() {
         >
           {/* Left: Tag & Heading */}
           <div className="flex flex-col items-start max-w-[620px]">
-            <p className="text-[11.5px] uppercase tracking-[0.14em] font-medium text-[#777a78] mb-4 sm:mb-6">
+            <p className="text-[11.5px] uppercase tracking-[0.14em] font-medium text-[#5e6360] mb-4 sm:mb-6">
               CASE STUDIES
             </p>
             <h2 className="text-[32px] sm:text-[40px] md:text-[46px] lg:text-[50px] font-bold leading-[1.12] tracking-[-0.03em]">
               <span className="text-[#1c1f1d]">Selected work, </span>
-              <span className="text-[#9ea19d]">
+              <span className="text-[#676d69]">
                 from Home <br className="hidden sm:inline" />
                 Depot to Manorama Online.
               </span>
@@ -109,7 +109,7 @@ export default function CaseStudies() {
 
           {/* Right: Subtitle & CTA Button */}
           <div className="flex flex-col items-start lg:items-start lg:pt-8 max-w-[380px]">
-            <p className="text-[14.5px] sm:text-[15px] text-[#6b726f] leading-[1.6]">
+            <p className="text-[14.5px] sm:text-[15px] text-[#505754] leading-[1.6]">
               Six engagements across architecture, marketing and e-commerce. Full
               write-ups are being prepared.
             </p>
@@ -142,23 +142,24 @@ export default function CaseStudies() {
             >
               <Link
                 href={featured.href}
-                className="w-full group relative bg-[#22363a] rounded-[12px] p-6 sm:p-10 lg:p-12 overflow-hidden flex flex-col justify-between shadow-sm transition-all duration-300 hover:shadow-xl border border-[#22363a]"
+                className="w-full group relative bg-[#22363a] rounded-[12px] p-6 sm:p-10 lg:p-12 overflow-hidden isolate flex flex-col justify-between shadow-sm transition-all duration-300 hover:shadow-xl border border-[#22363a]"
               >
-                {/* Background Grain Texture Overlay */}
+                {/* Background Grain Texture Overlay set to 14% opacity */}
                 <div
                   className="absolute inset-0 pointer-events-none z-0"
                   style={{
-                    backgroundImage: "url('/grain.png')",
+                    backgroundImage: "url('/nw%20graints.png')",
                     backgroundRepeat: "repeat",
                     backgroundSize: "256px 256px",
-                    opacity: 0.12,
+                    mixBlendMode: "overlay",
+                    opacity: 0.14,
                   }}
                   aria-hidden="true"
                 />
 
                 {/* Top Tag */}
                 <div className="relative z-10">
-                  <span className="text-[11px] sm:text-[11.5px] uppercase tracking-[0.16em] font-medium text-[#7d948f]">
+                  <span className="text-[11px] sm:text-[11.5px] uppercase tracking-[0.16em] font-medium text-[#a8c4be]">
                     FEATURED &middot; {featured.category}
                   </span>
                 </div>
@@ -184,7 +185,7 @@ export default function CaseStudies() {
                     <h3 className="text-white font-bold text-[30px] sm:text-[36px] leading-[1.1] tracking-tight">
                       {featured.title}
                     </h3>
-                    <p className="text-[#96aaa6] text-[13.5px] sm:text-[14.5px] leading-[1.6] mt-2.5">
+                    <p className="text-[#c2d4cf] text-[13.5px] sm:text-[14.5px] leading-[1.6] mt-2.5">
                       {featured.description}
                     </p>
                   </div>
@@ -205,7 +206,7 @@ export default function CaseStudies() {
                     <h3 className="text-white font-bold text-[40px] lg:text-[44px] leading-[1.1] tracking-tight">
                       {featured.title}
                     </h3>
-                    <p className="text-[#96aaa6] text-[14.5px] leading-[1.65] mt-3.5">
+                    <p className="text-[#c2d4cf] text-[14.5px] leading-[1.65] mt-3.5">
                       {featured.description}
                     </p>
                   </div>
@@ -267,7 +268,7 @@ export default function CaseStudies() {
                     <h4 className="text-[16px] sm:text-[18px] font-bold text-[#1c1f1d] leading-tight">
                       {secondary.title}
                     </h4>
-                    <p className="text-[10px] sm:text-[10.5px] uppercase tracking-[0.14em] font-medium text-[#7d827f] mt-1">
+                    <p className="text-[10px] sm:text-[10.5px] uppercase tracking-[0.14em] font-medium text-[#5a615e] mt-1">
                       {secondary.category}
                     </p>
                   </div>
@@ -332,7 +333,7 @@ export default function CaseStudies() {
                       <h4 className="text-[13.5px] sm:text-[17px] font-bold text-[#1c1f1d] leading-tight truncate w-full">
                         {item.title}
                       </h4>
-                      <p className="text-[8.5px] sm:text-[10px] uppercase tracking-[0.12em] font-medium text-[#7d827f] mt-0.5 truncate w-full">
+                      <p className="text-[8.5px] sm:text-[10px] uppercase tracking-[0.12em] font-medium text-[#5a615e] mt-0.5 truncate w-full">
                         {item.category}
                       </p>
                     </div>

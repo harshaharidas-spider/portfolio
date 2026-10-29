@@ -65,20 +65,20 @@ export default function Faq() {
             transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
             className="w-full lg:w-[460px] flex-none flex flex-col items-start"
           >
-            <p className="text-[11.5px] uppercase tracking-[0.14em] font-medium text-[#777a78] mb-6 sm:mb-8">
+            <p className="text-[11.5px] uppercase tracking-[0.14em] font-medium text-[#5e6360] mb-6 sm:mb-8">
               FAQ
             </p>
             <h2 className="text-[38px] sm:text-[46px] lg:text-[54px] font-bold leading-[1.06] tracking-tight text-[#1c1f1d]">
               <span className="block">Questions</span>
               <span className="block mt-0.5">
-                people <span className="text-[#a5a8a4]">ask.</span>
+                people <span className="text-[#616663]">ask.</span>
               </span>
             </h2>
-            <p className="text-[15px] sm:text-[15.5px] text-[#636c67] mt-8 sm:mt-10">
+            <p className="text-[15px] sm:text-[15.5px] text-[#4c5450] mt-8 sm:mt-10">
               Got other questions?{" "}
               <Link
                 href="#contact"
-                className="text-[#636c67] hover:text-[#1c1f1d] transition-colors"
+                className="text-[#1c1f1d] hover:text-[#436156] transition-colors underline underline-offset-4 decoration-[#85A596] font-medium"
               >
                 Talk to Tony directly.
               </Link>

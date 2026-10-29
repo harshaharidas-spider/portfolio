@@ -32,7 +32,7 @@ export default function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6 }}
-          className="text-[11.5px] uppercase tracking-[0.14em] font-medium text-[#777a78] mb-8 sm:mb-10 lg:mb-12"
+          className="text-[11.5px] uppercase tracking-[0.14em] font-medium text-[#5e6360] mb-8 sm:mb-10 lg:mb-12"
         >
           ABOUT
         </motion.p>
@@ -52,9 +52,9 @@ export default function About() {
               <span className="block">by working with the right partners</span>
               <span className="block">for you and help you focus on</span>
               <span className="block">
-                business. <span className="text-[#a5a8a4]">From office setup to</span>
+                business. <span className="text-[#696e6b]">From office setup to</span>
               </span>
-              <span className="block text-[#a5a8a4]">everything online.</span>
+              <span className="block text-[#696e6b]">everything online.</span>
             </motion.h2>
 
             {/* Bottom: "More about Tony" Pill Button */}
@@ -96,10 +96,10 @@ export default function About() {
                   whileHover={{ y: -4, borderColor: "#55806e", transition: { duration: 0.2 } }}
                   className="w-full sm:w-[330px] h-[140px] sm:h-[210px] border border-[#85A596] flex flex-col items-center justify-center p-3 sm:p-6 text-center bg-transparent transition-colors cursor-default"
                 >
-                  <span className="text-[#85A596] text-[34px] sm:text-[54px] lg:text-[60px] font-normal leading-none tracking-tight">
+                  <span className="text-[#4d7868] text-[34px] sm:text-[54px] lg:text-[60px] font-normal leading-none tracking-tight">
                     {stat.number}
                   </span>
-                  <span className="text-[#505552] text-[11px] sm:text-[13.5px] font-normal mt-2 sm:mt-3.5 leading-snug max-w-[220px]">
+                  <span className="text-[#333835] text-[11px] sm:text-[13.5px] font-normal mt-2 sm:mt-3.5 leading-snug max-w-[220px]">
                     {stat.label}
                   </span>
                 </motion.div>

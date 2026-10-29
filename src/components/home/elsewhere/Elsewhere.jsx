@@ -107,12 +107,12 @@ export default function Elsewhere() {
         >
           {/* Left: Tag & Main Heading */}
           <div className="flex flex-col items-start max-w-[560px]">
-            <p className="text-[11.5px] uppercase tracking-[0.14em] font-medium text-[#777a78] mb-3 sm:mb-4">
+            <p className="text-[11.5px] uppercase tracking-[0.14em] font-medium text-[#5e6360] mb-3 sm:mb-4">
               ELSEWHERE
             </p>
             <h2 className="text-[36px] sm:text-[44px] lg:text-[50px] font-bold leading-[1.08] tracking-tight text-[#1c1f1d]">
               <span className="block">Follow along,</span>
-              <span className="block mt-0.5 text-[#9ea19d]">
+              <span className="block mt-0.5 text-[#676d69]">
                 off the page.
               </span>
             </h2>
@@ -120,7 +120,7 @@ export default function Elsewhere() {
 
           {/* Right: Subtitle Copy */}
           <div className="flex flex-col items-start lg:items-start lg:pt-6 max-w-[420px]">
-            <p className="text-[13.5px] sm:text-[14px] text-[#6b726f] leading-[1.5]">
+            <p className="text-[13.5px] sm:text-[14px] text-[#505754] leading-[1.5]">
               Portraits on YouTube, reels on Instagram, and the day-to-day on
               Facebook, LinkedIn and Instagram. A quick look here ; the full feeds
               are a tap away.
@@ -204,7 +204,7 @@ export default function Elsewhere() {
                     <h3 className="text-[15px] sm:text-[15.5px] font-bold text-[#1c1f1d] leading-tight group-hover:text-black transition-colors">
                       {card.title}
                     </h3>
-                    <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-[#7c8380] mt-0.5">
+                    <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-[#5e6662] mt-0.5">
                       {card.category}
                     </p>
                   </div>

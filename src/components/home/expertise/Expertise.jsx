@@ -185,10 +185,10 @@ export default function Expertise() {
     <section
       id="expertise"
       onMouseLeave={() => setHoveredId(null)}
-      className="relative w-full bg-[#22363A] overflow-hidden py-16 sm:py-20 lg:py-28"
+      className="relative w-full bg-[#22363A] overflow-hidden isolate py-16 sm:py-20 lg:py-28"
     >
       <span id="services" className="-top-20 relative block" aria-hidden="true" />
-      {/* Background Grain Texture Overlay */}
+      {/* Background Grain Texture Overlay set to 14% opacity */}
       <div
         className="absolute inset-0 pointer-events-none z-0"
         style={{
@@ -196,7 +196,7 @@ export default function Expertise() {
           backgroundRepeat: "repeat",
           backgroundSize: "256px 256px",
           mixBlendMode: "overlay",
-          opacity: 0.8,
+          opacity: 0.14,
         }}
         aria-hidden="true"
       />
@@ -239,7 +239,7 @@ export default function Expertise() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.22 }}
-              className="mt-4 text-[14.5px] text-[#8ea29e] leading-[1.65]"
+              className="mt-4 text-[14.5px] text-[#c0d2cd] leading-[1.65]"
             >
               {activeItem.description}
             </motion.p>
@@ -261,12 +261,12 @@ export default function Expertise() {
                   className={`inline-flex items-center px-3.5 py-1.5 sm:py-2 rounded-full transition-all cursor-pointer select-none ${
                     isSelected
                       ? "bg-[#aecfbf] text-[#1c2825] shadow-sm scale-[1.02]"
-                      : "border border-[#384d49] bg-[#1d2d2a]/50 text-[#a3b1ae] hover:border-white/30 hover:text-white"
+                      : "border border-[#384d49] bg-[#1d2d2a]/50 text-[#b4c3bf] hover:border-white/30 hover:text-white"
                   }`}
                 >
                   <span
                     className={`text-[11px] font-mono mr-2 ${
-                      isSelected ? "text-[#38534b] font-medium" : "text-[#5d736f]"
+                      isSelected ? "text-[#38534b] font-medium" : "text-[#8fa6a1]"
                     }`}
                   >
                     {formattedNum}
@@ -341,7 +341,7 @@ export default function Expertise() {
                             className={`text-[13px] sm:text-[14px] w-[36px] sm:w-[44px] flex-none text-left select-none transition-colors duration-150 ${
                               isActive
                                 ? "text-white/80 font-medium"
-                                : "text-[#5e7470] group-hover:text-[#a3b1ae]"
+                                : "text-[#8fa6a1] group-hover:text-white"
                             }`}
                           >
                             {item.id}
@@ -351,7 +351,7 @@ export default function Expertise() {
                             className={`text-[20px] sm:text-[28px] md:text-[34px] lg:text-[40px] leading-[120%] tracking-[-0.02em] whitespace-nowrap transition-all duration-150 ${
                               isActive
                                 ? "text-white font-medium translate-x-1"
-                                : "text-[#A3B1AE] font-normal group-hover:text-white"
+                                : "text-[#b4c3bf] font-normal group-hover:text-white"
                             }`}
                           >
                             {item.name}
@@ -416,7 +416,7 @@ export default function Expertise() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.25 }}
-                  className="mt-5 sm:mt-6 text-[14.5px] sm:text-[15.5px] text-[#93a7a3] leading-[1.7] max-w-[460px]"
+                  className="mt-5 sm:mt-6 text-[14.5px] sm:text-[15.5px] text-[#c0d2cd] leading-[1.7] max-w-[460px]"
                 >
                   {activeItem.description}
                 </motion.p>
