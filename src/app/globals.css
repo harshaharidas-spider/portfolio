@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-roboto), Roboto, sans-serif;
+  --font-roboto: var(--font-roboto), Roboto, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  font-family: var(--font-roboto), Roboto, sans-serif;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-roboto), Roboto, sans-serif;
+  color: #ffffff;
+  background-color: #22363a;
+}
+
+/* Custom slim scrollbar for Areas of Expertise */
+.expertise-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #85A596 rgba(255, 255, 255, 0.08);
+}
+.expertise-scrollbar::-webkit-scrollbar {
+  width: 3px;
+}
+.expertise-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+}
+.expertise-scrollbar::-webkit-scrollbar-thumb {
+  background: #85A596;
+  border-radius: 3px;
+}
+.expertise-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #aecfbf;
+}

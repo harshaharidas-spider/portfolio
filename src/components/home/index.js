@@ -1,0 +1,10 @@
+export { default as Hero } from "./hero";
+export { default as About } from "./about";
+export { default as Timeline } from "./timeline";
+export { default as Expertise } from "./expertise";
+export { default as Numbers } from "./numbers";
+export { default as HowIWork } from "./how-i-work";
+export { default as Ventures } from "./ventures";
+export { default as CaseStudies } from "./case-studies";
+export { default as Faq } from "./faq";
+export { default as Elsewhere } from "./elsewhere";

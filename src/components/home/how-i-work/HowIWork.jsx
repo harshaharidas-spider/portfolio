@@ -1,0 +1,107 @@
+import Link from "next/link";
+
+export default function HowIWork() {
+  const steps = [
+    {
+      number: "01.",
+      title: "Understand the business",
+      description:
+        "What you actually need not what vendors pitch. Which computer to buy, which networks to use, what to implement and what to skip.",
+      isActive: true,
+    },
+    {
+      number: "02.",
+      title: "Research, neutrally",
+      description:
+        "Options, costs and track records compared through extensive, neutral research so you don't pay for expensive solutions where cheaper alternatives exist.",
+      isActive: false,
+    },
+    {
+      number: "03.",
+      title: "Choose & coordinate",
+      description:
+        "The right partners, chosen on track record rather than pitch, and coordinated end-to-end while you focus on business.",
+      isActive: false,
+    },
+    {
+      number: "04.",
+      title: "Stay hands-on",
+      description:
+        "I quit my primary job as a software architect in 2011 but I still love to get my hands dirty writing code myself.",
+      isActive: false,
+    },
+  ];
+
+  return (
+    <section id="how-i-work" className="w-full bg-[#f4f2ee] py-16 sm:py-20 lg:py-28">
+      <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-[75px]">
+        {/* Top Header Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start justify-between">
+          {/* Left: Section Label & Heading */}
+          <div className="lg:col-span-7 flex flex-col items-start">
+            <p className="text-[12px] uppercase tracking-[0.1em] font-medium text-[#777a78] mb-6 sm:mb-8">
+              HOW I WORK
+            </p>
+            <h2 className="text-[32px] sm:text-[38px] lg:text-[44px] font-bold leading-[1.12] tracking-[-0.03em] max-w-[560px]">
+              <span className="text-[#1c1f1d] block">
+                From first brief to hands-on,
+              </span>
+              <span className="text-[#a3a3a0] block mt-1">step by step.</span>
+            </h2>
+          </div>
+
+          {/* Right: Description & CTA Button */}
+          <div className="lg:col-span-5 flex flex-col items-start lg:items-start lg:pt-12">
+            <p className="text-[14.5px] sm:text-[15.5px] text-[#555a57] leading-[1.65] max-w-[420px]">
+              Every engagement follows the same four steps — so you always know
+              what happens next.
+            </p>
+            <div className="mt-6">
+              <Link
+                href="#contact"
+                className="group inline-flex items-center gap-2 bg-[#aecfbf] hover:bg-[#9ec4b3] text-[#1c1f1d] text-[13.5px] font-medium px-5 py-2.5 rounded-full transition-colors"
+              >
+                <span>Book a consultation</span>
+                <svg
+                  className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                  />
+                </svg>
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* 4 Steps Columns */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 mt-16 sm:mt-20 lg:mt-24">
+          {steps.map((step) => (
+            <div
+              key={step.number}
+              className={`pt-8 border-t ${
+                step.isActive ? "border-[#85A596]" : "border-[#dedcd4]"
+              }`}
+            >
+              <span className="text-[#85A596] text-[40px] sm:text-[46px] font-medium leading-none block">
+                {step.number}
+              </span>
+              <h3 className="text-[#1c1f1d] text-[18px] sm:text-[19px] font-semibold mt-4 sm:mt-5 tracking-tight">
+                {step.title}
+              </h3>
+              <p className="text-[#555a57] text-[13.5px] leading-[1.65] mt-3">
+                {step.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
