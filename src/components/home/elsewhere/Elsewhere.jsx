@@ -1,5 +1,7 @@
+"use client";
+
 import Image from "next/image";
-import Link from "next/link";
+import { motion } from "framer-motion";
 
 const socialCards = [
   {
@@ -92,11 +94,17 @@ export default function Elsewhere() {
   return (
     <section
       id="elsewhere"
-      className="w-full bg-[#F4F2EE] py-16 sm:py-20 lg:py-24 overflow-hidden"
+      className="w-full bg-[#F4F2EE] py-16 sm:py-20 lg:py-28 overflow-hidden"
     >
       <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-[60px] xl:px-[75px]">
         {/* Top Header Row */}
-        <div className="flex flex-col lg:flex-row items-start justify-between gap-8 lg:gap-14 mb-10 sm:mb-14">
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
+          className="flex flex-col lg:flex-row items-start justify-between gap-8 lg:gap-14 mb-12 sm:mb-16 lg:mb-20"
+        >
           {/* Left: Tag & Main Heading */}
           <div className="flex flex-col items-start max-w-[560px]">
             <p className="text-[11.5px] uppercase tracking-[0.14em] font-medium text-[#777a78] mb-3 sm:mb-4">
@@ -118,104 +126,104 @@ export default function Elsewhere() {
               are a tap away.
             </p>
           </div>
-        </div>
+        </motion.div>
 
-        {/* 5 Cards Row: Horizontal snap carousel on mobile, High/Low staggered on desktop matching Figma */}
-        <div className="flex overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pb-4 snap-x snap-mandatory lg:overflow-visible lg:flex-nowrap lg:justify-between lg:pb-0 gap-4 sm:gap-6 lg:gap-4 xl:gap-6 items-start w-full">
-          {socialCards.map((card) => (
-            <a
+        {/* 5 Cards Row */}
+        <div className="flex overflow-x-auto pb-4 snap-x snap-mandatory lg:overflow-visible lg:flex-nowrap lg:justify-between lg:pb-0 gap-4 sm:gap-6 lg:gap-4 xl:gap-6 items-start w-full">
+          {socialCards.map((card, idx) => (
+            <motion.div
               key={card.id}
-              href={card.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`snap-start w-[200px] sm:w-[220px] flex-none flex flex-col justify-between group focus:outline-none select-none transition-transform duration-300 ${card.offsetClass}`}
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{
+                duration: 0.6,
+                delay: idx * 0.1,
+                ease: [0.21, 0.47, 0.32, 0.98],
+              }}
+              whileHover={{ y: -6, transition: { duration: 0.25 } }}
+              className={`snap-start w-[259.2px] flex-none flex flex-col justify-between group focus:outline-none select-none ${card.offsetClass}`}
             >
-              {/* Media Card Box: Exact Figma specs 220px x 220px, Radius 8px */}
-              <div
-                className={`relative w-[220px] h-[220px] ${card.bg} rounded-[8px] p-4 flex flex-col justify-between overflow-hidden shadow-sm`}
+              <a
+                href={card.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full flex flex-col"
               >
-                {/* Background Grain Texture Overlay */}
+                {/* Exact Media Box Container: 259.2px wide × 300px high */}
                 <div
-                  className="absolute inset-0 pointer-events-none z-[2]"
-                  style={{
-                    backgroundImage: "url('/grain.png')",
-                    backgroundRepeat: "repeat",
-                    backgroundSize: "256px 256px",
-                    opacity: 0.12,
-                  }}
-                  aria-hidden="true"
-                />
-
-                {/* Embedded Video (Cards 1, 2, 4, 5) */}
-                {card.mediaType === "video" && (
-                  <video
-                    src={card.mediaSrc}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="absolute inset-0 w-full h-full object-cover rounded-[8px] z-0"
-                  />
-                )}
-
-                {/* Embedded Image (Card 3: reel3.png) */}
-                {card.mediaType === "image" && (
-                  <Image
-                    src={card.mediaSrc}
-                    alt={card.title}
-                    width={220}
-                    height={220}
-                    className="absolute inset-0 w-full h-full object-cover rounded-[8px] z-0"
-                  />
-                )}
-
-                {/* Subtle dark vignette overlay for legibility */}
-                <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/55 rounded-[8px] z-[1] pointer-events-none" />
-
-                {/* Card Top Row: Brand Icon */}
-                <div className="relative z-10 flex items-center justify-between w-full">
-                  <div className="text-white drop-shadow-sm">{card.icon}</div>
-                </div>
-
-                {/* Bottom-right authentic watermark image from public */}
-                {card.watermarkSrc && (
-                  <div className="absolute -bottom-2 -right-2 w-[100px] h-[100px] pointer-events-none z-10 opacity-30 select-none">
-                    <Image
-                      src={card.watermarkSrc}
-                      alt=""
-                      width={120}
-                      height={120}
-                      className="w-full h-full object-contain drop-shadow-md"
+                  className={`relative w-full h-[300px] ${card.bg} rounded-[12px] p-4 flex flex-col justify-between overflow-hidden shadow-sm`}
+                >
+                  {/* Embedded Video */}
+                  {card.mediaType === "video" && (
+                    <video
+                      src={card.mediaSrc}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="absolute inset-0 w-full h-full object-cover rounded-[12px] z-0"
                     />
+                  )}
+
+                  {/* Embedded Image */}
+                  {card.mediaType === "image" && (
+                    <Image
+                      src={card.mediaSrc}
+                      alt={card.title}
+                      fill
+                      className="absolute inset-0 w-full h-full object-cover rounded-[12px] z-0"
+                    />
+                  )}
+
+                  {/* Subtle dark vignette overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40 rounded-[12px] z-[1] pointer-events-none" />
+
+                  {/* Card Top Row: Brand Icon */}
+                  <div className="relative z-10 flex items-center justify-between w-full">
+                    <div className="text-white drop-shadow-sm">{card.icon}</div>
                   </div>
-                )}
-              </div>
 
-              {/* Text & Action Row below card */}
-              <div className="flex items-center justify-between mt-3 px-0.5 w-full">
-                <div>
-                  <h3 className="text-[15px] sm:text-[15.5px] font-bold text-[#1c1f1d] leading-tight group-hover:text-black transition-colors">
-                    {card.title}
-                  </h3>
-                  <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-[#7c8380] mt-0.5">
-                    {card.category}
-                  </p>
+                  {/* Bottom-right watermark */}
+                  {card.watermarkSrc && (
+                    <div className="absolute -bottom-2 -right-2 w-[100px] h-[100px] pointer-events-none z-10 opacity-25 select-none">
+                      <Image
+                        src={card.watermarkSrc}
+                        alt=""
+                        width={120}
+                        height={120}
+                        className="w-full h-full object-contain drop-shadow-md"
+                      />
+                    </div>
+                  )}
                 </div>
 
-                {/* Circular Arrow Button: 36px x 36px border 1px #85A596 */}
-                <div className="w-[34px] h-[34px] rounded-full border border-[#85A596] group-hover:border-[#1c1f1d] group-hover:bg-[#1c1f1d] group-hover:text-white flex items-center justify-center text-[#555] transition-all shrink-0">
-                  <svg
-                    className="w-3.5 h-3.5"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
+                {/* Bottom Title & Action Row */}
+                <div className="flex items-center justify-between pt-3 pb-1 px-1 w-full">
+                  <div>
+                    <h3 className="text-[15px] sm:text-[15.5px] font-bold text-[#1c1f1d] leading-tight group-hover:text-black transition-colors">
+                      {card.title}
+                    </h3>
+                    <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-[#7c8380] mt-0.5">
+                      {card.category}
+                    </p>
+                  </div>
+
+                  {/* Circular Arrow Button */}
+                  <div className="w-[36px] h-[36px] rounded-full border border-[#85A596] group-hover:border-[#1c1f1d] group-hover:bg-[#1c1f1d] group-hover:text-white flex items-center justify-center text-[#555] transition-all shrink-0">
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </div>
                 </div>
-              </div>
-            </a>
+              </a>
+            </motion.div>
           ))}
         </div>
       </div>

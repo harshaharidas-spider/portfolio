@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 const chapters = [
   {
@@ -61,7 +62,6 @@ const chapters = [
 ];
 
 // Milestone angles on the dial arc relative to 0deg (horizontal right pointer)
-// Index 2 (2005) is 0deg.
 const MILESTONE_ANGLES = [-36, -18, 0, 18, 36];
 
 // Dynamic font sizing for inner dial text so long labels never overflow onto the wheel
@@ -71,14 +71,6 @@ const getDesktopDialYearClass = (text) => {
   if (len <= 5) return "text-[64px] xl:text-[76px]";
   if (len <= 7) return "text-[46px] xl:text-[54px]";
   return "text-[36px] xl:text-[44px]";
-};
-
-const getMobileDialYearClass = (text) => {
-  const len = (text || "").length;
-  if (len <= 4) return "text-[50px] sm:text-[66px]";
-  if (len <= 5) return "text-[40px] sm:text-[52px]";
-  if (len <= 7) return "text-[28px] sm:text-[38px]";
-  return "text-[22px] sm:text-[30px]";
 };
 
 export default function Timeline() {
@@ -94,10 +86,9 @@ export default function Timeline() {
   const currentChapter = chapters[activeIndex];
   // Rotation angle for desktop wheel: rotates active milestone to 0deg (3 o'clock position)
   const dialRotation = (2 - activeIndex) * 18;
-  // Rotation angle for mobile wheel (Figma Image 2: base 90deg, pointer at 12 o'clock)
   const mobileDialRotation = 90 + (2 - activeIndex) * 18;
 
-  // Button navigation: Fast, immediate response with no delay
+  // Button navigation
   const handleNavigate = (direction) => {
     setActiveIndex((prev) => {
       const next = prev + direction;
@@ -107,7 +98,7 @@ export default function Timeline() {
     });
   };
 
-  // Jump to specific milestone (bottom bar or dial tick)
+  // Jump to specific milestone
   const handleSelectMilestone = useCallback((idx) => {
     setActiveIndex(idx);
   }, []);
@@ -161,8 +152,12 @@ export default function Timeline() {
   };
 
   return (
-    <section
+    <motion.section
       id="story"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       onPointerUp={handlePointerUp}
       onPointerLeave={handlePointerUp}
       className="relative w-full bg-[#22363A] overflow-hidden min-h-[680px] lg:min-h-[760px] py-10 lg:py-14 flex flex-col justify-between select-none"
@@ -173,16 +168,23 @@ export default function Timeline() {
       <div
         className="absolute inset-0 pointer-events-none z-0"
         style={{
-          backgroundImage: "url('/grain.png')",
+          backgroundImage: "url('/nw%20graints.png')",
           backgroundRepeat: "repeat",
           backgroundSize: "256px 256px",
-          opacity: 0.14,
+          mixBlendMode: "overlay",
+          opacity: 0.8,
         }}
         aria-hidden="true"
       />
 
-      {/* Top Header Row: Exact Figma Reference (Desktop only, mobile has it in its flow) */}
-      <div className="hidden lg:flex relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-[75px] pt-2 lg:pt-4 items-start justify-end">
+      {/* Top Header Row */}
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        className="hidden lg:flex relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-[75px] pt-2 lg:pt-4 items-start justify-end"
+      >
         <div className="text-right flex flex-col items-end">
           <span className="text-[11px] sm:text-[12px] uppercase tracking-[0.2em] font-medium text-[#7e938f] mb-1">
             DRAG THE DIAL &rarr;
@@ -191,13 +193,12 @@ export default function Timeline() {
             From a late &apos;90s blog to a company of its own.
           </h2>
         </div>
-      </div>
+      </motion.div>
 
       {/* Center Interactive Area */}
       <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-[75px] my-auto py-4 sm:py-6 lg:py-8 w-full">
-        {/* Mobile Interactive Flow (< 1024px) Matching User's Figma Reference */}
+        {/* Mobile Interactive Flow (< 1024px) */}
         <div className="lg:hidden flex flex-col w-full">
-          {/* Mobile Top Header (Left-aligned matching Image 1) */}
           <div className="text-left w-full mb-3">
             <span className="text-[11px] uppercase tracking-[0.2em] font-medium text-[#7e938f] block mb-1">
               DRAG THE DIAL &rarr;
@@ -207,14 +208,12 @@ export default function Timeline() {
             </h2>
           </div>
 
-          {/* Mobile Wheel Dome: Full width edge-to-edge, compact height cutting off below subtitle */}
           <div
             className="relative -mx-6 sm:-mx-10 w-[calc(100%+3rem)] sm:w-[calc(100%+5rem)] h-[195px] sm:h-[215px] overflow-hidden select-none cursor-grab active:cursor-grabbing my-4"
             onPointerDown={handleMobilePointerDown}
             onPointerMove={handleMobilePointerMove}
             onPointerUp={handleMobilePointerUp}
           >
-            {/* 1. Thick dark curved line under the wheel track matching Figma reference */}
             <div
               className="absolute rounded-full border-[2.5px] border-[#0e1b1d] z-[2] pointer-events-none"
               style={{
@@ -225,7 +224,6 @@ export default function Timeline() {
               }}
             />
 
-            {/* 2. Rotatable 684px Wheel */}
             <div
               className="absolute pointer-events-none z-[3]"
               style={{
@@ -250,7 +248,6 @@ export default function Timeline() {
               </div>
             </div>
 
-            {/* 3. Wheel Glow Overlay */}
             <div
               className="absolute pointer-events-none z-[4]"
               style={{
@@ -270,37 +267,20 @@ export default function Timeline() {
               />
             </div>
 
-            {/* 4. Pointer at 12 o'clock Apex (Top) with Group 9.png */}
+            {/* Mobile Pointer Badge (Cleaned with no lines) */}
             <div
-              className="absolute z-[10] pointer-events-none overflow-hidden"
+              className="absolute z-[10] pointer-events-none select-none flex items-center justify-center"
               style={{
-                top: "0px",
-                left: "calc(50% - 125px)",
-                width: "250px",
-                height: "68px",
+                top: "6px",
+                left: "calc(50% - 28px)",
+                width: "56px",
+                height: "56px",
               }}
             >
-              <div
-                style={{
-                  width: "250px",
-                  height: "65px",
-                  transformOrigin: "120.5px 32.5px",
-                  transform: "rotate(90deg)",
-                  marginTop: "2.5px",
-                }}
-              >
-                <Image
-                  src="/Group 9.png"
-                  alt="Milestone Pointer"
-                  width={250}
-                  height={65}
-                  className="select-none pointer-events-none object-contain"
-                  priority
-                />
-              </div>
+              <div className="absolute -inset-1 rounded-full border border-dashed border-[#d8e4c6]/40 pointer-events-none" />
+              <div className="w-full h-full rounded-full bg-[#d8e4c6] border-[2.5px] border-[#1d2d30] shadow-[0_4px_14px_rgba(0,0,0,0.35)]" />
             </div>
 
-            {/* Big Year & Subtitle in Center below Pointer */}
             <div
               className="absolute z-[10] flex flex-col items-center justify-center text-center pointer-events-none"
               style={{
@@ -324,23 +304,24 @@ export default function Timeline() {
             </div>
           </div>
 
-          {/* 3. Mobile Chapter Content & Horizontal Buttons matching Image 1 */}
-          <div className="w-full mt-4 flex flex-col text-left">
+          <motion.div 
+            key={activeIndex}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="w-full mt-4 flex flex-col text-left"
+          >
             <p className="text-[11px] uppercase tracking-[0.2em] font-medium text-[#7e938f] mb-2">
               {currentChapter.chapterNum}
             </p>
-
             <h3 className="text-white font-semibold text-[32px] sm:text-[38px] leading-[1.1] tracking-tight whitespace-pre-line">
               {currentChapter.title}
             </h3>
-
             <p className="text-[#8ea29e] text-[14.5px] sm:text-[15.5px] leading-[1.6] mt-3 max-w-[420px]">
               {currentChapter.description}
             </p>
 
-            {/* Horizontal Arrow Buttons: [<-] [->] Move the wheel */}
             <div className="mt-6 flex items-center gap-3.5">
-              {/* Left Arrow Button (Previous) */}
               <button
                 type="button"
                 onClick={() => handleNavigate(-1)}
@@ -357,7 +338,6 @@ export default function Timeline() {
                 </svg>
               </button>
 
-              {/* Right Arrow Button (Next) */}
               <button
                 type="button"
                 onClick={() => handleNavigate(1)}
@@ -374,29 +354,27 @@ export default function Timeline() {
                 </svg>
               </button>
 
-              {/* Label */}
               <span className="text-[#7e938f] text-[13px] font-normal tracking-wide ml-2 select-none">
                 Move the wheel
               </span>
             </div>
-          </div>
+          </motion.div>
         </div>
 
-        {/* Desktop Interactive Area (>= 1024px): Dial on Left, Milestone Content on Right */}
+        {/* Desktop Interactive Area (>= 1024px) */}
         <div className="hidden lg:flex flex-row items-center justify-between w-full relative min-h-[460px] lg:min-h-[520px]">
-          {/* Desktop Dial Container (>= 1024px): Exact Figma Specs (1520px x 1520px, left: -960px, top: -354px) */}
           <div
             className="absolute cursor-grab active:cursor-grabbing pointer-events-auto"
             style={{
               width: "1520px",
               height: "1520px",
-              left: "-960px",
+              left: "-1020px",
               top: "calc(50% - 760px)",
             }}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
           >
-            {/* 1. Thin Circle Border along inner track (Same color as section background, no dark blue disc) */}
+            {/* Inner Thin Circle Border */}
             <div
               className="absolute rounded-full border border-black/40 z-[1] pointer-events-none"
               style={{
@@ -407,11 +385,10 @@ export default function Timeline() {
               }}
             />
 
-            {/* 2. FIXED Big Year & Subtitle with adaptive sizing so it never overflows onto the wheel */}
             <div
-              className="absolute z-[2] flex flex-col justify-center pointer-events-none select-none max-w-[320px] px-2"
+              className="absolute z-[3] flex flex-col justify-center pointer-events-none select-none max-w-[320px] px-2"
               style={{
-                left: "1025px", // 960px left offset + 65px on-screen margin
+                left: "910px",
                 top: "50%",
                 transform: "translateY(-50%)",
               }}
@@ -428,16 +405,14 @@ export default function Timeline() {
               </span>
             </div>
 
-            {/* 3. ROTATABLE Wheel (1520px x 1520px) - Fast, snappy rotation with no delay */}
             <div
-              className="absolute inset-0 w-[1520px] h-[1520px] pointer-events-none z-[3]"
+              className="absolute inset-0 w-[1520px] h-[1520px] pointer-events-none z-[4]"
               style={{
                 transform: `rotate(${dialRotation}deg)`,
                 transformOrigin: "760px 760px",
                 transition: "transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1)",
               }}
             >
-              {/* The Wheel Image */}
               <div className="relative w-[1520px] h-[1520px]">
                 <Image
                   src="/wheel.png"
@@ -449,13 +424,11 @@ export default function Timeline() {
                 />
               </div>
 
-              {/* SVG Outer Arc & Milestone Ticks that rotate with the wheel */}
               <svg
                 viewBox="0 0 1520 1520"
                 className="absolute inset-0 w-full h-full pointer-events-none"
                 style={{ overflow: "visible" }}
               >
-                {/* Faint Outer Arc Line */}
                 <circle
                   cx="760"
                   cy="760"
@@ -466,7 +439,6 @@ export default function Timeline() {
                   strokeDasharray="2 4"
                 />
 
-                {/* 5 Milestone Ticks and Rotated Labels along arc */}
                 {chapters.map((chap, idx) => {
                   const angle = MILESTONE_ANGLES[idx];
                   const rad = (angle * Math.PI) / 180;
@@ -490,7 +462,6 @@ export default function Timeline() {
                       className="cursor-pointer pointer-events-auto"
                       onClick={() => handleSelectMilestone(idx)}
                     >
-                      {/* Tick Mark */}
                       <line
                         x1={x1}
                         y1={y1}
@@ -499,7 +470,6 @@ export default function Timeline() {
                         stroke={isCurrent ? "#d8e4c6" : "rgba(255, 255, 255, 0.35)"}
                         strokeWidth={isCurrent ? "2.5" : "1.2"}
                       />
-                      {/* Rotated Year Label */}
                       <text
                         x={lx}
                         y={ly}
@@ -520,8 +490,7 @@ export default function Timeline() {
               </svg>
             </div>
 
-            {/* 4. FIXED Shadow / Glow ON TOP of the wheel */}
-            <div className="absolute inset-0 w-[1520px] h-[1520px] pointer-events-none z-[4]">
+            <div className="absolute inset-0 w-[1520px] h-[1520px] pointer-events-none z-[5]">
               <Image
                 src="/wheelglow.png"
                 alt="Wheel Glow Shadow"
@@ -532,48 +501,60 @@ export default function Timeline() {
               />
             </div>
 
-            {/* 5. Wheel Pointer Indicator at 3 o'clock position (Right Apex) with Group 9.png */}
+            {/* Pointer Badge at 3 o'clock position */}
             <div
-              className="absolute z-[10] pointer-events-none select-none"
+              className="absolute z-[9] rounded-full border border-dashed border-[#d8e4c6]/40 pointer-events-none select-none"
               style={{
-                left: "1268px",
-                top: "692px",
-                width: "523px",
-                height: "136px",
+                left: "1388px",
+                top: "708px",
+                width: "104px",
+                height: "104px",
+              }}
+              aria-hidden="true"
+            />
+
+            {/* Desktop Pointer Badge (Cleaned with no lines) */}
+            <div
+              className="absolute z-[10] pointer-events-none select-none w-[84px] h-[84px] rounded-full bg-[#d8e4c6] border-[3px] border-[#18272a] shadow-[0_6px_24px_rgba(0,0,0,0.5)]"
+              style={{
+                left: "1398px",
+                top: "718px",
               }}
               title="Active Milestone Pointer"
-            >
-              <Image
-                src="/Group 9.png"
-                alt="Active Milestone Pointer"
-                width={523}
-                height={136}
-                className="select-none pointer-events-none object-contain"
-                priority
-              />
-            </div>
+            />
+
+            <div
+              className="absolute z-[8] h-[1px] bg-white/40 pointer-events-none select-none"
+              style={{
+                left: "1482px",
+                top: "760px",
+                width: "220px",
+              }}
+              aria-hidden="true"
+            />
           </div>
 
           {/* Chapter Milestone Content Area (Right) */}
-          <div className="w-full lg:w-[480px] xl:w-[540px] pl-2 sm:pl-6 lg:pl-0 mt-4 lg:mt-0 flex flex-col justify-center ml-auto relative z-10">
-            {/* Chapter Badge */}
+          <motion.div 
+            key={activeIndex}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+            className="w-full lg:w-[480px] xl:w-[540px] pl-2 sm:pl-6 lg:pl-0 mt-4 lg:mt-0 flex flex-col justify-center ml-auto relative z-10"
+          >
             <p className="text-[11px] sm:text-[12px] uppercase tracking-[0.2em] font-medium text-[#7e938f] mb-3">
               {currentChapter.chapterNum}
             </p>
 
-            {/* Chapter Headline */}
             <h3 className="text-white font-semibold text-[34px] sm:text-[44px] lg:text-[52px] leading-[1.08] tracking-tight whitespace-pre-line transition-all duration-150">
               {currentChapter.title}
             </h3>
 
-            {/* Chapter Description */}
             <p className="text-[#8ea29e] text-[15px] sm:text-[16.5px] leading-[1.65] mt-4 max-w-[420px] transition-all duration-150">
               {currentChapter.description}
             </p>
 
-            {/* 2 Navigation Buttons & "Move the wheel" (Exact Figma Reference) */}
             <div className="mt-8 flex items-center gap-3.5">
-              {/* Up Button (Previous Milestone) */}
               <button
                 type="button"
                 onClick={() => handleNavigate(-1)}
@@ -596,7 +577,6 @@ export default function Timeline() {
                 </svg>
               </button>
 
-              {/* Down Button (Next Milestone) */}
               <button
                 type="button"
                 onClick={() => handleNavigate(1)}
@@ -615,20 +595,19 @@ export default function Timeline() {
                   strokeWidth="2.6"
                   viewBox="0 0 24 24"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m0 0l-6-6m6 6l6-6" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m0 0l-6-6m6 6l-6-6" />
                 </svg>
               </button>
 
-              {/* Label: Move the wheel */}
               <span className="text-[#7e938f] text-[13px] sm:text-[14px] font-normal tracking-wide ml-2 select-none">
                 Move the wheel
               </span>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
 
-      {/* Bottom Milestone Bar (Exact Figma Reference) */}
+      {/* Bottom Milestone Bar */}
       <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-[75px] pt-4 pb-2 lg:pb-4 flex justify-end">
         <div className="w-full lg:w-[720px] xl:w-[780px] grid grid-cols-5 gap-1.5 sm:gap-4 lg:gap-6">
           {chapters.map((chap, idx) => {
@@ -641,7 +620,6 @@ export default function Timeline() {
                 onClick={() => handleSelectMilestone(idx)}
                 className="group relative flex flex-col text-left focus:outline-none pt-2 cursor-pointer transition-colors"
               >
-                {/* Indicator Line on top of each milestone */}
                 <span
                   className={`absolute -top-1 left-0 right-0 transition-all duration-200 ${
                     isActive
@@ -651,7 +629,6 @@ export default function Timeline() {
                   aria-hidden="true"
                 />
 
-                {/* Milestone Year */}
                 <span
                   className={`text-[9.5px] sm:text-[13px] font-semibold tracking-wider uppercase transition-colors duration-150 truncate ${
                     isActive ? "text-white" : "text-[#697f7b] group-hover:text-[#a0b5b1]"
@@ -660,7 +637,6 @@ export default function Timeline() {
                   {chap.year}
                 </span>
 
-                {/* Milestone Short Summary (Visible on tablet/desktop, subtle on mobile) */}
                 <span
                   className={`hidden sm:block text-[12px] sm:text-[13px] leading-snug mt-1 transition-colors duration-150 ${
                     isActive ? "text-[#d8e4c6] font-medium" : "text-[#7a908c] group-hover:text-white"
@@ -673,6 +649,6 @@ export default function Timeline() {
           })}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

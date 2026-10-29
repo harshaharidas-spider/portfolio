@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 export default function Ventures() {
   const bottomVentures = [
@@ -19,10 +22,11 @@ export default function Ventures() {
       <div
         className="absolute inset-0 pointer-events-none z-0"
         style={{
-          backgroundImage: "url('/grain.png')",
+          backgroundImage: "url('/nw%20graints.png')",
           backgroundRepeat: "repeat",
           backgroundSize: "256px 256px",
-          opacity: 0.14,
+          mixBlendMode: "overlay",
+          opacity: 0.8,
         }}
         aria-hidden="true"
       />
@@ -30,8 +34,14 @@ export default function Ventures() {
       {/* Main Content Area */}
       <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-[75px] my-auto py-6 lg:py-0">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-12 lg:gap-16">
-          {/* Left Column: Static Heading, Description & Button */}
-          <div className="w-full lg:w-[500px] xl:w-[540px] flex-none flex flex-col items-start">
+          {/* Left Column: Heading, Description & Button */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
+            className="w-full lg:w-[500px] xl:w-[540px] flex-none flex flex-col items-start"
+          >
             {/* Main Headline */}
             <h2 className="text-[34px] sm:text-[42px] lg:text-[48px] font-bold leading-[1.12] tracking-tight">
               <span className="text-white block">One idea.</span>
@@ -48,21 +58,29 @@ export default function Ventures() {
               and the UK.
             </p>
 
-            {/* Rectangular Action Button (Figma: rounded-none, #d8e4c6) */}
+            {/* Rectangular Action Button */}
             <div className="mt-8 sm:mt-12 w-full sm:w-auto">
-              <Link
-                href="#contact"
-                className="w-full sm:w-auto inline-flex items-center justify-center bg-[#d8e4c6] text-[#1c2825] font-semibold text-[13px] tracking-[0.06em] uppercase px-7 py-4 rounded-none shadow-sm hover:bg-[#c9d7b5] transition-colors"
-              >
-                EXPLORE SPIDERWORKS
-              </Link>
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Link
+                  href="#contact"
+                  className="w-full sm:w-auto inline-flex items-center justify-center bg-[#d8e4c6] text-[#1c2825] font-semibold text-[13px] tracking-[0.06em] uppercase px-7 py-4 rounded-none shadow-sm hover:bg-[#c9d7b5] transition-colors"
+                >
+                  EXPLORE SPIDERWORKS
+                </Link>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Right Column: Static Mint Venture Card with Visual.png Background Pattern */}
-          <div className="w-full lg:flex-1 flex justify-center lg:justify-end items-center relative">
+          {/* Right Column: Mint Venture Card with Visual.png Background Pattern */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.93, y: 30 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full lg:flex-1 flex justify-center lg:justify-end items-center relative"
+          >
             <div className="relative w-[587px] max-w-full h-[367px] flex items-center justify-center">
-              {/* Authentic Visual.png Digital Matrix Pattern Background (587px x 367px) */}
+              {/* Authentic Visual.png Digital Matrix Pattern Background */}
               <div
                 className="absolute inset-0 pointer-events-none z-0 overflow-hidden flex items-center justify-center"
                 aria-hidden="true"
@@ -77,8 +95,11 @@ export default function Ventures() {
                 />
               </div>
 
-              {/* Static Mint Venture Card (Exact Figma Specs: 305px x 298px, solid #AECFBF, no shadow, no dots) */}
-              <div className="relative z-10 w-[305px] max-w-[92%] h-[298px] bg-[#aecfbf] p-[28px] flex flex-col justify-between rounded-[4px]">
+              {/* Mint Venture Card */}
+              <motion.div
+                whileHover={{ y: -5, transition: { duration: 0.25 } }}
+                className="relative z-10 w-[305px] max-w-[92%] h-[298px] bg-[#aecfbf] p-[28px] flex flex-col justify-between rounded-[4px] shadow-lg"
+              >
                 {/* Top: Brand Title & Subtitle */}
                 <div>
                   <h3 className="font-bold text-[28px] text-[#1c2825] leading-none tracking-tight">
@@ -112,40 +133,44 @@ export default function Ventures() {
                       03
                     </span>
                     <span className="text-[15.5px] font-semibold text-[#1c2825] tracking-tight">
-                      Growth
+                      Marketing
                     </span>
                   </li>
                 </ul>
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
 
-      {/* Bottom Row: Static 4 Sister Concerns Grid (Bordered columns and row matching Figma) */}
-      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-[75px] pt-12 sm:pt-16 pb-4">
-        <div className="w-full border border-white/15 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y divide-white/15 sm:divide-y-0">
-          {bottomVentures.map((item, index) => (
-            <div
-              key={item.name}
-              className={`flex items-center justify-between px-5 sm:px-6 lg:px-7 xl:px-8 py-4 sm:py-6 select-none ${
-                index % 2 === 1 ? "sm:border-l sm:border-white/15" : ""
-              } ${
-                index >= 2 ? "sm:border-t sm:border-white/15 lg:border-t-0" : ""
-              } ${
-                index === 2 ? "lg:border-l lg:border-white/15" : ""
-              }`}
+      {/* Bottom Sister Concerns / Ventures Row */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.7, delay: 0.2, ease: [0.21, 0.47, 0.32, 0.98] }}
+        className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-[75px] pt-12 pb-4"
+      >
+        <div className="w-full border-t border-white/10 pt-8 grid grid-cols-2 sm:grid-cols-4 gap-6">
+          {bottomVentures.map((v, idx) => (
+            <motion.div
+              key={v.name}
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              className="flex flex-col text-left"
             >
-              <span className="text-[15px] sm:text-[16px] font-semibold tracking-tight text-white">
-                {item.name}
+              <span className="text-[#aecfbf] font-semibold text-[15px] sm:text-[16px] tracking-tight">
+                {v.name}
               </span>
-              <span className="text-[11px] sm:text-[11.5px] font-normal text-[#7a908c] whitespace-nowrap">
-                {item.meta}
+              <span className="text-[#6d8480] text-[12px] uppercase tracking-wider mt-1 font-medium">
+                {v.meta}
               </span>
-            </div>
+            </motion.div>
           ))}
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

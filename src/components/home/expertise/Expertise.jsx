@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
-
+import { motion, AnimatePresence } from "framer-motion";
 
 const expertiseData = [
   {
@@ -98,7 +98,6 @@ const expertiseData = [
   },
 ];
 
-
 export default function Expertise() {
   // Default to Item 3 (Website Development) as shown in reference image
   const [selectedId, setSelectedId] = useState(3);
@@ -193,38 +192,59 @@ export default function Expertise() {
       <div
         className="absolute inset-0 pointer-events-none z-0"
         style={{
-          backgroundImage: "url('/grain.png')",
+          backgroundImage: "url('/nw%20graints.png')",
           backgroundRepeat: "repeat",
           backgroundSize: "256px 256px",
-          opacity: 0.14,
+          mixBlendMode: "overlay",
+          opacity: 0.8,
         }}
         aria-hidden="true"
       />
 
       <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-[75px]">
-        {/* Mobile View (< 1024px) Matching Exact Figma Screenshot */}
-        <div className="lg:hidden flex flex-col">
-          {/* Top Label Row: AREAS OF EXPERTISE & 13 SERVICES */}
+        {/* Mobile View (< 1024px) */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
+          className="lg:hidden flex flex-col"
+        >
           <div className="flex items-center justify-between w-full mb-6">
-            <span className="text-[11px] uppercase tracking-[0.14em] font-medium text-[#7d938f]">
+            <span className="text-[11.5px] uppercase tracking-[0.14em] font-semibold text-[#b3ccc0]">
               AREAS OF EXPERTISE
             </span>
-            <span className="text-[11px] uppercase tracking-[0.14em] font-medium text-[#7d938f]">
+            <span className="text-[11.5px] uppercase tracking-[0.14em] font-semibold text-[#b3ccc0]">
               13 SERVICES
             </span>
           </div>
 
-          {/* Heading */}
-          <h3 className="text-[#aecfbf] font-normal text-[30px] sm:text-[36px] leading-[1.18] tracking-tight">
-            {activeItem.title}
-          </h3>
+          <AnimatePresence mode="wait">
+            <motion.h3
+              key={activeItem.id}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.22 }}
+              className="text-[#aecfbf] font-normal text-[30px] sm:text-[36px] leading-[1.18] tracking-tight"
+            >
+              {activeItem.title}
+            </motion.h3>
+          </AnimatePresence>
 
-          {/* Paragraph */}
-          <p className="mt-4 text-[14.5px] text-[#8ea29e] leading-[1.65]">
-            {activeItem.description}
-          </p>
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={activeItem.id + "-desc"}
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.22 }}
+              className="mt-4 text-[14.5px] text-[#8ea29e] leading-[1.65]"
+            >
+              {activeItem.description}
+            </motion.p>
+          </AnimatePresence>
 
-          {/* Interactive Badges/Pills for all 13 services matching exact screenshot */}
           <div className="flex flex-wrap gap-2 sm:gap-2.5 my-8">
             {expertiseData.map((item) => {
               const isSelected = item.id === selectedId;
@@ -238,20 +258,23 @@ export default function Expertise() {
                     setSelectedId(item.id);
                     setHoveredId(item.id);
                   }}
-                  className={`inline-flex items-center px-3.5 py-1.5 sm:py-2 rounded-full transition-all cursor-pointer select-none ${isSelected
-                      ? "bg-[#aecfbf] text-[#1c2825] shadow-sm"
+                  className={`inline-flex items-center px-3.5 py-1.5 sm:py-2 rounded-full transition-all cursor-pointer select-none ${
+                    isSelected
+                      ? "bg-[#aecfbf] text-[#1c2825] shadow-sm scale-[1.02]"
                       : "border border-[#384d49] bg-[#1d2d2a]/50 text-[#a3b1ae] hover:border-white/30 hover:text-white"
-                    }`}
+                  }`}
                 >
                   <span
-                    className={`text-[11px] font-mono mr-2 ${isSelected ? "text-[#38534b] font-medium" : "text-[#5d736f]"
-                      }`}
+                    className={`text-[11px] font-mono mr-2 ${
+                      isSelected ? "text-[#38534b] font-medium" : "text-[#5d736f]"
+                    }`}
                   >
                     {formattedNum}
                   </span>
                   <span
-                    className={`text-[13px] ${isSelected ? "font-semibold text-[#1c2825]" : "font-normal"
-                      }`}
+                    className={`text-[13px] ${
+                      isSelected ? "font-semibold text-[#1c2825]" : "font-normal"
+                    }`}
                   >
                     {item.name}
                   </span>
@@ -260,7 +283,6 @@ export default function Expertise() {
             })}
           </div>
 
-          {/* Bottom Consultation Pill Button with Right Arrow matching exact screenshot */}
           <div className="w-full pt-1">
             <Link
               href="#contact"
@@ -278,18 +300,22 @@ export default function Expertise() {
               </svg>
             </Link>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Desktop View (>= 1024px): 6-row Scrollable Viewport with Custom Scrollbar */}
-        <div className="hidden lg:flex flex-row items-stretch justify-between gap-12 lg:gap-14 xl:gap-20">
+        {/* Desktop View (>= 1024px) */}
+        <motion.div
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.75, ease: [0.21, 0.47, 0.32, 0.98] }}
+          className="hidden lg:flex flex-row items-stretch justify-between gap-12 lg:gap-14 xl:gap-20"
+        >
           {/* Left Column: Areas of Expertise with scrollable 6-row viewport */}
           <div className="w-full lg:w-[560px] xl:w-[580px] flex-none flex flex-col justify-between">
-            {/* Top Label */}
-            <p className="text-[11.5px] uppercase tracking-[0.14em] font-medium text-[#7d938f] mb-8 lg:mb-10">
+            <p className="text-[11.5px] uppercase tracking-[0.14em] font-semibold text-[#b3ccc0] mb-8 lg:mb-10">
               AREAS OF EXPERTISE
             </p>
 
-            {/* Scrollable Viewport: exactly 6 items visible at 48px row height (288px) + Figma custom scrollbar */}
             <div className="relative flex items-stretch gap-4 sm:gap-6">
               <div
                 ref={scrollContainerRef}
@@ -311,22 +337,22 @@ export default function Expertise() {
                           onMouseEnter={() => setHoveredId(item.id)}
                           className="group flex items-center text-left w-full h-[48px] focus:outline-none cursor-pointer"
                         >
-                          {/* Number: left aligned, 36-47px column */}
                           <span
-                            className={`text-[13px] sm:text-[14px] w-[36px] sm:w-[44px] flex-none text-left select-none transition-colors duration-150 ${isActive
+                            className={`text-[13px] sm:text-[14px] w-[36px] sm:w-[44px] flex-none text-left select-none transition-colors duration-150 ${
+                              isActive
                                 ? "text-white/80 font-medium"
                                 : "text-[#5e7470] group-hover:text-[#a3b1ae]"
-                              }`}
+                            }`}
                           >
                             {item.id}
                           </span>
 
-                          {/* Title matching exact Figma specs: Roboto 400 (medium active), 40px, 120% line-height, -2% letter spacing */}
                           <span
-                            className={`text-[20px] sm:text-[28px] md:text-[34px] lg:text-[40px] leading-[120%] tracking-[-0.02em] whitespace-nowrap transition-all duration-150 ${isActive
-                                ? "text-white font-medium"
+                            className={`text-[20px] sm:text-[28px] md:text-[34px] lg:text-[40px] leading-[120%] tracking-[-0.02em] whitespace-nowrap transition-all duration-150 ${
+                              isActive
+                                ? "text-white font-medium translate-x-1"
                                 : "text-[#A3B1AE] font-normal group-hover:text-white"
-                              }`}
+                            }`}
                           >
                             {item.name}
                           </span>
@@ -337,17 +363,14 @@ export default function Expertise() {
                 </ul>
               </div>
 
-              {/* Custom Figma Scrollbar matching reference image */}
+              {/* Custom Figma Scrollbar */}
               <div
                 ref={trackRef}
                 onClick={handleTrackClick}
                 className="relative w-[14px] h-[288px] flex items-center justify-center flex-none cursor-pointer select-none group"
                 aria-label="Scroll services"
               >
-                {/* 1px Vertical Track Line */}
                 <div className="w-[1px] h-full bg-white/15" />
-
-                {/* Mint Pill Thumb (Matching Figma Image) */}
                 <div
                   onMouseDown={handleThumbMouseDown}
                   className="absolute w-[2.5px] bg-[#aecfbf] rounded-full cursor-grab active:cursor-grabbing hover:bg-white transition-colors duration-150"
@@ -359,13 +382,13 @@ export default function Expertise() {
               </div>
             </div>
 
-            {/* Bottom Scroll Notice */}
-            <p className="text-[10.5px] uppercase tracking-[0.16em] text-[#5e7470] mt-8 lg:mt-10 select-none">
+            {/* Bottom Scroll Notice - Updated with darker, bolder text */}
+            <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-[#c5ddd3] mt-8 lg:mt-10 select-none">
               SCROLL FOR ALL 13 SERVICES
             </p>
           </div>
 
-          {/* Center Vertical Divider Line matching reference image */}
+          {/* Center Vertical Divider Line */}
           <div
             className="hidden lg:block w-[1px] bg-white/10 self-stretch my-0 flex-none"
             aria-hidden="true"
@@ -373,30 +396,48 @@ export default function Expertise() {
 
           {/* Right Column: Dynamic Preview & Consultation Button */}
           <div className="w-full lg:flex-1 flex flex-col justify-between self-stretch pl-0 lg:pl-10 xl:pl-16 min-h-[360px] lg:min-h-[440px]">
-            {/* Dynamic Content (Heading & Paragraph) */}
             <div className="my-auto py-6 lg:py-0">
-              <h3 className="text-[#aecfbf] font-normal text-[28px] sm:text-[34px] md:text-[38px] lg:text-[42px] leading-[1.2] max-w-[500px]">
-                {activeItem.title}
-              </h3>
-              <p className="mt-5 sm:mt-6 text-[14.5px] sm:text-[15.5px] text-[#93a7a3] leading-[1.7] max-w-[460px]">
-                {activeItem.description}
-              </p>
+              <AnimatePresence mode="wait">
+                <motion.h3
+                  key={activeItem.id + "-desktop-title"}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.25 }}
+                  className="text-[#aecfbf] font-normal text-[28px] sm:text-[34px] md:text-[38px] lg:text-[42px] leading-[1.2] max-w-[500px]"
+                >
+                  {activeItem.title}
+                </motion.h3>
+              </AnimatePresence>
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={activeItem.id + "-desktop-desc"}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.25 }}
+                  className="mt-5 sm:mt-6 text-[14.5px] sm:text-[15.5px] text-[#93a7a3] leading-[1.7] max-w-[460px]"
+                >
+                  {activeItem.description}
+                </motion.p>
+              </AnimatePresence>
             </div>
 
-            {/* Bottom Right: Consultation Button */}
             <div className="flex justify-start lg:justify-end items-end pt-8 lg:pt-0">
-              <Link
-                href="#contact"
-                className="group inline-flex items-center gap-2 bg-[#aecfbf] hover:bg-[#9ec4b3] text-[#1c2825] text-[13.5px] font-medium h-[44px] px-7 rounded-full transition-colors shadow-sm"
-              >
-                <span>Book a consultation</span>
-                <span className="transition-transform duration-200 group-hover:translate-x-0.5">
-                  &rarr;
-                </span>
-              </Link>
+              <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
+                <Link
+                  href="#contact"
+                  className="group inline-flex items-center gap-2 bg-[#aecfbf] hover:bg-[#9ec4b3] text-[#1c2825] text-[13.5px] font-medium h-[44px] px-7 rounded-full transition-colors shadow-sm"
+                >
+                  <span>Book a consultation</span>
+                  <span className="transition-transform duration-200 group-hover:translate-x-0.5">
+                    &rarr;
+                  </span>
+                </Link>
+              </motion.div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
