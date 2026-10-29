@@ -201,9 +201,9 @@ export default function Expertise() {
         aria-hidden="true"
       />
 
-      {/* Full-height absolute vertical divider line running through the middle of the section */}
+      {/* Full-height absolute vertical divider line running through the middle with color #40666E */}
       <div
-        className="hidden lg:block absolute top-0 bottom-0 left-1/2 w-[1px] bg-white/10 pointer-events-none z-0"
+        className="hidden lg:block absolute top-0 bottom-0 left-1/2 w-[1px] bg-[#40666E] pointer-events-none z-0"
         aria-hidden="true"
       />
 
@@ -369,17 +369,17 @@ export default function Expertise() {
                 </ul>
               </div>
 
-              {/* Custom Figma Scrollbar (Reverted) */}
+              {/* Custom Figma Scrollbar with track line color #3A4E52 and thumb color #AECFBF */}
               <div
                 ref={trackRef}
                 onClick={handleTrackClick}
                 className="relative w-[14px] h-[288px] flex items-center justify-center flex-none cursor-pointer select-none group"
                 aria-label="Scroll services"
               >
-                <div className="w-[1px] h-full bg-white/15" />
+                <div className="w-[1px] h-full bg-[#3A4E52]" />
                 <div
                   onMouseDown={handleThumbMouseDown}
-                  className="absolute w-[2.5px] bg-[#aecfbf] rounded-full cursor-grab active:cursor-grabbing hover:bg-white transition-colors duration-150"
+                  className="absolute w-[2.5px] bg-[#AECFBF] rounded-full cursor-grab active:cursor-grabbing hover:bg-white transition-colors duration-150"
                   style={{
                     height: `${thumbHeight}px`,
                     top: `${thumbTop}px`,

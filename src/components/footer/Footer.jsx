@@ -43,7 +43,7 @@ export default function Footer() {
   return (
     <footer
       id="contact"
-      className="relative w-full bg-[#22363A] overflow-hidden isolate min-h-0 lg:min-h-[1226px] lg:h-[1226px] flex flex-col justify-between pt-16 sm:pt-20 pb-0"
+      className="relative w-full bg-[#22363A] overflow-hidden isolate flex flex-col justify-between pt-16 sm:pt-20 pb-0"
     >
       {/* Background Grain Texture Overlay set to 14% opacity */}
       <div
@@ -58,7 +58,7 @@ export default function Footer() {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-[75px] flex-1 flex flex-col justify-between">
+      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-[75px] flex flex-col">
         {/* Top Call To Action Area */}
         <div className="flex flex-col items-center text-center">
           <motion.p
@@ -159,7 +159,7 @@ export default function Footer() {
         </div>
 
         {/* Footer Navigation Columns */}
-        <div className="pt-12 border-t border-white/10 mt-12">
+        <div className="pt-16 sm:pt-20 lg:pt-24 mt-16 sm:mt-20">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-8">
             {/* Brand Intro Column */}
             <motion.div
@@ -225,13 +225,13 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Copyright & Back to Top Bar (Divider line removed) */}
+        {/* Copyright & Back to Top Bar */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 mt-10"
+          className="pt-12 pb-14 sm:pb-16 flex flex-col sm:flex-row items-center justify-between gap-3 mt-12 sm:mt-16"
         >
           <p className="text-[#91a6a2] text-[11px] uppercase tracking-[0.08em]">
             &copy; 2026 TONY JOHN. ALL RIGHTS RESERVED.
@@ -245,13 +245,13 @@ export default function Footer() {
         </motion.div>
       </div>
 
-      {/* Giant Watermark Signature (Touching Bottom - Full Width, Edge-to-Edge with No Gap to Screen) */}
+      {/* Giant Watermark Signature fully visible and flush at the bottom edge */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.9, delay: 0.25, ease: [0.21, 0.47, 0.32, 0.98] }}
-        className="relative z-10 w-full overflow-hidden select-none pointer-events-none leading-none mt-auto -mb-1 sm:-mb-2 lg:-mb-4"
+        className="relative z-10 w-full overflow-hidden select-none pointer-events-none leading-none -mb-2 sm:-mb-3 lg:-mb-4"
       >
         <div className="w-full flex justify-center items-end">
           <span className="text-white/[0.05] font-black tracking-[-0.04em] leading-[0.78] uppercase whitespace-nowrap block select-none text-[18.8vw] w-full text-center">
