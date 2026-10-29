@@ -201,6 +201,12 @@ export default function Expertise() {
         aria-hidden="true"
       />
 
+      {/* Full-height absolute vertical divider line running through the middle of the section */}
+      <div
+        className="hidden lg:block absolute top-0 bottom-0 left-1/2 w-[1px] bg-white/10 pointer-events-none z-0"
+        aria-hidden="true"
+      />
+
       <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-[75px]">
         {/* Mobile View (< 1024px) */}
         <motion.div
@@ -363,7 +369,7 @@ export default function Expertise() {
                 </ul>
               </div>
 
-              {/* Custom Figma Scrollbar */}
+              {/* Custom Figma Scrollbar (Reverted) */}
               <div
                 ref={trackRef}
                 onClick={handleTrackClick}
@@ -382,17 +388,14 @@ export default function Expertise() {
               </div>
             </div>
 
-            {/* Bottom Scroll Notice - Updated with darker, bolder text */}
+            {/* Bottom Scroll Notice */}
             <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-[#c5ddd3] mt-8 lg:mt-10 select-none">
               SCROLL FOR ALL 13 SERVICES
             </p>
           </div>
 
-          {/* Center Vertical Divider Line */}
-          <div
-            className="hidden lg:block w-[1px] bg-white/10 self-stretch my-0 flex-none"
-            aria-hidden="true"
-          />
+          {/* Spacer to accommodate the absolute middle divider line */}
+          <div className="hidden lg:block w-[1px] flex-none opacity-0" aria-hidden="true" />
 
           {/* Right Column: Dynamic Preview & Consultation Button */}
           <div className="w-full lg:flex-1 flex flex-col justify-between self-stretch pl-0 lg:pl-10 xl:pl-16 min-h-[360px] lg:min-h-[440px]">

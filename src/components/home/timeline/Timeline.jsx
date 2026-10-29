@@ -214,7 +214,7 @@ export default function Timeline() {
             onPointerMove={handleMobilePointerMove}
             onPointerUp={handleMobilePointerUp}
           >
-            {/* Glow Background Layer on Mobile - concentric behind wheel rim at 12 o'clock */}
+            {/* Glow Background Layer on Mobile */}
             <div
               className="absolute pointer-events-none z-[3]"
               style={{
@@ -238,7 +238,7 @@ export default function Timeline() {
               </div>
             </div>
 
-            {/* Rotatable Wheel Layer on Mobile - 100% concentric with glow */}
+            {/* Rotatable Wheel Layer on Mobile */}
             <div
               className="absolute pointer-events-none z-[4]"
               style={{
@@ -329,8 +329,8 @@ export default function Timeline() {
                     : "text-white/80 hover:text-white hover:border-white hover:bg-white/10 active:scale-95 cursor-pointer shadow-sm"
                 }`}
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.4" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15m0 0l6-6m-6 6l6 6" />
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 19V5m0 0l-5 5m5-5l5 5" />
                 </svg>
               </button>
 
@@ -345,8 +345,8 @@ export default function Timeline() {
                     : "hover:bg-[#c9d7b5] active:scale-95 cursor-pointer shadow-md"
                 }`}
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.6" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12h15m0 0l-6-6m6 6l-6 6" />
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 5v14m0 0l-5-5m5 5l5-5" />
                 </svg>
               </button>
 
@@ -390,7 +390,7 @@ export default function Timeline() {
               </span>
             </div>
 
-            {/* Fixed Glow Background Layer on Desktop - perfectly concentric behind wheel rim */}
+            {/* Fixed Glow Background Layer on Desktop */}
             <div className="absolute inset-0 w-[1520px] h-[1520px] pointer-events-none z-[4]">
               <div className="relative w-[1520px] h-[1520px]">
                 <Image
@@ -404,7 +404,7 @@ export default function Timeline() {
               </div>
             </div>
 
-            {/* Rotatable Wheel Layer on Desktop - 100% concentric with glow */}
+            {/* Rotatable Wheel Layer on Desktop */}
             <div
               className="absolute pointer-events-none z-[5]"
               style={{
@@ -429,7 +429,7 @@ export default function Timeline() {
               </div>
             </div>
 
-            {/* Rotatable SVG Milestone Markers and Dashed Arc on Desktop */}
+            {/* Rotatable Horizontally Aligned Year Labels on Desktop */}
             <div
               className="absolute inset-0 w-[1520px] h-[1520px] pointer-events-none z-[6]"
               style={{
@@ -443,32 +443,18 @@ export default function Timeline() {
                 className="absolute inset-0 w-full h-full pointer-events-none"
                 style={{ overflow: "visible" }}
               >
-                <circle
-                  cx="760"
-                  cy="760"
-                  r="760"
-                  fill="none"
-                  stroke="rgba(255, 255, 255, 0.2)"
-                  strokeWidth="1"
-                  strokeDasharray="3 5"
-                />
-
                 {chapters.map((chap, idx) => {
                   const angle = MILESTONE_ANGLES[idx];
                   const rad = (angle * Math.PI) / 180;
                   const cx = 760;
                   const cy = 760;
-                  const rTickInner = 746;
-                  const rTickOuter = 774;
-                  const x1 = cx + rTickInner * Math.cos(rad);
-                  const y1 = cy + rTickInner * Math.sin(rad);
-                  const x2 = cx + rTickOuter * Math.cos(rad);
-                  const y2 = cy + rTickOuter * Math.sin(rad);
 
-                  const rLabel = 798;
+                  const rLabel = 820;
                   const lx = cx + rLabel * Math.cos(rad);
                   const ly = cy + rLabel * Math.sin(rad);
                   const isCurrent = activeIndex === idx;
+
+                  if (isCurrent) return null;
 
                   return (
                     <g
@@ -476,30 +462,20 @@ export default function Timeline() {
                       className="cursor-pointer pointer-events-auto"
                       onClick={() => handleSelectMilestone(idx)}
                     >
-                      <line
-                        x1={x1}
-                        y1={y1}
-                        x2={x2}
-                        y2={y2}
-                        stroke={isCurrent ? "#d8e4c6" : "rgba(255, 255, 255, 0.35)"}
-                        strokeWidth={isCurrent ? "2.5" : "1.2"}
-                      />
-                      {!isCurrent && (
-                        <text
-                          x={lx}
-                          y={ly}
-                          fill="#98b3ad"
-                          fontSize="12"
-                          fontWeight="400"
-                          letterSpacing="0.08em"
-                          dominantBaseline="central"
-                          textAnchor="start"
-                          transform={`rotate(${angle + 90}, ${lx}, ${ly})`}
-                          className="select-none transition-colors duration-150 hover:fill-white"
-                        >
-                          {chap.year}
-                        </text>
-                      )}
+                      <text
+                        x={lx}
+                        y={ly}
+                        fill="#98b3ad"
+                        fontSize="12"
+                        fontWeight="400"
+                        letterSpacing="0.08em"
+                        dominantBaseline="central"
+                        textAnchor="start"
+                        transform={`rotate(${-dialRotation}, ${lx}, ${ly})`}
+                        className="select-none transition-colors duration-150 hover:fill-white"
+                      >
+                        {chap.year}
+                      </text>
                     </g>
                   );
                 })}
@@ -518,7 +494,7 @@ export default function Timeline() {
               aria-hidden="true"
             />
 
-            {/* Desktop Pointer Badge without icon */}
+            {/* Desktop Pointer Badge */}
             <div
               className="absolute z-[10] pointer-events-none select-none w-[84px] h-[84px] rounded-full bg-[#d8e4c6] border-[3px] border-[#18272a] shadow-[0_6px_24px_rgba(0,0,0,0.5)] flex items-center justify-center"
               style={{
@@ -528,13 +504,13 @@ export default function Timeline() {
               title="Active Milestone Pointer"
             />
 
-            {/* Horizontal Guideline to Chapter title */}
+            {/* Shortened Horizontal Guideline to Chapter title (Reduced width to 110px so it doesn't touch the text) */}
             <div
               className="absolute z-[8] h-[1px] bg-white/40 pointer-events-none select-none"
               style={{
                 left: "1482px",
                 top: "760px",
-                width: "220px",
+                width: "110px",
               }}
               aria-hidden="true"
             />
@@ -561,6 +537,7 @@ export default function Timeline() {
             </p>
 
             <div className="mt-8 flex items-center gap-3.5">
+              {/* Previous Button (Full Circle with Thin Up Arrow) */}
               <button
                 type="button"
                 onClick={() => handleNavigate(-1)}
@@ -576,13 +553,14 @@ export default function Timeline() {
                   className="w-4 h-4"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="2.4"
+                  strokeWidth="2"
                   viewBox="0 0 24 24"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 19.5V4.5m0 0l-6 6m6-6l6 6" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 19V5m0 0l-5 5m5-5l5 5" />
                 </svg>
               </button>
 
+              {/* Next Button (Full Circle with Thin Down Arrow) */}
               <button
                 type="button"
                 onClick={() => handleNavigate(1)}
@@ -598,10 +576,10 @@ export default function Timeline() {
                   className="w-4 h-4"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="2.6"
+                  strokeWidth="2"
                   viewBox="0 0 24 24"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m0 0l-6-6m6 6l-6-6" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 5v14m0 0l-5-5m5 5l5-5" />
                 </svg>
               </button>
 
@@ -615,44 +593,49 @@ export default function Timeline() {
 
       {/* Bottom Milestone Bar */}
       <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-[75px] pt-4 pb-2 lg:pb-4 flex justify-end">
-        <div className="w-full lg:w-[720px] xl:w-[780px] grid grid-cols-5 gap-1.5 sm:gap-4 lg:gap-6">
-          {chapters.map((chap, idx) => {
-            const isActive = activeIndex === idx;
+        <div className="relative w-full lg:w-[560px] xl:w-[620px] mr-0 lg:mr-8">
+          {/* Continuous background track line */}
+          <div className="absolute -top-1 left-0 right-0 h-[1px] bg-white/20" aria-hidden="true" />
+          {/* Active highlighted line segment */}
+          <div
+            className="absolute -top-1 h-[2px] sm:h-[2.5px] bg-[#d8e4c6] transition-all duration-300 shadow-[0_0_8px_rgba(216,228,198,0.4)]"
+            style={{
+              left: `${(activeIndex / (chapters.length - 1)) * 100}%`,
+              width: `${100 / chapters.length}%`,
+            }}
+            aria-hidden="true"
+          />
 
-            return (
-              <button
-                key={chap.id}
-                type="button"
-                onClick={() => handleSelectMilestone(idx)}
-                className="group relative flex flex-col text-left focus:outline-none pt-2 cursor-pointer transition-colors"
-              >
-                <span
-                  className={`absolute -top-1 left-0 right-0 transition-all duration-200 ${
-                    isActive
-                      ? "h-[2px] sm:h-[2.5px] bg-[#d8e4c6] shadow-[0_0_8px_rgba(216,228,198,0.4)]"
-                      : "h-[1px] bg-white/15 group-hover:bg-white/30"
-                  }`}
-                  aria-hidden="true"
-                />
+          <div className="grid grid-cols-5 gap-1.5 sm:px-0 lg:gap-6 pt-2">
+            {chapters.map((chap, idx) => {
+              const isActive = activeIndex === idx;
 
-                <span
-                  className={`text-[9.5px] sm:text-[13px] font-semibold tracking-wider uppercase transition-colors duration-150 truncate ${
-                    isActive ? "text-white" : "text-[#8ea8a2] group-hover:text-white"
-                  }`}
+              return (
+                <button
+                  key={chap.id}
+                  type="button"
+                  onClick={() => handleSelectMilestone(idx)}
+                  className="group relative flex flex-col text-left focus:outline-none cursor-pointer transition-colors"
                 >
-                  {chap.year}
-                </span>
+                  <span
+                    className={`text-[9.5px] sm:text-[13px] font-semibold tracking-wider uppercase transition-colors duration-150 truncate ${
+                      isActive ? "text-white" : "text-[#8ea8a2] group-hover:text-white"
+                    }`}
+                  >
+                    {chap.year}
+                  </span>
 
-                <span
-                  className={`hidden sm:block text-[12px] sm:text-[13px] leading-snug mt-1 transition-colors duration-150 ${
-                    isActive ? "text-[#d8e4c6] font-medium" : "text-[#a8c2bc] group-hover:text-white"
-                  }`}
-                >
-                  {chap.bottomLabel}
-                </span>
-              </button>
-            );
-          })}
+                  <span
+                    className={`hidden sm:block text-[12px] sm:text-[13px] leading-snug mt-1 transition-colors duration-150 ${
+                      isActive ? "text-[#d8e4c6] font-medium" : "text-[#a8c2bc] group-hover:text-white"
+                    }`}
+                  >
+                    {chap.bottomLabel}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
     </motion.section>

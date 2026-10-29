@@ -33,8 +33,8 @@ export default function Ventures() {
 
       {/* Main Container enclosed inside 1 Big Outer Solid Line Box */}
       <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-[75px] my-auto py-6 lg:py-0">
-        <div className="border border-solid border-white/[0.12] p-6 sm:p-10 lg:p-12 relative rounded-[4px]">
-          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-12 lg:gap-16">
+        <div className="border border-solid border-white/[0.12] pt-6 sm:pt-10 lg:pt-12 px-6 sm:px-10 lg:px-12 relative rounded-[4px] overflow-hidden">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-12 lg:gap-16 pb-12 sm:pb-16">
             {/* Left Column: Heading, Description & Button */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -143,15 +143,15 @@ export default function Ventures() {
             </motion.div>
           </div>
 
-          {/* Bottom 4 Sister Concerns Row inside individual boxed cells with lighter shade */}
+          {/* Bottom 4 Sister Concerns Row with exact 75px height and edge-to-edge layout */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, delay: 0.2, ease: [0.21, 0.47, 0.32, 0.98] }}
-            className="mt-14"
+            className="border-t border-solid border-white/[0.12] -mx-6 sm:-mx-10 lg:-mx-12"
           >
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 -mx-[1px]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
               {bottomVentures.map((v, idx) => (
                 <motion.div
                   key={v.name}
@@ -159,14 +159,14 @@ export default function Ventures() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  className={`flex flex-row sm:flex-col items-center sm:items-start justify-between sm:justify-start py-6 px-6 sm:px-8 border border-solid border-white/[0.12] bg-white/[0.01] ${
-                    idx !== 0 ? "lg:-ml-[1px]" : ""
-                  }`}
+                  className={`flex flex-row items-center justify-between sm:justify-start sm:gap-4 lg:gap-6 h-[75px] px-6 sm:px-8 bg-white/[0.01] ${
+                    idx !== 0 ? "lg:border-l lg:border-solid lg:border-white/[0.12]" : ""
+                  } ${idx !== 0 ? "border-t sm:border-t-0 border-white/[0.12]" : ""}`}
                 >
-                  <span className="text-white font-semibold text-[15px] sm:text-[16px] tracking-tight">
+                  <span className="text-white font-semibold text-[15px] sm:text-[15.5px] tracking-tight whitespace-nowrap">
                     {v.name}
                   </span>
-                  <span className="text-[#9bb7b1] text-[11.5px] uppercase tracking-wider sm:mt-1 font-medium">
+                  <span className="text-[#9bb7b1] text-[11px] uppercase tracking-wider font-medium whitespace-nowrap">
                     {v.meta}
                   </span>
                 </motion.div>
