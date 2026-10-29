@@ -49,7 +49,7 @@ export default function Footer() {
       <div
         className="absolute inset-0 pointer-events-none z-0"
         style={{
-          backgroundImage: "url('/nw%20graints.png')",
+          backgroundImage: "url('/image/nw%20graints.png')",
           backgroundRepeat: "repeat",
           backgroundSize: "256px 256px",
           mixBlendMode: "overlay",
@@ -135,31 +135,33 @@ export default function Footer() {
             </motion.div>
           </motion.div>
 
-          {/* Contact Details */}
+          {/* Contact Details with Increased Spaced Division Line (#3A4E52) */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.5, delay: 0.4, ease: [0.21, 0.47, 0.32, 0.98] }}
-            className="mt-6 space-y-1 text-center"
+            className="mt-6 space-y-1 text-center w-full"
           >
             <p className="text-[#b3c7c2] text-[13px]">
               Email:{" "}
               <a
                 href="mailto:tony@spiderworks.in"
-                className="hover:text-white transition-colors underline"
+                className="hover:text-white transition-colors"
               >
                 tony@spiderworks.in
               </a>
             </p>
-            <p className="text-[#91a8a3] text-[11px] uppercase tracking-[0.12em]">
+            <p className="text-[#91a8a3] text-[11px] uppercase tracking-[0.12em] mb-12 sm:mb-16">
               SPIDERWORKS TECHNOLOGIES, KOCHI, KERALA
             </p>
+            {/* Division Line with expanded vertical margins */}
+            <div className="w-full h-[1px] bg-[#3A4E52] my-12 sm:my-16" />
           </motion.div>
         </div>
 
         {/* Footer Navigation Columns */}
-        <div className="pt-16 sm:pt-20 lg:pt-24 mt-16 sm:mt-20">
+        <div className="pt-8 sm:pt-10 lg:pt-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-8">
             {/* Brand Intro Column */}
             <motion.div

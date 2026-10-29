@@ -192,7 +192,7 @@ export default function Expertise() {
       <div
         className="absolute inset-0 pointer-events-none z-0"
         style={{
-          backgroundImage: "url('/nw%20graints.png')",
+          backgroundImage: "url('/image/nw%20graints.png')",
           backgroundRepeat: "repeat",
           backgroundSize: "256px 256px",
           mixBlendMode: "overlay",

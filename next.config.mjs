@@ -14,6 +14,18 @@ const nextConfig = {
       },
     },
   },
+  async rewrites() {
+    return [
+      {
+        source: "/images/:path*",
+        destination: "/image/:path*",
+      },
+      {
+        source: "/videos/:path*",
+        destination: "/video/:path*",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

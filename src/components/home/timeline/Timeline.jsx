@@ -168,7 +168,7 @@ export default function Timeline() {
       <div
         className="absolute inset-0 pointer-events-none z-0"
         style={{
-          backgroundImage: "url('/nw%20graints.png')",
+          backgroundImage: "url('/image/nw%20graints.png')",
           backgroundRepeat: "repeat",
           backgroundSize: "256px 256px",
           mixBlendMode: "overlay",
@@ -228,7 +228,7 @@ export default function Timeline() {
             >
               <div className="relative w-full h-full">
                 <Image
-                  src="/nwglow.png"
+                  src="/image/nwglow.png"
                   alt="Wheel Glow Background"
                   fill
                   className="object-contain select-none"
@@ -253,7 +253,7 @@ export default function Timeline() {
             >
               <div className="relative w-full h-full">
                 <Image
-                  src="/nwwheel.png"
+                  src="/image/nwwheel.png"
                   alt="Rotatable Wheel"
                   fill
                   className="object-contain select-none"
@@ -394,7 +394,7 @@ export default function Timeline() {
             <div className="absolute inset-0 w-[1520px] h-[1520px] pointer-events-none z-[4]">
               <div className="relative w-[1520px] h-[1520px]">
                 <Image
-                  src="/nwglow.png"
+                  src="/image/nwglow.png"
                   alt="Wheel Glow Background"
                   fill
                   className="object-contain select-none"
@@ -419,7 +419,7 @@ export default function Timeline() {
             >
               <div className="relative w-[1600px] h-[1600px]">
                 <Image
-                  src="/nwwheel.png"
+                  src="/image/nwwheel.png"
                   alt="Rotatable Timeline Dial"
                   fill
                   className="object-contain select-none"

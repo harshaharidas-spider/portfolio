@@ -11,7 +11,7 @@ export default function Hero() {
       <div
         className="absolute inset-0 pointer-events-none z-0"
         style={{
-          backgroundImage: "url('/nw%20graints.png')",
+          backgroundImage: "url('/image/nw%20graints.png')",
           backgroundRepeat: "repeat",
           backgroundSize: "256px 256px",
           mixBlendMode: "overlay",
@@ -102,7 +102,7 @@ export default function Hero() {
             <div className="relative w-full max-w-[638px] flex-none select-none">
               <div className="relative z-10 w-full select-none block leading-none">
                 <Image
-                  src="/Portraitnw.png"
+                  src="/image/Portraitnw.png"
                   alt="Tony John working at laptop on phone call"
                   width={638}
                   height={475}

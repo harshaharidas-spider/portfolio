@@ -22,7 +22,7 @@ export default function Ventures() {
       <div
         className="absolute inset-0 pointer-events-none z-0"
         style={{
-          backgroundImage: "url('/nw%20graints.png')",
+          backgroundImage: "url('/image/nw%20graints.png')",
           backgroundRepeat: "repeat",
           backgroundSize: "256px 256px",
           mixBlendMode: "overlay",
@@ -87,7 +87,7 @@ export default function Ventures() {
                   aria-hidden="true"
                 >
                   <Image
-                    src="/Visual.png"
+                    src="/image/Visual.png"
                     alt=""
                     width={587}
                     height={367}

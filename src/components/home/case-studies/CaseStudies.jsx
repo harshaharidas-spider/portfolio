@@ -4,12 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-import logo1 from "../../../../public/logo1.jpg";
-import logo2 from "../../../../public/logo2_hires.png";
-import logo3 from "../../../../public/logo3_hires.png";
-import logo4 from "../../../../public/logo4_hires.png";
-import logo5 from "../../../../public/logo5_hires.png";
-import logo6 from "../../../../public/logo6_hires.png";
+import logo1 from "../../../../public/image/logo1.jpg";
+import logo2 from "../../../../public/image/logo2_hires.png";
+import logo3 from "../../../../public/image/logo3_hires.png";
+import logo4 from "../../../../public/image/logo4_hires.png";
+import logo5 from "../../../../public/image/logo5_hires.png";
+import logo6 from "../../../../public/image/logo6_hires.png";
 
 const caseStudies = [
   {
@@ -148,7 +148,7 @@ export default function CaseStudies() {
                 <div
                   className="absolute inset-0 pointer-events-none z-0"
                   style={{
-                    backgroundImage: "url('/nw%20graints.png')",
+                    backgroundImage: "url('/image/nw%20graints.png')",
                     backgroundRepeat: "repeat",
                     backgroundSize: "256px 256px",
                     mixBlendMode: "overlay",
