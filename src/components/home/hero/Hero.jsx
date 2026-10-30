@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -6,8 +7,8 @@ import { motion } from "framer-motion";
 
 export default function Hero() {
   return (
-    <section className="relative w-full bg-[#2b3d3f] overflow-hidden isolate min-h-[calc(100vh-50px)] lg:min-h-[720px] flex items-center">
-      {/* Background Grain Texture Overlay set to 14% opacity */}
+    <section className="relative w-full bg-[#2b3d3f] overflow-hidden isolate min-h-screen flex items-center py-24 sm:py-28 lg:py-20">
+      {/* Background Grain Texture Overlay */}
       <div
         className="absolute inset-0 pointer-events-none z-0"
         style={{
@@ -20,27 +21,29 @@ export default function Hero() {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-[60px] xl:px-[75px] py-12 lg:py-0">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8 w-full relative">
-          {/* Left Column: Heading, Subtitle & Buttons */}
-          <div className="w-full lg:w-[720px] xl:w-[760px] flex-none flex flex-col justify-center z-10">
-            {/* Main Headline */}
+      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-[60px] xl:px-[75px]">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-4 w-full relative">
+
+          {/* Left Column */}
+          <div className="w-full lg:w-[58%] xl:w-[56%] flex-none flex flex-col justify-center z-10 lg:translate-y-10">
+
             <motion.h1
               initial={{ opacity: 0, y: 25 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
-              className="text-[#eef0ec] font-bold text-[38px] sm:text-[60px] md:text-[76px] lg:text-[84px] xl:text-[96px] leading-[100%] tracking-[-0.05em] lg:whitespace-nowrap"
+              className="text-[#eef0ec] font-bold text-[38px] sm:text-[60px] md:text-[76px] lg:text-[clamp(64px,6.2vw,90px)] leading-[100%] tracking-[-0.05em]"
+              style={{ fontFamily: "Roboto, sans-serif" }}
             >
               <span className="block lg:inline">Hi, I am </span>
               <span className="block lg:inline">Tony John</span>
             </motion.h1>
 
-            {/* Subtitle description with balanced gap from heading */}
+            {/* Subtitle */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.18, ease: [0.21, 0.47, 0.32, 0.98] }}
-              className="mt-10 sm:mt-12 lg:mt-14 text-[15px] sm:text-[16px] text-[#c1ccc9] leading-[150%] tracking-[-0.03em] font-normal max-w-[620px]"
+              className="mt-3 lg:mt-4 text-[15px] sm:text-[16px] text-[#c1ccc9] leading-[150%] tracking-[-0.03em] font-normal max-w-[620px]"
             >
               Twenty-four years in IT - engineer, e-commerce consultant, digital marketer.{" "}
               <span className="block sm:inline">
@@ -48,14 +51,14 @@ export default function Hero() {
               </span>
             </motion.p>
 
-            {/* Action Buttons with balanced gap from description */}
+            {/* Action Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.3, ease: [0.21, 0.47, 0.32, 0.98] }}
-              className="mt-12 sm:mt-14 lg:mt-16 flex flex-col sm:flex-row items-stretch sm:items-center gap-5 sm:gap-8 w-full sm:w-auto"
+              className="mt-12 sm:mt-14 lg:mt-20 flex flex-col sm:flex-row items-stretch sm:items-center gap-5 sm:gap-8 w-full sm:w-auto"
             >
-              {/* Primary Consultation Button */}
+              {/* Primary Button */}
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                 <Link
                   href="#contact"
@@ -65,13 +68,14 @@ export default function Hero() {
                 </Link>
               </motion.div>
 
-              {/* Secondary Explore Spiderworks Button with Arrow Box */}
+              {/* Secondary Button */}
               <motion.div whileHover={{ x: 3 }} whileTap={{ scale: 0.98 }}>
                 <Link
                   href="#spiderworks"
                   className="w-full sm:w-auto group inline-flex items-center justify-center sm:justify-start gap-3 text-[#dce6e3] hover:text-white font-medium text-[13px] tracking-[0.06em] uppercase transition-colors py-2 sm:py-0"
                 >
                   <span>EXPLORE SPIDERWORKS</span>
+
                   <span className="w-7 h-7 border border-white/40 flex items-center justify-center text-white/80 group-hover:border-white group-hover:text-white transition-colors">
                     <svg
                       className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
@@ -92,26 +96,27 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* Right Column: Hero Image with exact Figma dimensions (638px x 475px) */}
+          {/* Right Column: Hero Image */}
           <motion.div
             initial={{ opacity: 0, x: 40, scale: 0.96 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full lg:flex-1 flex justify-center lg:justify-end items-center relative"
+            className="w-full lg:w-[48%] flex justify-center lg:justify-center items-center relative lg:-translate-x-6"
           >
-            <div className="relative w-full max-w-[638px] flex-none select-none">
-              <div className="relative z-10 w-full select-none block leading-none">
+            <div className="relative w-full max-w-[800px] h-[400px] sm:h-[480px] lg:h-[min(72vh,580px)] flex-none select-none flex items-center justify-center">
+              <div className="relative z-10 w-full h-full select-none block leading-none">
                 <Image
                   src="/image/Portraitnw.png"
                   alt="Tony John working at laptop on phone call"
-                  width={638}
-                  height={475}
+                  width={1000}
+                  height={1000}
                   priority
-                  className="w-full h-auto max-h-[475px] object-contain block select-none pointer-events-none"
+                  className="w-full h-full object-contain block select-none pointer-events-none scale-[1.08]"
                 />
               </div>
             </div>
           </motion.div>
+
         </div>
       </div>
     </section>

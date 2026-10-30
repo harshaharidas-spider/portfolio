@@ -119,9 +119,19 @@ export default function CaseStudies() {
                 className="group inline-flex items-center gap-2.5 bg-[#aecfbf] hover:bg-[#9ec4b3] text-[#1c2825] text-[13.5px] font-medium h-[40px] px-6 rounded-full transition-colors shadow-sm mt-5"
               >
                 <span>Discuss your project</span>
-                <span className="transition-transform duration-200 group-hover:translate-x-0.5">
-                  &rarr;
-                </span>
+                <svg
+                  className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                  />
+                </svg>
               </Link>
             </motion.div>
           </div>
@@ -193,8 +203,18 @@ export default function CaseStudies() {
                   {/* Arrow Button */}
                   <div className="flex justify-end mt-4">
                     <div className="w-[36px] h-[36px] rounded-full bg-[#cce3d6] text-[#1c2825] flex items-center justify-center shadow-sm">
-                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      <svg
+                        className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                        />
                       </svg>
                     </div>
                   </div>
@@ -226,8 +246,18 @@ export default function CaseStudies() {
                         </div>
                       )}
                       <div className="absolute bottom-8 right-12 w-[36px] h-[36px] rounded-full bg-[#cce3d6] group-hover:bg-white text-[#1c2825] flex items-center justify-center border-2 border-[#22363a] shadow-sm transition-transform duration-200 group-hover:scale-105 z-20">
-                        <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M5 12h14M12 5l7 7-7 7" />
+                        <svg
+                          className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                          />
                         </svg>
                       </div>
                     </div>
@@ -273,8 +303,18 @@ export default function CaseStudies() {
                     </p>
                   </div>
                   <span className="w-[32px] h-[32px] sm:w-[36px] sm:h-[36px] rounded-full border border-[#dedcd7] group-hover:border-[#1c1f1d] group-hover:bg-[#1c1f1d] group-hover:text-white flex items-center justify-center text-[#555] transition-all shrink-0">
-                    <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    <svg
+                      className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                      />
                     </svg>
                   </span>
                 </div>
@@ -338,8 +378,18 @@ export default function CaseStudies() {
                       </p>
                     </div>
                     <span className="w-[26px] h-[26px] sm:w-[34px] sm:h-[34px] rounded-full border border-[#dedcd7] group-hover:border-[#1c1f1d] group-hover:bg-[#1c1f1d] group-hover:text-white flex items-center justify-center text-[#555] transition-all shrink-0">
-                      <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      <svg
+                        className="w-3 h-3 sm:w-3.5 sm:h-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                        />
                       </svg>
                     </span>
                   </div>
