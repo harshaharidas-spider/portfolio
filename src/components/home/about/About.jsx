@@ -1,7 +1,14 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import {
+  motion,
+  useInView,
+  useMotionValue,
+  useTransform,
+  animate,
+} from "framer-motion";
 
 const stats = [
   {
@@ -21,6 +28,53 @@ const stats = [
     label: "Portals & companies built",
   },
 ];
+
+// Helper to split a stat string like "24+", "07", or "1996" into parts
+function parseStatNumber(str) {
+  const match = String(str).match(/^([^0-9]*)(\d+)(.*)$/);
+  if (!match) return { prefix: "", value: 0, suffix: str, padZero: false };
+  const [, prefix, numStr, suffix] = match;
+  const padZero = numStr.length > 1 && numStr.startsWith("0");
+  return {
+    prefix,
+    value: parseInt(numStr, 10),
+    suffix,
+    padZero,
+  };
+}
+
+// Framer Motion Animated Counter exported correctly for other components
+export function Counter({ value, duration = 2, delay = 0 }) {
+  const { prefix, value: targetValue, suffix, padZero } = parseStatNumber(value);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const count = useMotionValue(0);
+
+  // Format the animated number with leading zeros (e.g., "07") and prefix/suffix
+  const rounded = useTransform(count, (latest) => {
+    const num = Math.round(latest);
+    const formatted = padZero && num < 10 ? `0${num}` : `${num}`;
+    return `${prefix}${formatted}${suffix}`;
+  });
+
+  useEffect(() => {
+    if (!isInView) return;
+
+    const controls = animate(count, targetValue, {
+      duration,
+      delay,
+      ease: [0.16, 1, 0.3, 1], // Smooth deceleration curve
+    });
+
+    return () => controls.stop();
+  }, [isInView, count, targetValue, duration, delay]);
+
+  return (
+    <span ref={ref} className="inline-flex items-baseline tabular-nums">
+      <motion.span>{rounded}</motion.span>
+    </span>
+  );
+}
 
 export default function About() {
   return (
@@ -89,7 +143,7 @@ export default function About() {
             </motion.div>
           </div>
 
-          {/* Right Column: 4 Stat Tiles - 2 columns on mobile matching Figma */}
+          {/* Right Column: 4 Stat Tiles with Animated Counters */}
           <div className="w-full lg:w-[672px] lg:h-[432px] flex justify-center lg:justify-end">
             <div className="grid grid-cols-2 gap-3 sm:gap-[12px] w-full sm:w-[672px] h-auto lg:h-[432px]">
               {stats.map((stat, idx) => (
@@ -103,11 +157,23 @@ export default function About() {
                     delay: idx * 0.1,
                     ease: [0.21, 0.47, 0.32, 0.98],
                   }}
-                  whileHover={{ y: -4, borderColor: "#55806e", transition: { duration: 0.2 } }}
+                  whileHover={{
+                    y: -4,
+                    borderColor: "#55806e",
+                    backgroundColor: "rgba(133, 165, 150, 0.05)",
+                    transition: { duration: 0.2 },
+                  }}
                   className="w-full sm:w-[330px] h-[140px] sm:h-[210px] border border-[#85A596] flex flex-col items-center justify-center p-3 sm:p-6 text-center bg-transparent transition-colors cursor-default"
                 >
-                  <span className="text-[#4d7868] text-[34px] sm:text-[54px] lg:text-[60px] font-normal leading-none tracking-tight">
-                    {stat.number}
+                  <span
+                    className="text-[#8EB9A4] text-[40px] sm:text-[48px] lg:text-[56px] font-medium leading-[100%] tracking-[-0.04em]"
+                    style={{ fontFamily: "Roboto, sans-serif" }}
+                  >
+                    <Counter
+                      value={stat.number}
+                      duration={stat.number === "1996" ? 2.2 : 1.8}
+                      delay={0.15 + idx * 0.1}
+                    />
                   </span>
                   <span className="text-[#333835] text-[11px] sm:text-[13.5px] font-normal mt-2 sm:mt-3.5 leading-snug max-w-[220px]">
                     {stat.label}

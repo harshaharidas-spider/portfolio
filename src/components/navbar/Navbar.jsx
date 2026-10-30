@@ -44,12 +44,12 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* Right Action Button */}
+        {/* Right Action Button with exact Figma dimensions (172px x 35px) */}
         <div className="hidden sm:flex items-center">
           <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
             <Link
               href="#contact"
-              className="inline-flex items-center justify-center bg-[#1c1f1d] hover:bg-black text-white text-[12px] font-medium tracking-[0.02em] px-3.5 py-1.5 rounded-[2px] transition-colors leading-none"
+              className="inline-flex items-center justify-center bg-[#1c1f1d] hover:bg-black text-white text-[12px] font-medium tracking-[0.02em] w-[172px] h-[35px] px-[22px] py-[16px] rounded-[2px] transition-colors leading-none"
             >
               Book a consultation
             </Link>
