@@ -2,6 +2,61 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
+
+function AutoplayVideo({ src, className }) {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const video = ref.current;
+    if (!video) return;
+
+    const tryPlay = () => {
+      video.muted = true;
+      const p = video.play();
+      if (p && typeof p.catch === "function") p.catch(() => {});
+    };
+
+    // Attempt as soon as the browser has enough data to start.
+    video.addEventListener("loadeddata", tryPlay);
+    video.addEventListener("canplay", tryPlay);
+
+    // Attempt again whenever the card scrolls into view.
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) tryPlay();
+        });
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(video);
+
+    // Immediate attempt in case the video is already ready.
+    tryPlay();
+
+    return () => {
+      video.removeEventListener("loadeddata", tryPlay);
+      video.removeEventListener("canplay", tryPlay);
+      observer.disconnect();
+    };
+  }, [src]);
+
+  return (
+    <video
+      ref={ref}
+      autoPlay
+      loop
+      muted
+      playsInline
+      preload="auto"
+      webkit-playsinline="true"
+      className={className}
+    >
+      <source src={src} type="video/mp4" />
+    </video>
+  );
+}
 
 const socialCards = [
   {
@@ -156,23 +211,10 @@ export default function Elsewhere() {
                 >
                   {/* Embedded Video with Production Autoplay & Mobile Support */}
                   {card.mediaType === "video" && (
-                    <video
-                      ref={(el) => {
-                        if (el) {
-                          el.muted = true;
-                          el.play().catch(() => {});
-                        }
-                      }}
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      preload="auto"
-                      webkit-playsinline="true"
+                    <AutoplayVideo
+                      src={card.mediaSrc}
                       className="absolute inset-0 w-full h-full object-cover rounded-[12px] z-0"
-                    >
-                      <source src={card.mediaSrc} type="video/mp4" />
-                    </video>
+                    />
                   )}
 
                   {/* Embedded Image */}
