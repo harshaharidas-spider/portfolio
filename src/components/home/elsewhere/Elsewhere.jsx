@@ -149,33 +149,63 @@ export default function Elsewhere() {
   return (
     <section
       id="elsewhere"
-      className="w-full bg-[#F4F2EE] py-16 sm:py-20 lg:py-28 overflow-hidden"
+      className="w-full overflow-hidden"
+      style={{ background: "var(--paper, #F4F2EE)" }}
     >
-      <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-[60px] xl:px-[75px]">
-        {/* Top Header Row */}
+      {/* Figma frame: 1440px wide x 790px high, 48px side padding */}
+      <div className="w-full max-w-[1440px] lg:h-[790px] mx-auto px-6 sm:px-10 lg:px-[48px] py-16 sm:py-20 lg:py-0 flex flex-col justify-center">
+        {/* Top Header Row: heading (left) + description (right) */}
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
-          className="flex flex-col lg:flex-row items-start justify-between gap-8 lg:gap-14 mb-12 sm:mb-16 lg:mb-20"
+          className="flex flex-col lg:flex-row items-start justify-between gap-6 lg:gap-14 mb-12 sm:mb-16 lg:mb-16"
         >
           {/* Left: Tag & Main Heading */}
-          <div className="flex flex-col items-start max-w-[560px]">
-            <p className="text-[11.5px] uppercase tracking-[0.14em] font-medium text-[#5e6360] mb-3 sm:mb-4">
+          <div className="flex flex-col items-start">
+            <p
+              className="uppercase mb-4 sm:mb-6"
+              style={{
+                color: "var(--ink-muted, #6F726E)",
+                fontFamily: "Roboto, sans-serif",
+                fontSize: "11px",
+                fontStyle: "normal",
+                fontWeight: 400,
+                lineHeight: "normal",
+                letterSpacing: "1.1px",
+              }}
+            >
               ELSEWHERE
             </p>
-            <h2 className="text-[36px] sm:text-[44px] lg:text-[50px] font-bold leading-[1.08] tracking-tight text-[#1c1f1d]">
-              <span className="block">Follow along,</span>
-              <span className="block mt-0.5 text-[#676d69]">
-                off the page.
-              </span>
+            <h2
+              className="text-[36px] sm:text-[48px]"
+              style={{
+                fontFamily: "Roboto, sans-serif",
+                fontStyle: "normal",
+                fontWeight: 500,
+                lineHeight: "104%",
+                letterSpacing: "-1.92px",
+              }}
+            >
+              <span style={{ color: "var(--ink, #1C1F1D)" }}>Follow along,</span>
+              <br />
+              <span style={{ color: "var(--ink-faint, #A9AAA4)" }}>off the page.</span>
             </h2>
           </div>
 
-          {/* Right: Subtitle Copy */}
-          <div className="flex flex-col items-start lg:items-start lg:pt-6 max-w-[420px]">
-            <p className="text-[13.5px] sm:text-[14px] text-[#505754] leading-[1.5]">
+          {/* Right: Description */}
+          <div className="flex flex-col items-start lg:pt-[27px] max-w-[380px]">
+            <p
+              style={{
+                color: "var(--ink-muted, #6F726E)",
+                fontFamily: "Roboto, sans-serif",
+                fontSize: "16px",
+                fontStyle: "normal",
+                fontWeight: 400,
+                lineHeight: "150%",
+              }}
+            >
               Portraits on YouTube, reels on Instagram, and the day-to-day on
               Facebook, LinkedIn and Instagram. A quick look here ; the full feeds
               are a tap away.
@@ -183,8 +213,8 @@ export default function Elsewhere() {
           </div>
         </motion.div>
 
-        {/* 5 Cards Row */}
-        <div className="flex overflow-x-auto pb-4 snap-x snap-mandatory lg:overflow-visible lg:flex-nowrap lg:justify-between lg:pb-0 gap-4 sm:gap-6 lg:gap-4 xl:gap-6 items-start w-full">
+        {/* 5 Cards Row: 259.2px wide, 12px gap */}
+        <div className="flex overflow-x-auto pb-4 snap-x snap-mandatory lg:overflow-visible lg:flex-nowrap lg:justify-start lg:pb-0 gap-3 items-start w-full">
           {socialCards.map((card, idx) => (
             <motion.div
               key={card.id}
@@ -205,15 +235,16 @@ export default function Elsewhere() {
                 rel="noopener noreferrer"
                 className="w-full flex flex-col"
               >
-                {/* Exact Media Box Container: 259.2px wide × 300px high */}
+                {/* Media Box: 259.2px wide x 300px high, 6px rounded corners, no grain */}
                 <div
-                  className={`relative w-full h-[300px] ${card.bg} rounded-[12px] p-4 flex flex-col justify-between overflow-hidden shadow-sm`}
+                  className={`relative w-[259.2px] h-[300px] ${card.bg} rounded-[6px] p-4 flex flex-col justify-between overflow-hidden isolate`}
+                  style={{ transform: "translateZ(0)" }}
                 >
-                  {/* Embedded Video with Production Autoplay & Mobile Support */}
+                  {/* Embedded Video */}
                   {card.mediaType === "video" && (
                     <AutoplayVideo
                       src={card.mediaSrc}
-                      className="absolute inset-0 w-full h-full object-cover rounded-[12px] z-0"
+                      className="absolute inset-0 w-full h-full object-cover rounded-[6px] z-0"
                     />
                   )}
 
@@ -223,14 +254,14 @@ export default function Elsewhere() {
                       src={card.mediaSrc}
                       alt={card.title}
                       fill
-                      className="absolute inset-0 w-full h-full object-cover rounded-[12px] z-0"
+                      className="absolute inset-0 w-full h-full object-cover rounded-[6px] z-0"
                     />
                   )}
 
                   {/* Subtle dark vignette overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40 rounded-[12px] z-[1] pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40 rounded-[6px] z-[1] pointer-events-none" />
 
-                  {/* Card Top Row: Clean Standalone Brand Icon */}
+                  {/* Card Top Row: Brand Icon */}
                   <div className="relative z-10 flex items-center justify-between w-full">
                     <div>{card.icon}</div>
                   </div>

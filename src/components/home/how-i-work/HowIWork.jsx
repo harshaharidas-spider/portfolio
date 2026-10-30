@@ -51,23 +51,41 @@ export default function HowIWork() {
             <p className="text-[12px] uppercase tracking-[0.1em] font-medium text-[#5e6360] mb-6 sm:mb-8">
               HOW I WORK
             </p>
-            <h2 className="text-[32px] sm:text-[38px] lg:text-[44px] font-bold leading-[1.12] tracking-[-0.03em] max-w-[560px]">
-              <span className="text-[#1c1f1d] block">
+            <h2 
+              className="font-medium tracking-[-1.92px] max-w-[620px]"
+              style={{
+                fontFamily: "Roboto, sans-serif",
+                fontSize: "48px",
+                lineHeight: "104%",
+                color: "#1C1F1D",
+              }}
+            >
+              <span className="block">
                 From first brief to hands-on,
               </span>
               <span className="text-[#616663] block mt-1">step by step.</span>
             </h2>
           </motion.div>
 
-          {/* Right: Description & CTA Button */}
+          {/* Right: Description & CTA Button aligned to the exact top text line */}
           <motion.div
             initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, delay: 0.15, ease: [0.21, 0.47, 0.32, 0.98] }}
-            className="lg:col-span-5 flex flex-col items-start lg:items-start lg:pt-12"
+            className="lg:col-span-5 flex flex-col items-start pt-[34px] sm:pt-[38px] lg:pt-[42px]"
           >
-            <p className="text-[14.5px] sm:text-[15.5px] text-[#555a57] leading-[1.65] max-w-[420px]">
+            <p 
+              className="max-w-[420px]"
+              style={{
+                color: "var(--ink-muted, #6F726E)",
+                fontFamily: "Roboto, sans-serif",
+                fontSize: "17px",
+                fontStyle: "normal",
+                fontWeight: 400,
+                lineHeight: "150%",
+              }}
+            >
               Every engagement follows the same four steps — so you always know
               what happens next.
             </p>
@@ -111,17 +129,47 @@ export default function HowIWork() {
                 ease: [0.21, 0.47, 0.32, 0.98],
               }}
               whileHover={{ y: -4, transition: { duration: 0.2 } }}
-              className={`pt-8 border-t-[2px] transition-colors ${
-                step.isActive ? "border-[#85A596]" : "border-[#85A596]"
-              }`}
+              className="group pt-8 border-t-[2px] border-[#DAD5CC] hover:border-[#85A596] transition-colors duration-300"
             >
-              <span className="text-[#8EB9A4] text-[56px] font-medium leading-none tracking-[-0.04em] block">
+              <span 
+                className="block"
+                style={{
+                  color: "var(--jade-text, #8EB9A4)",
+                  fontFamily: "Roboto, sans-serif",
+                  fontSize: "56px",
+                  fontStyle: "normal",
+                  fontWeight: 500,
+                  lineHeight: "normal",
+                  letterSpacing: "-2.24px",
+                }}
+              >
                 {step.number}
               </span>
-              <h3 className="text-[#1c1f1d] text-[18px] sm:text-[19px] font-semibold mt-4 sm:mt-5 tracking-tight">
+              <h3 
+                className="mt-4 sm:mt-5"
+                style={{
+                  color: "var(--ink, #1C1F1D)",
+                  fontFamily: "Roboto, sans-serif",
+                  fontSize: "22px",
+                  fontStyle: "normal",
+                  fontWeight: 500,
+                  lineHeight: "normal",
+                  letterSpacing: "-0.22px",
+                }}
+              >
                 {step.title}
               </h3>
-              <p className="text-[#3b423f] text-[13.5px] leading-[1.65] mt-3">
+              <p 
+                className="mt-3"
+                style={{
+                  color: "var(--ink-muted, #6F726E)",
+                  fontFamily: "Roboto, sans-serif",
+                  fontSize: "16px",
+                  fontStyle: "normal",
+                  fontWeight: 400,
+                  lineHeight: "150%",
+                }}
+              >
                 {step.description}
               </p>
             </motion.div>

@@ -1,10 +1,31 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
 export default function Hero() {
+  const fullText = "Hi, I am Tony John";
+  const [displayedText, setDisplayedText] = useState("");
+  const [isTypingComplete, setIsTypingComplete] = useState(false);
+
+  useEffect(() => {
+    let i = 0;
+    // Slower, smoother typing speed (180ms per character) starting from the very beginning ("Hi, I am ")
+    const typingInterval = setInterval(() => {
+      if (i < fullText.length) {
+        setDisplayedText(fullText.substring(0, i + 1));
+        i++;
+      } else {
+        clearInterval(typingInterval);
+        setIsTypingComplete(true);
+      }
+    }, 180);
+
+    return () => clearInterval(typingInterval);
+  }, []);
+
   return (
     <section className="relative w-full bg-[#22363A] overflow-hidden isolate min-h-screen flex items-center py-24 sm:py-28 lg:py-20">
       {/* Background Grain Texture Overlay */}
@@ -22,26 +43,26 @@ export default function Hero() {
       <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-[60px] xl:px-[75px]">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-4 w-full relative">
 
-          {/* Left Column */}
-          <div className="w-full lg:w-[58%] xl:w-[56%] flex-none flex flex-col justify-center z-10 lg:translate-y-10">
+          {/* Left Column - Moved down using pt-12 / lg:pt-[88px] without expanding section height */}
+          <div className="w-full lg:w-[58%] xl:w-[56%] flex-none flex flex-col justify-center z-10 pt-12 sm:pt-16 lg:pt-[88px]">
 
-            <motion.h1
-              initial={{ opacity: 0, y: 25 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
-              className="text-[#eef0ec] font-bold text-[38px] sm:text-[60px] md:text-[76px] lg:text-[clamp(64px,6.2vw,90px)] leading-[100%] tracking-[-0.05em]"
+            {/* Smooth Typing Animation starting from "Hi, I am " */}
+            <h1
+              className="text-[#eef0ec] font-bold text-[38px] sm:text-[60px] md:text-[76px] lg:text-[clamp(64px,6.2vw,90px)] leading-[100%] tracking-[-0.05em] mb-[29px] min-h-[1em]"
               style={{ fontFamily: "Roboto, sans-serif" }}
             >
-              <span className="block lg:inline">Hi, I am </span>
-              <span className="block lg:inline">Tony John</span>
-            </motion.h1>
+              <span>{displayedText}</span>
+              {!isTypingComplete && (
+                <span className="inline-block w-[3px] h-[0.8em] bg-[#eef0ec] ml-1 animate-pulse align-middle" />
+              )}
+            </h1>
 
-            {/* Subtitle */}
+            {/* Subtitle with exact Figma 114px bottom gap */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.18, ease: [0.21, 0.47, 0.32, 0.98] }}
-              className="mt-3 lg:mt-4 text-[16px] text-[#c1ccc9] font-normal max-w-[631px]"
+              transition={{ duration: 0.7, delay: 0.4, ease: [0.21, 0.47, 0.32, 0.98] }}
+              className="text-[16px] text-[#c1ccc9] font-normal max-w-[631px] mb-[114px]"
               style={{
                 fontFamily: "Roboto, sans-serif",
                 lineHeight: "145%",
@@ -58,8 +79,8 @@ export default function Hero() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.3, ease: [0.21, 0.47, 0.32, 0.98] }}
-              className="mt-12 sm:mt-14 lg:mt-20 flex flex-col sm:flex-row items-stretch sm:items-center gap-5 sm:gap-8 w-full sm:w-auto"
+              transition={{ duration: 0.7, delay: 0.55, ease: [0.21, 0.47, 0.32, 0.98] }}
+              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-5 sm:gap-8 w-full sm:w-auto"
             >
               {/* Primary Button */}
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
@@ -72,11 +93,11 @@ export default function Hero() {
                 </Link>
               </motion.div>
 
-              {/* Secondary Button - Unified with same text size & vertical padding */}
+              {/* Secondary Button */}
               <motion.div whileHover={{ x: 3 }} whileTap={{ scale: 0.98 }}>
                 <Link
                   href="#spiderworks"
-                  className="w-full sm:w-auto group inline-flex items-center justify-center sm:justify-start gap-3 text-[#dce6e3] hover:text-white font-medium text-[14px] uppercase transition-colors py-4 sm:py-4 tracking-normal"
+                  className="w-full sm:w-auto group inline-flex items-center justify-center sm:justify-start gap-3 text-[#dce6e3] hover:text-white font-medium text-[14px] uppercase transition-colors py-4 tracking-normal"
                   style={{ fontFamily: "Roboto, sans-serif" }}
                 >
                   <span>Explore Spiderworks</span>

@@ -22,7 +22,7 @@ const expertiseData = [
   {
     id: 3,
     name: "Website Development",
-    title: "Choose the right website development solution.",
+    title: "Build what your business actually needs.",
     description:
       "Don't get carried away with the cheap offers from freelancers and don't fall into the trap of very expensive website proposals. Choose the right option that suits your requirements.",
   },
@@ -35,7 +35,7 @@ const expertiseData = [
   },
   {
     id: 5,
-    name: "Ecommerce Solutions",
+    name: "E-commerce Solutions",
     title: "Choose the right solution for online selling.",
     description:
       "Whether it is a simple e-commerce website or an ERP integrated sophisticated e-commerce platform, I can help you choose the right solutions and setup your online selling platform.",
@@ -109,9 +109,9 @@ export default function Expertise() {
   const startScrollTopRef = useRef(0);
 
   const [thumbTop, setThumbTop] = useState(0);
-  const thumbHeight = 58;
-  const trackHeight = 288;
-  const itemHeight = 48; // Each item height in px
+  const thumbHeight = 64;
+  const trackHeight = 324; // Exact Figma: 540px - 108px top - 108px bottom
+  const itemHeight = 54; // Each item height in px
 
   const activeId = hoveredId ?? selectedId;
   const activeItem =
@@ -120,7 +120,7 @@ export default function Expertise() {
   const updateThumbPosition = useCallback(() => {
     if (!scrollContainerRef.current) return;
     const { scrollTop, scrollHeight, clientHeight } = scrollContainerRef.current;
-    
+
     const currentIndex = Math.min(
       Math.round(scrollTop / itemHeight),
       expertiseData.length - 1
@@ -206,10 +206,10 @@ export default function Expertise() {
     <section
       id="expertise"
       onMouseLeave={() => setHoveredId(null)}
-      className="relative w-full bg-[#22363A] overflow-hidden isolate py-16 sm:py-20 lg:py-28"
+      className="relative w-full bg-[#22363A] overflow-hidden isolate h-auto lg:h-[540px] lg:min-h-[540px] lg:max-h-[540px] py-12 lg:py-0 select-none"
     >
       <span id="services" className="-top-20 relative block" aria-hidden="true" />
-      {/* Background Grain Texture Overlay set to 14% opacity */}
+      {/* Background Grain Texture Overlay */}
       <div
         className="absolute inset-0 pointer-events-none z-0"
         style={{
@@ -222,26 +222,49 @@ export default function Expertise() {
         aria-hidden="true"
       />
 
-      {/* Full-height absolute vertical divider line running through the middle */}
+      {/* Full-height vertical divider line running through the exact 50% middle */}
       <div
-        className="hidden lg:block absolute top-0 bottom-0 left-1/2 w-[1px] bg-[#40666E] pointer-events-none z-0"
+        className="hidden lg:block absolute top-0 bottom-0 left-1/2 w-[1px] bg-[#385157] pointer-events-none z-0"
         aria-hidden="true"
       />
 
-      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-[75px]">
+      {/* Main Container: Fixed 1440px Width x 540px Height Canvas */}
+      <div className="relative z-10 w-full max-w-[1440px] h-full mx-auto px-6 sm:px-10 lg:px-[60px] flex flex-col justify-between lg:block">
         {/* Mobile View (< 1024px) */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
-          className="lg:hidden flex flex-col"
+          className="lg:hidden flex flex-col my-auto py-4"
         >
           <div className="flex items-center justify-between w-full mb-6">
-            <span className="text-[11.5px] uppercase tracking-[0.14em] font-semibold text-[#b3ccc0]">
+            <span
+              style={{
+                color: "#A3B1AE",
+                fontFamily: "Roboto, sans-serif",
+                fontSize: "11px",
+                fontStyle: "normal",
+                fontWeight: 600,
+                lineHeight: "normal",
+                letterSpacing: "1.1px",
+                textTransform: "uppercase",
+              }}
+            >
               AREAS OF EXPERTISE
             </span>
-            <span className="text-[11.5px] uppercase tracking-[0.14em] font-semibold text-[#b3ccc0]">
+            <span
+              style={{
+                color: "#A3B1AE",
+                fontFamily: "Roboto, sans-serif",
+                fontSize: "11px",
+                fontStyle: "normal",
+                fontWeight: 600,
+                lineHeight: "normal",
+                letterSpacing: "1.1px",
+                textTransform: "uppercase",
+              }}
+            >
               13 SERVICES
             </span>
           </div>
@@ -253,7 +276,15 @@ export default function Expertise() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.22 }}
-              className="text-[#aecfbf] font-normal text-[30px] sm:text-[36px] leading-[1.18] tracking-tight"
+              style={{
+                color: "#AECFBF",
+                fontFamily: "Roboto, sans-serif",
+                fontSize: "32px",
+                fontStyle: "normal",
+                fontWeight: 300,
+                lineHeight: "110%",
+                letterSpacing: "-1.2px",
+              }}
             >
               {activeItem.title}
             </motion.h3>
@@ -266,7 +297,15 @@ export default function Expertise() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.22 }}
-              className="mt-4 text-[14.5px] text-[#c0d2cd] leading-[1.65]"
+              className="mt-4"
+              style={{
+                color: "#A3B1AE",
+                fontFamily: "Roboto, sans-serif",
+                fontSize: "16px",
+                fontStyle: "normal",
+                fontWeight: 400,
+                lineHeight: "150%",
+              }}
             >
               {activeItem.description}
             </motion.p>
@@ -310,155 +349,270 @@ export default function Expertise() {
           <div className="w-full pt-1">
             <Link
               href="#contact"
-              className="group w-full inline-flex items-center justify-center gap-2.5 bg-[#aecfbf] hover:bg-[#9ec4b3] text-[#1c2825] text-[14.5px] font-medium h-[52px] px-6 rounded-full transition-colors shadow-sm"
+              className="group w-full inline-flex items-center justify-center gap-[12px] bg-[#AECFBF] hover:bg-[#9ec4b3] text-[#1C1F1D] rounded-[100px] transition-colors shadow-sm"
+              style={{
+                padding: "12px 16px 12px 20px",
+                borderRadius: "100px",
+                background: "#AECFBF",
+              }}
             >
-              <span>Book a consultation</span>
+              <span
+                style={{
+                  color: "#1C1F1D",
+                  fontFamily: "Roboto, sans-serif",
+                  fontSize: "14px",
+                  fontStyle: "normal",
+                  fontWeight: 500,
+                  lineHeight: "normal",
+                }}
+              >
+                Book a consultation
+              </span>
               <svg
-                className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
+                className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5"
                 fill="none"
-                stroke="currentColor"
+                stroke="#1C1F1D"
                 strokeWidth="2"
                 viewBox="0 0 24 24"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
               </svg>
             </Link>
           </div>
         </motion.div>
 
-        {/* Desktop View (>= 1024px) */}
-        <motion.div
-          initial={{ opacity: 0, y: 35 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.75, ease: [0.21, 0.47, 0.32, 0.98] }}
-          className="hidden lg:flex flex-row items-stretch justify-between gap-12 lg:gap-14 xl:gap-20"
-        >
-          {/* Left Column: Areas of Expertise with scrollable 6-row viewport */}
-          <div className="w-full lg:w-[560px] xl:w-[580px] flex-none flex flex-col justify-between">
-            <p className="text-[11.5px] uppercase tracking-[0.14em] font-semibold text-[#b3ccc0] mb-8 lg:mb-10">
-              AREAS OF EXPERTISE
-            </p>
+        {/* Desktop View (Fixed 1440px x 540px Frame matching Figma) */}
+        <div className="hidden lg:block h-full relative">
+          {/* Top Tag: AREAS OF EXPERTISE (left: 60px, top: 52px) */}
+          <p
+            className="absolute select-none"
+            style={{
+              left: "60px",
+              top: "52px",
+              color: "#A3B1AE",
+              fontFamily: "Roboto, sans-serif",
+              fontSize: "11px",
+              fontStyle: "normal",
+              fontWeight: 600,
+              lineHeight: "normal",
+              letterSpacing: "1.1px",
+              textTransform: "uppercase",
+            }}
+          >
+            AREAS OF EXPERTISE
+          </p>
 
-            <div className="relative flex items-stretch gap-4 sm:gap-6">
-              <div
-                ref={scrollContainerRef}
-                onScroll={handleScroll}
-                className="w-full h-[288px] overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pr-2 select-none"
-              >
-                <ul className="w-full flex flex-col">
-                  {expertiseData.map((item) => {
-                    const isActive = activeId === item.id;
+          {/* Left Column Scrollable Services List (left: 60px, top: 108px, height: 324px, width: calc(50% - 100px)) */}
+          <div
+            ref={scrollContainerRef}
+            onScroll={handleScroll}
+            className="absolute overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden select-none"
+            style={{
+              left: "60px",
+              top: "108px",
+              height: "324px",
+              width: "calc(50% - 110px)",
+            }}
+          >
+            <ul className="w-full flex flex-col py-1">
+              {expertiseData.map((item) => {
+                const isActive = activeId === item.id;
 
-                    return (
-                      <li key={item.id} className="w-full h-[48px] flex items-center">
-                        <button
-                          type="button"
-                          onClick={() => scrollToItem(item.id)}
-                          onMouseEnter={() => {
-                            setHoveredId(item.id);
-                            scrollToItem(item.id);
-                          }}
-                          className="group flex items-center text-left w-full h-[48px] focus:outline-none cursor-pointer"
-                        >
-                          <span
-                            className={`text-[13px] sm:text-[14px] w-[36px] sm:w-[44px] flex-none text-left select-none transition-colors duration-150 ${
-                              isActive
-                                ? "text-white/80 font-medium"
-                                : "text-[#8fa6a1] group-hover:text-white"
-                            }`}
-                          >
-                            {item.id}
-                          </span>
+                return (
+                  <li key={item.id} className="w-full h-[54px] flex items-center">
+                    <button
+                      type="button"
+                      onClick={() => scrollToItem(item.id)}
+                      onMouseEnter={() => {
+                        setHoveredId(item.id);
+                        scrollToItem(item.id);
+                      }}
+                      className="group flex items-center text-left w-full h-full focus:outline-none cursor-pointer"
+                    >
+                      {/* Number */}
+                      <span
+                        className={`text-[13px] w-[20px] flex-none text-left select-none transition-colors duration-150 ${
+                          isActive
+                            ? "text-[#EEF0EC] font-medium"
+                            : "text-[#7E938F] group-hover:text-white"
+                        }`}
+                        style={{ fontFamily: "Roboto, sans-serif" }}
+                      >
+                        {item.id}
+                      </span>
 
-                          <span
-                            className={`text-[20px] sm:text-[28px] md:text-[34px] lg:text-[40px] leading-[120%] tracking-[-0.02em] whitespace-nowrap transition-all duration-150 ${
-                              isActive
-                                ? "text-white font-medium translate-x-1"
-                                : "text-[#b4c3bf] font-normal group-hover:text-white"
-                            }`}
-                          >
-                            {item.name}
-                          </span>
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
+                      {/* Exact 40px Spacing between Number and Text from Figma Redline */}
+                      <div className="w-[40px] flex-none" aria-hidden="true" />
 
-              {/* Custom Figma Scrollbar */}
-              <div
-                ref={trackRef}
-                onClick={handleTrackClick}
-                className="relative w-[14px] h-[288px] flex items-center justify-center flex-none cursor-pointer select-none group"
-                aria-label="Scroll services"
-              >
-                <div className="w-[1px] h-full bg-[#3A4E52]" />
-                <div
-                  onMouseDown={handleThumbMouseDown}
-                  className="absolute w-[2.5px] bg-[#AECFBF] rounded-full cursor-grab active:cursor-grabbing hover:bg-white transition-colors duration-150"
-                  style={{
-                    height: `${thumbHeight}px`,
-                    top: `${thumbTop}px`,
-                  }}
-                />
-              </div>
-            </div>
-
-            {/* Bottom Scroll Notice */}
-            <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-[#c5ddd3] mt-8 lg:mt-10 select-none">
-              SCROLL FOR ALL 13 SERVICES
-            </p>
+                      {/* Service Name: 40px Roboto 500, 120% (48px) line-height, -0.8px letter-spacing, #EEF0EC when active */}
+                      <span
+                        className="whitespace-nowrap transition-all duration-150"
+                        style={{
+                          fontFamily: "Roboto, sans-serif",
+                          fontSize: isActive ? "40px" : "32px",
+                          lineHeight: "120%", // 48px when 40px
+                          letterSpacing: isActive ? "-0.8px" : "-0.6px",
+                          fontWeight: isActive ? 500 : 400,
+                          color: isActive ? "#EEF0EC" : "#7E938F",
+                        }}
+                      >
+                        {item.name}
+                      </span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
 
-          {/* Spacer to accommodate absolute middle divider line */}
-          <div className="hidden lg:block w-[1px] flex-none opacity-0" aria-hidden="true" />
+          {/* Custom Scrollbar: Exactly 30px gap to middle vertical divider, top 108px, bottom 108px, height 324px */}
+          <div
+            ref={trackRef}
+            onClick={handleTrackClick}
+            className="absolute flex items-center justify-center cursor-pointer select-none group"
+            style={{
+              left: "calc(50% - 30px)",
+              top: "108px",
+              height: "324px",
+              width: "14px",
+            }}
+            aria-label="Scroll services"
+          >
+            {/* Track Line: 1px background #385157 */}
+            <div className="w-[1px] h-full bg-[#385157]" />
+            {/* Thumb: 3px wide with smooth drag & hover */}
+            <div
+              onMouseDown={handleThumbMouseDown}
+              className="absolute w-[3px] bg-[#5A7A80] hover:bg-[#AECFBF] rounded-full cursor-grab active:cursor-grabbing transition-colors duration-150"
+              style={{
+                height: `${thumbHeight}px`,
+                top: `${thumbTop}px`,
+              }}
+            />
+          </div>
 
-          {/* Right Column: Dynamic Preview & Consultation Button */}
-          <div className="w-full lg:flex-1 flex flex-col justify-between self-stretch pl-0 lg:pl-10 xl:pl-16 min-h-[360px] lg:min-h-[440px]">
-            <div className="my-auto py-6 lg:py-0">
+          {/* Bottom Notice: SCROLL FOR ALL 13 SERVICES (left: 120px aligned under service title column, top: 448px) */}
+          <p
+            className="absolute select-none"
+            style={{
+              left: "120px",
+              bottom: "48px",
+              color: "#A3B1AE",
+              fontFamily: "Roboto, sans-serif",
+              fontSize: "11px",
+              fontStyle: "normal",
+              fontWeight: 400,
+              lineHeight: "normal",
+              letterSpacing: "1.1px",
+              textTransform: "uppercase",
+            }}
+          >
+            SCROLL FOR ALL 13 SERVICES
+          </p>
+
+          {/* Right Column: Starts exactly at left: calc(50% + 74px), matching Figma 74px gap from middle line */}
+          <div
+            className="absolute top-0 bottom-0 right-[60px]"
+            style={{
+              left: "calc(50% + 74px)",
+              maxWidth: "540px",
+            }}
+          >
+            {/* Heading: Positioned above description box */}
+            <div
+              className="absolute w-full"
+              style={{
+                top: "165px",
+                maxWidth: "500px",
+              }}
+            >
               <AnimatePresence mode="wait">
                 <motion.h3
                   key={activeItem.id + "-desktop-title"}
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.25 }}
-                  className="text-[#aecfbf] font-normal text-[28px] sm:text-[34px] md:text-[38px] lg:text-[42px] leading-[1.2] max-w-[500px]"
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.22 }}
+                  style={{
+                    color: "#AECFBF",
+                    fontFamily: "Roboto, sans-serif",
+                    fontSize: "40px",
+                    fontStyle: "normal",
+                    fontWeight: 300,
+                    lineHeight: "100%", // 40px
+                    letterSpacing: "-1.6px",
+                  }}
                 >
                   {activeItem.title}
                 </motion.h3>
               </AnimatePresence>
+            </div>
+
+            {/* Description Box: Exact Figma Specs (top: 279px, bottom distance: 131px to bottom of 540px frame) */}
+            <div
+              className="absolute w-full"
+              style={{
+                top: "279px",
+                maxWidth: "500px",
+              }}
+            >
               <AnimatePresence mode="wait">
                 <motion.p
                   key={activeItem.id + "-desktop-desc"}
-                  initial={{ opacity: 0, y: 8 }}
+                  initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.25 }}
-                  className="mt-5 sm:mt-6 text-[14.5px] sm:text-[15.5px] text-[#c0d2cd] leading-[1.7] max-w-[460px]"
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.22 }}
+                  style={{
+                    color: "#A3B1AE",
+                    fontFamily: "Roboto, sans-serif",
+                    fontSize: "17px",
+                    fontStyle: "normal",
+                    fontWeight: 400,
+                    lineHeight: "150%", // 25.5px
+                  }}
                 >
                   {activeItem.description}
                 </motion.p>
               </AnimatePresence>
             </div>
 
-            <div className="flex justify-start lg:justify-end items-end pt-8 lg:pt-0">
-              <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
+            {/* Bottom Right: Consultation Button (display: inline-flex, padding: 12px 16px 12px 20px, gap: 12px, border-radius: 100px, background: #AECFBF) */}
+            <div
+              className="absolute right-0 flex justify-end items-center"
+              style={{
+                bottom: "48px",
+              }}
+            >
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
                 <Link
                   href="#contact"
-                  className="group inline-flex items-center gap-2 bg-[#aecfbf] hover:bg-[#9ec4b3] text-[#1c2825] text-[13.5px] font-medium h-[44px] px-7 rounded-full transition-colors shadow-sm"
+                  className="group inline-flex items-center transition-all shadow-sm"
+                  style={{
+                    display: "inline-flex",
+                    padding: "12px 16px 12px 20px",
+                    alignItems: "center",
+                    gap: "12px",
+                    borderRadius: "100px",
+                    background: "#AECFBF",
+                  }}
                 >
-                  <span>Book a consultation</span>
+                  <span
+                    style={{
+                      color: "#1C1F1D",
+                      fontFamily: "Roboto, sans-serif",
+                      fontSize: "14px",
+                      fontStyle: "normal",
+                      fontWeight: 500,
+                      lineHeight: "normal",
+                    }}
+                  >
+                    Book a consultation
+                  </span>
                   <svg
-                    className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
+                    className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5"
                     fill="none"
-                    stroke="currentColor"
+                    stroke="#1C1F1D"
                     strokeWidth="2"
                     viewBox="0 0 24 24"
                   >
@@ -472,7 +626,7 @@ export default function Expertise() {
               </motion.div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -13,7 +13,7 @@ const chapters = [
     chapterNum: "CHAPTER 01",
     title: "Starts out in IT",
     description:
-      "First steps into software engineering, networking, and the dawn of commercial internet technologies.",
+      "First steps into software engineering, networking,\nand the dawn of commercial internet technologies.",
     bottomLabel: "Starts out in IT",
   },
   {
@@ -24,7 +24,7 @@ const chapters = [
     chapterNum: "CHAPTER 02",
     title: "Starts blogging",
     description:
-      "Sharing early tech insights, developer tutorials, and building an authoritative online community.",
+      "Sharing early tech insights, developer tutorials,\nand building an authoritative online community.",
     bottomLabel: "Starts blogging",
   },
   {
@@ -34,7 +34,7 @@ const chapters = [
     dialLabel: "THE FOUNDING",
     chapterNum: "CHAPTER 03",
     title: "Founds\nSpiderWorks",
-    description: "Technology, creativity and marketing, under one roof.",
+    description: "Technology, creativity and marketing\nunder one roof.",
     bottomLabel: "Founds SpiderWorks",
   },
   {
@@ -45,7 +45,7 @@ const chapters = [
     chapterNum: "CHAPTER 04",
     title: "Leaves architecture",
     description:
-      "Transitioning fully into digital entrepreneurship, enterprise IT consultancy, and scaling online ventures.",
+      "Transitioning fully into digital entrepreneurship,\nenterprise IT consultancy, and scaling online ventures.",
     bottomLabel: "Leaves architecture",
   },
   {
@@ -56,22 +56,13 @@ const chapters = [
     chapterNum: "CHAPTER 05",
     title: "Founder,\nmentor",
     description:
-      "Advising enterprise leadership, mentoring tech founders, and shaping sustainable growth strategies.",
+      "Advising enterprise leadership, mentoring tech founders,\nand shaping sustainable growth strategies.",
     bottomLabel: "Founder, mentor",
   },
 ];
 
 // Milestone angles on the dial arc relative to 0deg (horizontal right pointer)
 const MILESTONE_ANGLES = [-36, -18, 0, 18, 36];
-
-// Dynamic font sizing for inner dial text so long labels never overflow onto the wheel
-const getDesktopDialYearClass = (text) => {
-  const len = (text || "").length;
-  if (len <= 4) return "text-[82px] xl:text-[98px]";
-  if (len <= 5) return "text-[64px] xl:text-[76px]";
-  if (len <= 7) return "text-[46px] xl:text-[54px]";
-  return "text-[36px] xl:text-[44px]";
-};
 
 export default function Timeline() {
   const [activeIndex, setActiveIndex] = useState(2); // Default to 2005
@@ -160,11 +151,11 @@ export default function Timeline() {
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       onPointerUp={handlePointerUp}
       onPointerLeave={handlePointerUp}
-      className="relative w-full bg-[#22363A] overflow-hidden isolate min-h-[680px] lg:min-h-[760px] py-10 lg:py-14 flex flex-col justify-between select-none"
+      className="relative w-full bg-[#22363A] overflow-hidden isolate h-auto lg:h-[812px] lg:min-h-[812px] lg:max-h-[812px] py-8 lg:py-0 select-none"
     >
       <span id="about-tony" className="-top-20 relative block" aria-hidden="true" />
 
-      {/* Background Grain Texture Overlay set to 14% opacity */}
+      {/* Background Grain Texture Overlay */}
       <div
         className="absolute inset-0 pointer-events-none z-0"
         style={{
@@ -177,28 +168,26 @@ export default function Timeline() {
         aria-hidden="true"
       />
 
-      {/* Top Header Row */}
-      <motion.div 
-        initial={{ opacity: 0, y: -20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        className="hidden lg:flex relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-[75px] pt-2 lg:pt-4 items-start justify-end"
-      >
-        <div className="text-right flex flex-col items-end">
-          <span className="text-[11px] sm:text-[12px] uppercase tracking-[0.2em] font-medium text-[#7e938f] mb-1">
+      {/* Main Container: Fixed 1440px Width, 812px Height matching Figma frame */}
+      <div className="relative z-10 w-full max-w-[1440px] h-full mx-auto px-6 sm:px-10 lg:px-[48px] flex flex-col justify-between lg:block">
+        {/* Top Header Row (Desktop: Absolute at top: 38px, right: 48px) */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="hidden lg:flex absolute top-[38px] right-[48px] z-10 text-right flex-col items-end"
+        >
+          <span className="text-[11px] sm:text-[12px] uppercase tracking-[0.2em] font-medium text-[#7e938f] mb-1 select-none">
             DRAG THE DIAL &rarr;
           </span>
-          <h2 className="text-[#e2ece9] text-[17px] sm:text-[19px] lg:text-[21px] font-normal leading-snug tracking-tight">
+          <h2 className="text-[#e2ece9] text-[17px] sm:text-[19px] lg:text-[20px] font-normal leading-snug tracking-tight">
             From a late &apos;90s blog to a company of its own.
           </h2>
-        </div>
-      </motion.div>
+        </motion.div>
 
-      {/* Center Interactive Area */}
-      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-[75px] my-auto py-4 sm:py-6 lg:py-8 w-full">
-        {/* Mobile Interactive Flow (< 1024px) */}
-        <div className="lg:hidden flex flex-col w-full">
+        {/* Mobile Interactive View (< 1024px) */}
+        <div className="lg:hidden flex flex-col w-full my-auto py-4">
           <div className="text-left w-full mb-3">
             <span className="text-[11px] uppercase tracking-[0.2em] font-medium text-[#7e938f] block mb-1">
               DRAG THE DIAL &rarr;
@@ -263,7 +252,7 @@ export default function Timeline() {
               </div>
             </div>
 
-            {/* Mobile Pointer Badge */}
+            {/* Clean Mobile Pointer Badge (arrow removed) */}
             <div
               className="absolute z-[10] pointer-events-none select-none flex items-center justify-center"
               style={{
@@ -274,7 +263,7 @@ export default function Timeline() {
               }}
             >
               <div className="absolute -inset-1 rounded-full border border-dashed border-[#d8e4c6]/40 pointer-events-none" />
-              <div className="w-full h-full rounded-full bg-[#d8e4c6] border-[2.5px] border-[#1d2d30] shadow-[0_4px_14px_rgba(0,0,0,0.35)] flex items-center justify-center" />
+              <div className="w-full h-full rounded-full bg-[#d8e4c6] border-[2.5px] border-[#1d2d30] shadow-[0_4px_14px_rgba(0,0,0,0.35)]" />
             </div>
 
             <div
@@ -286,34 +275,70 @@ export default function Timeline() {
               }}
             >
               <span
-                className={`font-extralight text-[#93b7b1] transition-all duration-150 leading-none select-none tracking-tight ${
-                  currentChapter.dialYear.length <= 4
-                    ? "text-[58px] sm:text-[68px]"
-                    : "text-[38px] sm:text-[48px]"
-                }`}
+                className="font-light text-[#576C6F] transition-all duration-150 leading-[100%] tracking-[-0.04em] select-none text-[52px] sm:text-[64px]"
+                style={{ fontFamily: "Roboto, sans-serif" }}
               >
                 {currentChapter.dialYear}
               </span>
-              <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-medium text-[#aecbc6] mt-1.5 transition-all duration-150 select-none">
+              <span
+                className="select-none mt-1.5 transition-all duration-150"
+                style={{
+                  color: "#A3B1AE",
+                  fontFamily: "Roboto, sans-serif",
+                  fontSize: "11px",
+                  fontWeight: 400,
+                  letterSpacing: "1.1px",
+                  textTransform: "uppercase",
+                }}
+              >
                 {currentChapter.dialLabel}
               </span>
             </div>
           </div>
 
-          <motion.div 
+          <motion.div
             key={activeIndex}
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
             className="w-full mt-4 flex flex-col text-left"
           >
-            <p className="text-[11px] uppercase tracking-[0.2em] font-medium text-[#a8c4be] mb-2">
+            <p
+              className="uppercase mb-2 select-none"
+              style={{
+                color: "#A3B1AE",
+                fontFamily: "Roboto, sans-serif",
+                fontSize: "12px",
+                fontWeight: 500,
+                letterSpacing: "1.2px",
+              }}
+            >
               {currentChapter.chapterNum}
             </p>
-            <h3 className="text-white font-semibold text-[32px] sm:text-[38px] leading-[1.1] tracking-tight whitespace-pre-line">
+
+            <h3
+              className="whitespace-pre-line"
+              style={{
+                color: "#EEF0EC",
+                fontFamily: "Roboto, sans-serif",
+                fontSize: "34px",
+                fontWeight: 500,
+                lineHeight: "110%",
+                letterSpacing: "-0.8px",
+              }}
+            >
               {currentChapter.title}
             </h3>
-            <p className="text-[#c2d4cf] text-[14.5px] sm:text-[15.5px] leading-[1.6] mt-3 max-w-[420px]">
+            <p
+              className="mt-3 max-w-[420px] whitespace-pre-line"
+              style={{
+                color: "#A3B1AE",
+                fontFamily: "Roboto, sans-serif",
+                fontSize: "16px",
+                fontWeight: 400,
+                lineHeight: "150%",
+              }}
+            >
               {currentChapter.description}
             </p>
 
@@ -350,46 +375,77 @@ export default function Timeline() {
                 </svg>
               </button>
 
-              <span className="text-[#7e938f] text-[13px] font-normal tracking-wide ml-2 select-none">
+              <span
+                className="ml-2 select-none"
+                style={{
+                  color: "#A3B1AE",
+                  fontFamily: "Roboto, sans-serif",
+                  fontSize: "13px",
+                  fontWeight: 400,
+                }}
+              >
                 Move the wheel
               </span>
             </div>
           </motion.div>
         </div>
 
-        {/* Desktop Interactive Area (>= 1024px) */}
-        <div className="hidden lg:flex flex-row items-center justify-between w-full relative min-h-[460px] lg:min-h-[520px]">
+        {/* Desktop Interactive Layout (Fixed 1440x812 Exact Figma Canvas) */}
+        <div className="hidden lg:block">
+          {/* Big Year on Left: Exact Figma Specs (342px top/bottom center line, left 48px within container) */}
+          <div className="absolute left-[48px] top-1/2 -translate-y-1/2 z-[3] flex flex-col justify-center select-none pointer-events-none max-w-[340px]">
+            <motion.span
+              key={currentChapter.dialYear}
+              initial={{ opacity: 0.6, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.25 }}
+              className="block select-none truncate"
+              style={{
+                color: "#576C6F",
+                fontFamily: "Roboto, sans-serif",
+                fontSize: currentChapter.dialYear.length > 5 ? "88px" : "128px",
+                fontStyle: "normal",
+                fontWeight: 300,
+                lineHeight: "100%",
+                letterSpacing: currentChapter.dialYear.length > 5 ? "-3.5px" : "-5.12px",
+              }}
+            >
+              {currentChapter.dialYear}
+            </motion.span>
+            <motion.span
+              key={currentChapter.dialLabel}
+              initial={{ opacity: 0.6, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.25, delay: 0.05 }}
+              className="block select-none mt-2.5 truncate w-fit"
+              style={{
+                color: "#A3B1AE",
+                textAlign: "right",
+                fontFamily: "Roboto, sans-serif",
+                fontSize: "11px",
+                fontStyle: "normal",
+                fontWeight: 400,
+                lineHeight: "normal",
+                letterSpacing: "1.1px",
+                textTransform: "uppercase",
+              }}
+            >
+              {currentChapter.dialLabel}
+            </motion.span>
+          </div>
+
+          {/* Rotatable Wheel & Center Interactive Dial */}
           <div
             className="absolute cursor-grab active:cursor-grabbing pointer-events-auto"
             style={{
               width: "1520px",
               height: "1520px",
-              left: "-920px",
+              left: "-1000px",
               top: "calc(50% - 760px)",
             }}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
           >
-            <div
-              className="absolute z-[3] flex flex-col justify-center pointer-events-none select-none max-w-[320px] px-2"
-              style={{
-                left: "910px",
-                top: "50%",
-                transform: "translateY(-50%)",
-              }}
-            >
-              <span
-                className={`font-extralight leading-none tracking-tight text-[#93b7b1] transition-all duration-150 truncate ${getDesktopDialYearClass(
-                  currentChapter.dialYear
-                )}`}
-              >
-                {currentChapter.dialYear}
-              </span>
-              <span className="text-[10px] xl:text-[11px] uppercase tracking-[0.2em] font-medium text-[#aecbc6] mt-2.5 transition-all duration-150 truncate max-w-[280px]">
-                {currentChapter.dialLabel}
-              </span>
-            </div>
-
             {/* Fixed Glow Background Layer on Desktop */}
             <div className="absolute inset-0 w-[1520px] h-[1520px] pointer-events-none z-[4]">
               <div className="relative w-[1520px] h-[1520px]">
@@ -429,7 +485,7 @@ export default function Timeline() {
               </div>
             </div>
 
-            {/* Rotatable Horizontally Aligned Year Labels on Desktop */}
+            {/* Rotatable Curved/Bended Year Labels on Wheel Arc matching Figma Specs */}
             <div
               className="absolute inset-0 w-[1520px] h-[1520px] pointer-events-none z-[6]"
               style={{
@@ -465,13 +521,17 @@ export default function Timeline() {
                       <text
                         x={lx}
                         y={ly}
-                        fill="#98b3ad"
+                        fill="#A3B1AE"
                         fontSize="12"
-                        fontWeight="400"
-                        letterSpacing="0.08em"
+                        fontWeight="500"
+                        letterSpacing="0.96px"
                         dominantBaseline="central"
                         textAnchor="start"
-                        transform={`rotate(${-dialRotation}, ${lx}, ${ly})`}
+                        transform={`rotate(${angle}, ${lx}, ${ly})`}
+                        style={{
+                          fontFamily: "Roboto, sans-serif",
+                          textTransform: "uppercase",
+                        }}
                         className="select-none transition-colors duration-150 hover:fill-white"
                       >
                         {chap.year}
@@ -484,60 +544,98 @@ export default function Timeline() {
 
             {/* Pointer Badge dashed outer ring at 3 o'clock position */}
             <div
-              className="absolute z-[9] rounded-full border border-dashed border-[#d8e4c6]/40 pointer-events-none select-none"
+              className="absolute z-[9] rounded-full border border-dashed border-[#d8e4c6]/45 pointer-events-none select-none"
               style={{
-                left: "1388px",
-                top: "708px",
-                width: "104px",
-                height: "104px",
+                left: "1390px",
+                top: "710px",
+                width: "100px",
+                height: "100px",
               }}
               aria-hidden="true"
             />
 
-            {/* Desktop Pointer Badge */}
+            {/* Clean Pointer Badge Circle (pointer arrow removed as requested) */}
             <div
-              className="absolute z-[10] pointer-events-none select-none w-[84px] h-[84px] rounded-full bg-[#d8e4c6] border-[3px] border-[#18272a] shadow-[0_6px_24px_rgba(0,0,0,0.5)] flex items-center justify-center"
+              className="absolute z-[10] pointer-events-none select-none w-[80px] h-[80px] rounded-full bg-[#d8e4c6] border-[3px] border-[#18272a] shadow-[0_6px_24px_rgba(0,0,0,0.5)]"
               style={{
-                left: "1398px",
-                top: "718px",
+                left: "1400px",
+                top: "720px",
               }}
               title="Active Milestone Pointer"
             />
-
-            {/* Shortened Horizontal Guideline to Chapter title (Reduced width to 110px so it doesn't touch the text) */}
-            <div
-              className="absolute z-[8] h-[1px] bg-white/40 pointer-events-none select-none"
-              style={{
-                left: "1482px",
-                top: "760px",
-                width: "110px",
-              }}
-              aria-hidden="true"
-            />
           </div>
 
-          {/* Chapter Milestone Content Area (Right) */}
-          <motion.div 
+          {/* Horizontal Connecting Line: Exact reduced length ending at 640px (before text at 656px) */}
+          <div
+            className="absolute z-[8] h-[1px] bg-white/70 pointer-events-none select-none"
+            style={{
+              left: "490px",
+              top: "50%",
+              width: "150px",
+            }}
+            aria-hidden="true"
+          />
+
+          {/* Chapter Milestone Content Area (Right): Starts flush with blue vertical line at left: 656px */}
+          <motion.div
             key={activeIndex}
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.35, ease: "easeOut" }}
-            className="w-full lg:w-[480px] xl:w-[540px] pl-2 sm:pl-6 lg:pl-0 mt-4 lg:mt-0 flex flex-col justify-center ml-auto relative z-10"
+            className="absolute top-1/2 -translate-y-1/2 z-10 flex flex-col justify-center"
+            style={{
+              left: "656px",
+              maxWidth: "460px",
+            }}
           >
-            <p className="text-[11px] sm:text-[12px] uppercase tracking-[0.2em] font-medium text-[#a8c4be] mb-3">
+            {/* CHAPTER NUMBER */}
+            <p
+              className="uppercase mb-3.5 select-none"
+              style={{
+                color: "#A3B1AE",
+                fontFamily: "Roboto, sans-serif",
+                fontSize: "12px",
+                fontWeight: 500,
+                letterSpacing: "1.2px",
+              }}
+            >
               {currentChapter.chapterNum}
             </p>
 
-            <h3 className="text-white font-semibold text-[34px] sm:text-[44px] lg:text-[52px] leading-[1.08] tracking-tight whitespace-pre-line transition-all duration-150">
+            {/* HEAD SIZE: Exactly 40px, Roboto 500, 110% line-height, -0.8px letter-spacing */}
+            <h3
+              className="whitespace-pre-line transition-all duration-150"
+              style={{
+                color: "#EEF0EC",
+                fontFamily: "Roboto, sans-serif",
+                fontSize: "40px",
+                fontStyle: "normal",
+                fontWeight: 500,
+                lineHeight: "110%", // 44px
+                letterSpacing: "-0.8px",
+              }}
+            >
               {currentChapter.title}
             </h3>
 
-            <p className="text-[#c2d4cf] text-[15px] sm:text-[16.5px] leading-[1.65] mt-4 max-w-[420px] transition-all duration-150">
+            {/* HEAD DESCRIPTION: Exactly 2 lines, 17px, Roboto 400, 150% line-height, #A3B1AE */}
+            <p
+              className="mt-4 max-w-[440px] whitespace-pre-line transition-all duration-150"
+              style={{
+                color: "#A3B1AE",
+                fontFamily: "Roboto, sans-serif",
+                fontSize: "17px",
+                fontStyle: "normal",
+                fontWeight: 400,
+                lineHeight: "150%", // 25.5px
+              }}
+            >
               {currentChapter.description}
             </p>
 
+            {/* Navigation Buttons and Label */}
             <div className="mt-8 flex items-center gap-3.5">
-              {/* Previous Button (Full Circle with Thin Up Arrow) */}
+              {/* Previous Button */}
               <button
                 type="button"
                 onClick={() => handleNavigate(-1)}
@@ -545,7 +643,7 @@ export default function Timeline() {
                 aria-label="Previous milestone"
                 className={`w-11 h-11 rounded-full border border-white/40 bg-[#1e2f32]/60 flex items-center justify-center transition-all ${
                   activeIndex === 0
-                    ? "opacity-30 cursor-not-allowed text-white/40 border-white/20"
+                    ? "opacity-30 cursor-not-allowed text-white/30 border-white/20"
                     : "text-white/80 hover:text-white hover:border-white hover:bg-white/10 active:scale-95 cursor-pointer shadow-sm"
                 }`}
               >
@@ -560,7 +658,7 @@ export default function Timeline() {
                 </svg>
               </button>
 
-              {/* Next Button (Full Circle with Thin Down Arrow) */}
+              {/* Next Button */}
               <button
                 type="button"
                 onClick={() => handleNavigate(1)}
@@ -583,58 +681,76 @@ export default function Timeline() {
                 </svg>
               </button>
 
-              <span className="text-[#7e938f] text-[13px] sm:text-[14px] font-normal tracking-wide ml-2 select-none">
+              {/* MOVE THE WHEEL: 13px, Roboto 400, #A3B1AE */}
+              <span
+                className="ml-3 select-none"
+                style={{
+                  color: "#A3B1AE",
+                  fontFamily: "Roboto, sans-serif",
+                  fontSize: "13px",
+                  fontStyle: "normal",
+                  fontWeight: 400,
+                  lineHeight: "normal",
+                }}
+              >
                 Move the wheel
               </span>
             </div>
           </motion.div>
-        </div>
-      </div>
 
-      {/* Bottom Milestone Bar */}
-      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-[75px] pt-4 pb-2 lg:pb-4 flex justify-end">
-        <div className="relative w-full lg:w-[560px] xl:w-[620px] mr-0 lg:mr-8">
-          {/* Continuous background track line */}
-          <div className="absolute -top-1 left-0 right-0 h-[1px] bg-white/20" aria-hidden="true" />
-          {/* Active highlighted line segment */}
-          <div
-            className="absolute -top-1 h-[2px] sm:h-[2.5px] bg-[#d8e4c6] transition-all duration-300 shadow-[0_0_8px_rgba(216,228,198,0.4)]"
-            style={{
-              left: `${(activeIndex / (chapters.length - 1)) * 100}%`,
-              width: `${100 / chapters.length}%`,
-            }}
-            aria-hidden="true"
-          />
+          {/* Bottom Milestone Bar (Rail Rule): Exactly 736px, starts at 656px flush with blue vertical line */}
+          <div className="absolute left-[656px] bottom-[52px] w-[736px] z-10">
+            {/* Continuous subtle baseline across all 5 milestones */}
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-[#EEF0EC]/25" aria-hidden="true" />
 
-          <div className="grid grid-cols-5 gap-1.5 sm:px-0 lg:gap-6 pt-2">
-            {chapters.map((chap, idx) => {
-              const isActive = activeIndex === idx;
+            {/* Bright active scroll highlight segment positioned directly above the active milestone */}
+            <div
+              className="absolute top-0 h-[2px] bg-[#D8E4C6] transition-all duration-300 ease-out shadow-[0_0_8px_rgba(216,228,198,0.4)] z-10"
+              style={{
+                left: `${activeIndex * 20}%`,
+                width: "20%",
+              }}
+              aria-hidden="true"
+            />
 
-              return (
-                <button
-                  key={chap.id}
-                  type="button"
-                  onClick={() => handleSelectMilestone(idx)}
-                  className="group relative flex flex-col text-left focus:outline-none cursor-pointer transition-colors"
-                >
-                  <span
-                    className={`text-[9.5px] sm:text-[13px] font-semibold tracking-wider uppercase transition-colors duration-150 truncate ${
-                      isActive ? "text-white" : "text-[#8ea8a2] group-hover:text-white"
-                    }`}
+            <div className="grid grid-cols-5 w-full pt-3.5 gap-4">
+              {chapters.map((chap, idx) => {
+                const isActive = activeIndex === idx;
+
+                return (
+                  <button
+                    key={chap.id}
+                    type="button"
+                    onClick={() => handleSelectMilestone(idx)}
+                    className="group relative flex flex-col text-left focus:outline-none cursor-pointer transition-colors"
                   >
-                    {chap.year}
-                  </span>
+                    {/* Top year text */}
+                    <span
+                      className={`text-[12px] uppercase tracking-[0.96px] transition-colors duration-150 truncate ${
+                        isActive
+                          ? "text-[#EEF0EC] font-medium"
+                          : "text-[#A3B1AE] font-normal group-hover:text-white"
+                      }`}
+                      style={{ fontFamily: "Roboto, sans-serif" }}
+                    >
+                      {chap.year}
+                    </span>
 
-                  <span
-                    className={`hidden sm:block text-[12px] sm:text-[13px] leading-snug mt-1 transition-colors duration-150 ${
-                      isActive ? "text-[#d8e4c6] font-medium" : "text-[#a8c2bc] group-hover:text-white"
-                    }`}
-                  >
-                    {chap.bottomLabel}
-                  </span>
-                </button>
-              );
-            })}
+                    {/* Bottom description text */}
+                    <span
+                      className={`text-[13px] leading-[140%] mt-1.5 transition-colors duration-150 ${
+                        isActive
+                          ? "text-[#EEF0EC] font-normal"
+                          : "text-[#A3B1AE] font-normal group-hover:text-white"
+                      }`}
+                      style={{ fontFamily: "Roboto, sans-serif" }}
+                    >
+                      {chap.bottomLabel}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
