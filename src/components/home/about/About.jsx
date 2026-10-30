@@ -57,7 +57,7 @@ export default function About() {
               <span className="block text-[#696e6b]">everything online.</span>
             </motion.h2>
 
-            {/* Bottom: "More about Tony" Pill Button */}
+            {/* Bottom: "More about Tony" Pill Button with SVG Arrow */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -68,12 +68,22 @@ export default function About() {
               <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
                 <Link
                   href="#about-tony"
-                  className="group inline-flex items-center gap-2.5 bg-[#aecfbf] hover:bg-[#9ec4b3] text-[#1c2825] text-[13.5px] font-medium h-[40px] px-6 rounded-full transition-colors shadow-sm"
+                  className="group inline-flex items-center gap-2 bg-[#aecfbf] hover:bg-[#9ec4b3] text-[#1c1f1d] text-[13.5px] font-medium px-5 py-2.5 rounded-full transition-colors shadow-sm"
                 >
                   <span>More about Tony</span>
-                  <span className="transition-transform duration-200 group-hover:translate-x-0.5">
-                    &rarr;
-                  </span>
+                  <svg
+                    className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                    />
+                  </svg>
                 </Link>
               </motion.div>
             </motion.div>

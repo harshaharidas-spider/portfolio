@@ -99,7 +99,6 @@ const expertiseData = [
 ];
 
 export default function Expertise() {
-  // Default to Item 3 (Website Development) as shown in reference image
   const [selectedId, setSelectedId] = useState(3);
   const [hoveredId, setHoveredId] = useState(null);
 
@@ -112,6 +111,7 @@ export default function Expertise() {
   const [thumbTop, setThumbTop] = useState(0);
   const thumbHeight = 58;
   const trackHeight = 288;
+  const itemHeight = 48; // Each item height in px
 
   const activeId = hoveredId ?? selectedId;
   const activeItem =
@@ -120,6 +120,16 @@ export default function Expertise() {
   const updateThumbPosition = useCallback(() => {
     if (!scrollContainerRef.current) return;
     const { scrollTop, scrollHeight, clientHeight } = scrollContainerRef.current;
+    
+    const currentIndex = Math.min(
+      Math.round(scrollTop / itemHeight),
+      expertiseData.length - 1
+    );
+    const currentItem = expertiseData[currentIndex];
+    if (currentItem && currentItem.id !== selectedId && !isDraggingRef.current) {
+      setSelectedId(currentItem.id);
+    }
+
     const maxScroll = scrollHeight - clientHeight;
     if (maxScroll <= 0) {
       setThumbTop(0);
@@ -128,7 +138,7 @@ export default function Expertise() {
     const maxThumbTop = trackHeight - thumbHeight;
     const currentTop = (scrollTop / maxScroll) * maxThumbTop;
     setThumbTop(Math.max(0, Math.min(maxThumbTop, currentTop)));
-  }, [thumbHeight, trackHeight]);
+  }, [thumbHeight, trackHeight, selectedId]);
 
   const handleScroll = () => {
     updateThumbPosition();
@@ -181,6 +191,17 @@ export default function Expertise() {
     window.addEventListener("mouseup", onMouseUp);
   };
 
+  const scrollToItem = (id) => {
+    setSelectedId(id);
+    setHoveredId(id);
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({
+        top: (id - 1) * itemHeight,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <section
       id="expertise"
@@ -201,7 +222,7 @@ export default function Expertise() {
         aria-hidden="true"
       />
 
-      {/* Full-height absolute vertical divider line running through the middle with color #40666E */}
+      {/* Full-height absolute vertical divider line running through the middle */}
       <div
         className="hidden lg:block absolute top-0 bottom-0 left-1/2 w-[1px] bg-[#40666E] pointer-events-none z-0"
         aria-hidden="true"
@@ -260,10 +281,7 @@ export default function Expertise() {
                 <button
                   key={item.id}
                   type="button"
-                  onClick={() => {
-                    setSelectedId(item.id);
-                    setHoveredId(item.id);
-                  }}
+                  onClick={() => scrollToItem(item.id)}
                   className={`inline-flex items-center px-3.5 py-1.5 sm:py-2 rounded-full transition-all cursor-pointer select-none ${
                     isSelected
                       ? "bg-[#aecfbf] text-[#1c2825] shadow-sm scale-[1.02]"
@@ -292,17 +310,21 @@ export default function Expertise() {
           <div className="w-full pt-1">
             <Link
               href="#contact"
-              className="w-full inline-flex items-center justify-center gap-2.5 bg-[#aecfbf] hover:bg-[#9ec4b3] text-[#1c2825] text-[14.5px] font-medium h-[52px] px-6 rounded-full transition-colors shadow-sm"
+              className="group w-full inline-flex items-center justify-center gap-2.5 bg-[#aecfbf] hover:bg-[#9ec4b3] text-[#1c2825] text-[14.5px] font-medium h-[52px] px-6 rounded-full transition-colors shadow-sm"
             >
               <span>Book a consultation</span>
               <svg
-                className="w-4 h-4 text-[#1c2825]"
+                className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
                 viewBox="0 0 24 24"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                />
               </svg>
             </Link>
           </div>
@@ -336,11 +358,11 @@ export default function Expertise() {
                       <li key={item.id} className="w-full h-[48px] flex items-center">
                         <button
                           type="button"
-                          onClick={() => {
-                            setSelectedId(item.id);
+                          onClick={() => scrollToItem(item.id)}
+                          onMouseEnter={() => {
                             setHoveredId(item.id);
+                            scrollToItem(item.id);
                           }}
-                          onMouseEnter={() => setHoveredId(item.id)}
                           className="group flex items-center text-left w-full h-[48px] focus:outline-none cursor-pointer"
                         >
                           <span
@@ -369,7 +391,7 @@ export default function Expertise() {
                 </ul>
               </div>
 
-              {/* Custom Figma Scrollbar with track line color #3A4E52 and thumb color #AECFBF */}
+              {/* Custom Figma Scrollbar */}
               <div
                 ref={trackRef}
                 onClick={handleTrackClick}
@@ -394,7 +416,7 @@ export default function Expertise() {
             </p>
           </div>
 
-          {/* Spacer to accommodate the absolute middle divider line */}
+          {/* Spacer to accommodate absolute middle divider line */}
           <div className="hidden lg:block w-[1px] flex-none opacity-0" aria-hidden="true" />
 
           {/* Right Column: Dynamic Preview & Consultation Button */}
@@ -433,9 +455,19 @@ export default function Expertise() {
                   className="group inline-flex items-center gap-2 bg-[#aecfbf] hover:bg-[#9ec4b3] text-[#1c2825] text-[13.5px] font-medium h-[44px] px-7 rounded-full transition-colors shadow-sm"
                 >
                   <span>Book a consultation</span>
-                  <span className="transition-transform duration-200 group-hover:translate-x-0.5">
-                    &rarr;
-                  </span>
+                  <svg
+                    className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                    />
+                  </svg>
                 </Link>
               </motion.div>
             </div>
