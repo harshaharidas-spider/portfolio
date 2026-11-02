@@ -22,8 +22,9 @@ const POINTER_VISIBLE = 88;
 const RING_SIZE = 104;
 
 const SHOW_YEAR_LABELS = true;
+const SHOW_GLOW = false;
 
-/* ───────── Frame ───────── */
+/* ───────── Desktop frame ───────── */
 const W = 1440;
 const H = 812;
 
@@ -31,16 +32,16 @@ const H = 812;
 const CX = -200;
 const CY = H / 2;
 const WHEEL_TICK_OUTER = 759; // outer edge of the wheel (radius)
-const LABEL_GAP = 13.75; // gap from the Figma measurement
-const LABEL_EXTRA = 26; // CHANGED: was 14, more gap between wheel line and label
+const LABEL_GAP = 13.75;
+const LABEL_EXTRA = 26;
 const R_LABEL = WHEEL_TICK_OUTER + LABEL_GAP + LABEL_EXTRA;
-const LABEL_TILT = -11; // each label is tilted -11deg
+const LABEL_TILT = -11;
 const STEP = 16;
 const BOX = WHEEL_CANVAS_SIZE;
 const C = BOX / 2;
 const DEG_PER_PX = 0.12;
 
-/* ───────── Layout positions ───────── */
+/* ───────── Desktop layout positions ───────── */
 const NODE_X = 480;
 const TEXT_X = 773;
 const TEXT_Y = 316;
@@ -49,6 +50,40 @@ const TL_Y = 716;
 const TL_W = 736;
 const ITEM_W = TL_W / 5;
 
+/* ───────── Mobile dial (design frame 390 wide, scaled to full width) ───────── */
+const MW = 390; // mobile design width
+const MH = 290; // mobile dial height
+const MS = 0.75; // CHANGED: bigger wheel so the ring runs past both screen edges (full width)
+const MCX = MW / 2; // wheel centre x
+const MPY = 84; // pointer centre y
+const MCY = MPY + 680 * MS; // wheel centre y (below the frame, only the top arc shows)
+const M_POINTER = 60;
+const M_RING = 78;
+const M_DEG_PER_PX = 0.16;
+const M_LABEL_R = R_LABEL * MS;
+
+/* ───────── Diagonal glow ───────── */
+const GLOW_INNER_R = 606;
+const GLOW_OUTER_R = 745;
+const GLOW_HALF = 4; // half width in degrees
+const GLOW_CORE = 1.5; // bright centre in degrees
+const GLOW_PEAK = 0.14; // CHANGED: desktop glow reduced (was 0.30)
+const GLOW_PEAK_MOBILE = 0.1; // CHANGED: mobile glow, even softer
+
+const glowBg = (cx, cy, at, peak) =>
+  `conic-gradient(from ${at - GLOW_HALF}deg at ${cx}px ${cy}px,
+    rgba(216,228,198,0) 0deg,
+    rgba(216,228,198,${peak}) ${GLOW_HALF - GLOW_CORE}deg,
+    rgba(216,228,198,${peak}) ${GLOW_HALF + GLOW_CORE}deg,
+    rgba(216,228,198,0) ${GLOW_HALF * 2}deg,
+    rgba(216,228,198,0) 360deg)`;
+const glowMask = (cx, cy, k) =>
+  `radial-gradient(circle at ${cx}px ${cy}px,
+    transparent ${GLOW_INNER_R * k}px,
+    #000 ${GLOW_INNER_R * k}px,
+    #000 ${GLOW_OUTER_R * k}px,
+    transparent ${GLOW_OUTER_R * k}px)`;
+
 /* ───────── Tokens ───────── */
 const EASE = [0.21, 0.47, 0.32, 0.98];
 const font = { fontFamily: "Roboto, sans-serif", fontStyle: "normal" };
@@ -56,7 +91,6 @@ const LIGHT = "var(--on-dark, #EEF0EC)";
 const MUTED = "var(--on-dark-muted, #A3B1AE)";
 const SAGE = "var(--accent-sage, #D8E4C6)";
 
-// 11px / 400 / 1.1px / uppercase
 const smallCaps = {
   ...font,
   fontSize: "11px",
@@ -109,9 +143,8 @@ const chapters = [
   },
 ];
 
-/* Year label on the wheel, fades out when it reaches the pointer */
+/* Desktop: year label on the wheel, fades out when it reaches the pointer */
 function DialLabel({ rot, angle, children }) {
-  // CHANGED: fade distance 10 -> 12
   const opacity = useTransform(rot, (v) =>
     Math.min(1, Math.abs(angle + v) / 12)
   );
@@ -135,6 +168,43 @@ function DialLabel({ rot, angle, children }) {
     >
       {String(children).toUpperCase()}
     </motion.text>
+  );
+}
+
+/* Mobile: year label placed on the top arc, tilted along the rim, fades at the pointer */
+function MobileLabel({ rot, index, children }) {
+  const base = index * STEP;
+  const x = useTransform(
+    rot,
+    (v) => MCX + M_LABEL_R * Math.cos(((base + v - 90) * Math.PI) / 180)
+  );
+  const y = useTransform(
+    rot,
+    (v) => MCY + M_LABEL_R * Math.sin(((base + v - 90) * Math.PI) / 180)
+  );
+  const rotate = useTransform(rot, (v) => base + v);
+  const opacity = useTransform(rot, (v) =>
+    Math.min(1, Math.abs(base + v) / 12)
+  );
+  return (
+    <motion.div
+      className="absolute left-0 top-0 pointer-events-none"
+      style={{ x, y, rotate, opacity }}
+    >
+      <span
+        className="block -translate-x-1/2 -translate-y-1/2 whitespace-nowrap"
+        style={{
+          ...font,
+          color: MUTED,
+          fontSize: 10,
+          fontWeight: 500,
+          letterSpacing: "1px",
+          textTransform: "uppercase",
+        }}
+      >
+        {String(children).toUpperCase()}
+      </span>
+    </motion.div>
   );
 }
 
@@ -187,11 +257,16 @@ function Buttons({ active, last, goTo }) {
 export default function DialSegments() {
   const [active, setActive] = useState(2);
   const [scale, setScale] = useState(null);
+  const [mScale, setMScale] = useState(null);
 
   const rot = useMotionValue(-2 * STEP);
+  const mobileRot = useTransform(rot, (v) => v - 90); // pointer at the top on mobile
+
   const frameRef = useRef(null);
+  const mFrameRef = useRef(null);
   const activeRef = useRef(2);
   const scaleRef = useRef(1);
+  const mScaleRef = useRef(1);
   const anim = useRef(null);
   const drag = useRef(null);
 
@@ -215,7 +290,7 @@ export default function DialSegments() {
     [rot, last]
   );
 
-  /* Scale the fixed 1440 x 812 frame to the available width */
+  /* Scale the fixed desktop frame to the available width */
   useEffect(() => {
     const el = frameRef.current;
     if (!el) return;
@@ -228,22 +303,41 @@ export default function DialSegments() {
     return () => ro.disconnect();
   }, []);
 
-  /* Drag the wheel */
+  /* Scale the fixed mobile dial frame to the full available width */
+  useEffect(() => {
+    const el = mFrameRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([entry]) => {
+      const s = Math.max(0.01, entry.contentRect.width / MW);
+      mScaleRef.current = s;
+      setMScale(s);
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  /* Drag the wheel (desktop = vertical, mobile = horizontal) */
   const onPointerDown = (e) => {
     e.currentTarget.setPointerCapture(e.pointerId);
     anim.current?.stop();
-    drag.current = { y: e.clientY, rot: rot.get() };
+    drag.current = { x: e.clientX, y: e.clientY, rot: rot.get() };
   };
-  const onPointerMove = (e) => {
-    if (!drag.current) return;
-    const dy = (e.clientY - drag.current.y) / scaleRef.current;
-    const next = Math.max(-last * STEP, Math.min(0, drag.current.rot + dy * DEG_PER_PX));
+  const applyDrag = (delta, k) => {
+    const next = Math.max(-last * STEP, Math.min(0, drag.current.rot + delta * k));
     rot.set(next);
     const nearest = Math.round(-next / STEP);
     if (nearest !== activeRef.current) {
       activeRef.current = nearest;
       setActive(nearest);
     }
+  };
+  const onPointerMove = (e) => {
+    if (!drag.current) return;
+    applyDrag((e.clientY - drag.current.y) / scaleRef.current, DEG_PER_PX);
+  };
+  const onPointerMoveMobile = (e) => {
+    if (!drag.current) return;
+    applyDrag((e.clientX - drag.current.x) / mScaleRef.current, M_DEG_PER_PX);
   };
   const onPointerUp = () => {
     if (!drag.current) return;
@@ -298,7 +392,7 @@ export default function DialSegments() {
               width: BOX,
               height: BOX,
               rotate: rot,
-              overflow: "visible", // CHANGED
+              overflow: "visible",
             }}
             aria-hidden="true"
           >
@@ -308,13 +402,7 @@ export default function DialSegments() {
               alt=""
               draggable={false}
               className="absolute select-none"
-              style={{
-                left: 0,
-                top: 0,
-                width: BOX,
-                height: BOX,
-                objectFit: "contain",
-              }}
+              style={{ left: 0, top: 0, width: BOX, height: BOX, objectFit: "contain" }}
             />
             {SHOW_YEAR_LABELS && (
               <svg
@@ -322,7 +410,7 @@ export default function DialSegments() {
                 width={BOX}
                 height={BOX}
                 viewBox={`0 0 ${BOX} ${BOX}`}
-                style={{ overflow: "visible" }} // CHANGED: stops the label being cut off
+                style={{ overflow: "visible" }}
               >
                 {chapters.map((c, i) => (
                   <DialLabel key={c.no} rot={rot} angle={i * STEP}>
@@ -332,6 +420,24 @@ export default function DialSegments() {
               </svg>
             )}
           </motion.div>
+
+          {/* Diagonal glow (fixed, does not rotate) */}
+          {SHOW_GLOW && (
+            <div
+              aria-hidden="true"
+              className="absolute z-[1] pointer-events-none"
+              style={{
+                left: 0,
+                top: 0,
+                width: W,
+                height: H,
+                background: glowBg(CX, CY, 90, GLOW_PEAK),
+                mixBlendMode: "screen",
+                WebkitMaskImage: glowMask(CX, CY, 1),
+                maskImage: glowMask(CX, CY, 1),
+              }}
+            />
+          )}
 
           {/* Big year in the hub */}
           <div className="absolute z-[2] pointer-events-none" style={{ left: 37, top: CY - 62.5 }}>
@@ -421,10 +527,7 @@ export default function DialSegments() {
               width={RING_SIZE}
               height={RING_SIZE}
               viewBox={`0 0 ${RING_SIZE} ${RING_SIZE}`}
-              style={{
-                left: NODE_X - RING_SIZE / 2,
-                top: CY - RING_SIZE / 2,
-              }}
+              style={{ left: NODE_X - RING_SIZE / 2, top: CY - RING_SIZE / 2 }}
             >
               <circle
                 cx={RING_SIZE / 2}
@@ -559,75 +662,236 @@ export default function DialSegments() {
         </div>
       </div>
 
-      {/* ═════════ Mobile / tablet: simple stacked version ═════════ */}
-      <div className="lg:hidden relative z-10 px-6 sm:px-10 py-16">
+      {/* ═════════ Mobile / tablet: dial arc + text + timeline ═════════ */}
+      <div className="lg:hidden relative z-10 px-6 sm:px-10 pt-14 pb-12">
+        <p style={{ ...smallCaps, color: MUTED }}>Drag the dial</p>
         <p
-          className="max-w-[420px]"
+          className="mt-3 max-w-[480px]"
           style={{ ...font, color: LIGHT, fontSize: "20px", fontWeight: 400, lineHeight: "112%", letterSpacing: "-0.4px" }}
         >
           From a late ’90s blog to a company of its own.
         </p>
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={chapter.no}
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -14 }}
-            transition={{ duration: 0.35, ease: EASE }}
-            className="mt-10"
+        {/* Dial arc: CHANGED, breaks out of the page padding so it is full width */}
+        <div
+          ref={mFrameRef}
+          className="relative -mx-6 sm:-mx-10 mt-6 overflow-hidden"
+          style={{ height: MH * (mScale ?? 1) }}
+        >
+          <div
+            className="absolute left-0 top-0"
+            style={{
+              width: MW,
+              height: MH,
+              transform: `scale(${mScale ?? 1})`,
+              transformOrigin: "top left",
+              visibility: mScale === null ? "hidden" : "visible",
+            }}
           >
-            <p
+            {/* Wheel, rotated so the pointer sits at the top */}
+            <motion.div
+              className="absolute pointer-events-none z-[1]"
               style={{
-                ...font,
-                color: "#576C6F",
-                fontSize: "clamp(72px, 22vw, 128px)",
-                fontWeight: 300,
-                lineHeight: "100%",
-                letterSpacing: "-0.04em",
+                left: MCX - C,
+                top: MCY - C,
+                width: BOX,
+                height: BOX,
+                rotate: mobileRot,
+                scale: MS,
               }}
+              aria-hidden="true"
             >
-              {chapter.hub}
-            </p>
-            <div className="mt-6">{chapterLabel}</div>
-            <h3
-              className="mt-[15px]"
-              style={{ ...font, color: LIGHT, fontSize: "40px", fontWeight: 500, lineHeight: "110%", letterSpacing: "-0.8px" }}
-            >
-              {chapter.title}
-            </h3>
-            <p
-              className="mt-[18px] max-w-[360px]"
-              style={{ ...font, color: MUTED, fontSize: "17px", fontWeight: 400, lineHeight: "150%" }}
-            >
-              {chapter.text}
-            </p>
-          </motion.div>
-        </AnimatePresence>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={WHEEL_SRC}
+                alt=""
+                draggable={false}
+                className="absolute select-none"
+                style={{ left: 0, top: 0, width: BOX, height: BOX, objectFit: "contain" }}
+              />
+            </motion.div>
 
-        <div className="mt-8">
-          <Buttons active={active} last={last} goTo={goTo} />
+            {/* Diagonal glow, fixed at the top of the arc (softer) */}
+            {SHOW_GLOW && (
+              <div
+                aria-hidden="true"
+                className="absolute z-[1] pointer-events-none"
+                style={{
+                  left: 0,
+                  top: 0,
+                  width: MW,
+                  height: MH,
+                  background: glowBg(MCX, MCY, 0, GLOW_PEAK_MOBILE),
+                  mixBlendMode: "screen",
+                  WebkitMaskImage: glowMask(MCX, MCY, MS),
+                  maskImage: glowMask(MCX, MCY, MS),
+                }}
+              />
+            )}
+
+            {/* Year labels on the rim */}
+            {SHOW_YEAR_LABELS &&
+              chapters.map((c, i) => (
+                <MobileLabel key={c.no} rot={rot} index={i}>
+                  {c.label}
+                </MobileLabel>
+              ))}
+
+            {/* Big year in the hub */}
+            <div
+              className="absolute z-[2] pointer-events-none text-center"
+              style={{ left: 0, width: MW, top: 160 }}
+            >
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={chapter.no}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3, ease: EASE }}
+                >
+                  <p
+                    style={{
+                      ...font,
+                      color: "#576C6F",
+                      fontSize: "84px",
+                      fontWeight: 300,
+                      lineHeight: "100%",
+                      letterSpacing: "-3px",
+                    }}
+                  >
+                    {chapter.hub}
+                  </p>
+                  <p
+                    style={{
+                      ...font,
+                      marginTop: 8,
+                      fontSize: "12px",
+                      fontWeight: 400,
+                      color: MUTED,
+                      opacity: 0.7,
+                    }}
+                  >
+                    {chapter.tag}
+                  </p>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Drag zone (horizontal drag, vertical scroll still works) */}
+            <div
+              className="absolute left-0 top-0 z-[3] cursor-grab active:cursor-grabbing select-none"
+              style={{ width: MW, height: MH, touchAction: "pan-y" }}
+              onPointerDown={onPointerDown}
+              onPointerMove={onPointerMoveMobile}
+              onPointerUp={onPointerUp}
+              onPointerCancel={onPointerUp}
+            />
+
+            {/* Dotted ring around the pointer */}
+            <svg
+              aria-hidden="true"
+              className="absolute z-[4] pointer-events-none"
+              width={M_RING}
+              height={M_RING}
+              viewBox={`0 0 ${M_RING} ${M_RING}`}
+              style={{ left: MCX - M_RING / 2, top: MPY - M_RING / 2 }}
+            >
+              <circle
+                cx={M_RING / 2}
+                cy={M_RING / 2}
+                r={M_RING / 2 - 1}
+                fill="none"
+                stroke="rgba(216,228,198,0.85)"
+                strokeWidth="1.2"
+                strokeDasharray="3 3.5"
+                strokeLinecap="round"
+              />
+            </svg>
+
+            {/* Pointer */}
+            <div
+              className="absolute z-[5] pointer-events-none rounded-full"
+              style={{
+                left: MCX - M_POINTER / 2,
+                top: MPY - M_POINTER / 2,
+                width: M_POINTER,
+                height: M_POINTER,
+                background: SAGE,
+                border: "4px solid #21363B",
+                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.45)",
+              }}
+            />
+          </div>
         </div>
 
-        <div className="mt-12 border-t" style={{ borderColor: "rgba(238,240,236,0.9)" }}>
-          {chapters.map((c, i) => {
-            const on = i === active;
-            return (
-              <button
-                key={c.no}
-                type="button"
-                onClick={() => goTo(i)}
-                className="w-full text-left py-4 border-b flex items-baseline gap-4"
-                style={{
-                  borderColor: "rgba(238,240,236,0.15)",
-                  color: on ? LIGHT : MUTED,
-                }}
+        {/* Chapter text */}
+        <div className="mt-8 max-w-[480px]">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={chapter.no}
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -14 }}
+              transition={{ duration: 0.35, ease: EASE }}
+            >
+              {chapterLabel}
+              <h3
+                className="mt-[12px] min-h-[70px]"
+                style={{ ...font, color: LIGHT, fontSize: "32px", fontWeight: 500, lineHeight: "110%", letterSpacing: "-0.64px" }}
               >
-                <span className="w-[84px] shrink-0" style={smallCaps}>{c.label}</span>
-                <span style={{ ...font, fontSize: "13px", lineHeight: "140%" }}>{c.title}</span>
-              </button>
-            );
-          })}
+                {chapter.title}
+              </h3>
+              <p
+                className="mt-[14px] min-h-[51px] max-w-[360px]"
+                style={{ ...font, color: MUTED, fontSize: "16px", fontWeight: 400, lineHeight: "150%" }}
+              >
+                {chapter.text}
+              </p>
+            </motion.div>
+          </AnimatePresence>
+
+          <div className="mt-6">
+            <Buttons active={active} last={last} goTo={goTo} />
+          </div>
+        </div>
+
+        {/* Timeline */}
+        <div className="mt-10">
+          <div className="w-full" style={{ height: 1, background: LIGHT }} />
+          <div className="relative flex">
+            <motion.span
+              className="absolute left-0 block"
+              style={{ top: -2, width: "calc(20% - 6px)", height: 3, background: SAGE }}
+              animate={{ x: `${active * 100}%` }}
+              transition={{ type: "spring", stiffness: 140, damping: 22 }}
+            />
+            {chapters.map((c, i) => {
+              const on = i === active;
+              return (
+                <button
+                  key={c.no}
+                  type="button"
+                  onClick={() => goTo(i)}
+                  className="w-1/5 text-left pt-[14px] pr-[6px] transition-colors"
+                  style={{ color: on ? LIGHT : MUTED }}
+                >
+                  <span
+                    className="block"
+                    style={{ ...smallCaps, fontSize: "10px", letterSpacing: "0.8px" }}
+                  >
+                    {c.label}
+                  </span>
+                  <span
+                    className="hidden sm:block mt-2"
+                    style={{ ...font, fontSize: "12px", lineHeight: "140%" }}
+                  >
+                    {c.title}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
