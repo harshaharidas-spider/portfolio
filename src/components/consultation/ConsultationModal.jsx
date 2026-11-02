@@ -80,7 +80,7 @@ export default function ConsultationModal({ open, onClose }) {
       // Wire this to your lead endpoint (API route, Formspree, HubSpot, etc.).
       // Until that endpoint exists, a 404/network error is treated as a local
       // success so the form works today; a real endpoint returning 4xx/5xx errors.
-      const res = await fetch("/api/consultation", {
+      const res = await fetch("https://api.nexus.spiderworks.org/api/save_lead?client_token=0305ead9-fd5c-4bf4-b654-e454724620b0&form_id=36f8cf7b-30ab-4377-ae72-17fac2aa9cbc", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
