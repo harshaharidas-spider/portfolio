@@ -11,59 +11,43 @@ import {
 
 /* ───────── YOUR IMAGES (files in /public/image) ───────── */
 const WHEEL_SRC = "/image/nwwheel.png"; // the wheel
-const GLOW_SRC = "/image/nwglow.png"; // glow just above the wheel
-const POINTER_SRC = "/image/wheelpointer.png"; // pointer inside the wheel
 
-/* Dotted ring around the pointer (fixed, does not rotate).
-   By default it is drawn in code. To use your own image instead,
-   set USE_RING_IMAGE = true and fix the file name below. */
 const USE_RING_IMAGE = false;
 const POINTER_RING_SRC = "/image/pointerrottate.png";
 
-/* ───────── Dial dimensions & images (Figma 1520px x 1520px dial) ─────────
-   The dial in Figma is 1520px x 1520px.
-   nwwheel.png has a 1600x1600 canvas (1520px dial content + 40px outer margin).
-   nwglow.png has a 1520x1520 canvas (matching the exact 1520px dial content).
-*/
+/* ───────── Dial dimensions ───────── */
 const WHEEL_CANVAS_SIZE = 1600; // nwwheel.png square canvas
-const GLOW_SIZE = 1520; // nwglow.png square size (1520px in Figma)
-const GLOW_OFFSET = { x: 0, y: 0 };
-const GLOW_OPACITY = 1;
-const GLOW_BLEND = "normal";
 
-/* Pointer + dotted ring (both are centred on the exact same point at NODE_X, CY) */
-const POINTER_VISIBLE = 88; // diameter of the cream pointer circle with dark border
-const RING_SIZE = 104; // dotted ring diameter (leaves a uniform gap around the pointer)
+const POINTER_VISIBLE = 88;
+const RING_SIZE = 104;
 
-/* Year labels drawn around the wheel. Set to false if your wheel image already has them. */
 const SHOW_YEAR_LABELS = true;
 
-/* ───────── Frame (Figma: W 1440 / H 812, fixed) ───────── */
+/* ───────── Frame ───────── */
 const W = 1440;
 const H = 812;
 
-/* ───────── Dial geometry, in frame pixels ───────── */
-const CX = -200; // dial centre x (so the 1520px dial's right edge reaches x = 560px)
-const CY = H / 2; // dial centre y (406)
-const R_LABEL = 782; // year labels sit outside the 759px wheel ticks along the curve
-const STEP = 16; // degrees between two chapters
-const BOX = WHEEL_CANVAS_SIZE; // 1600px square box holding the rotating wheel
-const C = BOX / 2; // 800
-const DEG_PER_PX = 0.12; // drag sensitivity
+/* ───────── Dial geometry ───────── */
+const CX = -200;
+const CY = H / 2;
+const WHEEL_TICK_OUTER = 759; // outer edge of the wheel (radius)
+const LABEL_GAP = 13.75; // gap from the Figma measurement
+const LABEL_EXTRA = 26; // CHANGED: was 14, more gap between wheel line and label
+const R_LABEL = WHEEL_TICK_OUTER + LABEL_GAP + LABEL_EXTRA;
+const LABEL_TILT = -11; // each label is tilted -11deg
+const STEP = 16;
+const BOX = WHEEL_CANVAS_SIZE;
+const C = BOX / 2;
+const DEG_PER_PX = 0.12;
 
-/* ───────── Layout positions ─────────
-   Wheel ticks inner edge: CX + 600 = -200 + 600 = 400px.
-   Wheel ticks outer edge: CX + 759 = -200 + 759 = 559px.
-   Wheel width: 159px.
-   Exact center of wheel width: (400 + 559) / 2 = 479.5 ~ 480px.
-*/
-const NODE_X = 480; // pointer centre x: exact center of wheel width
-const TEXT_X = 773; // left edge of the chapter text column
-const TEXT_Y = 316; // top of the chapter text column
-const TL_X = 656; // timeline left (736px wide, right padding 48)
-const TL_Y = 716; // timeline line y
+/* ───────── Layout positions ───────── */
+const NODE_X = 480;
+const TEXT_X = 773;
+const TEXT_Y = 316;
+const TL_X = 656;
+const TL_Y = 716;
 const TL_W = 736;
-const ITEM_W = TL_W / 5; // 147.2px per milestone
+const ITEM_W = TL_W / 5;
 
 /* ───────── Tokens ───────── */
 const EASE = [0.21, 0.47, 0.32, 0.98];
@@ -82,7 +66,6 @@ const smallCaps = {
   textTransform: "uppercase",
 };
 
-// Chapters. Only chapter 03 comes from your Figma; the rest is placeholder copy.
 const chapters = [
   {
     no: "01",
@@ -128,21 +111,26 @@ const chapters = [
 
 /* Year label on the wheel, fades out when it reaches the pointer */
 function DialLabel({ rot, angle, children }) {
+  // CHANGED: fade distance 10 -> 12
   const opacity = useTransform(rot, (v) =>
-    Math.min(1, Math.abs(angle + v) / 10)
+    Math.min(1, Math.abs(angle + v) / 12)
   );
+  const x = C + R_LABEL;
   return (
     <motion.text
-      x={C + R_LABEL}
+      x={x}
       y={C}
-      transform={`rotate(${angle} ${C} ${C})`}
+      transform={`rotate(${angle} ${C} ${C}) rotate(${LABEL_TILT} ${x} ${C})`}
       dominantBaseline="middle"
-      fill="#A3B1AE"
       style={{
         opacity,
+        fill: MUTED,
         fontFamily: "Roboto, sans-serif",
-        fontSize: 11,
-        letterSpacing: "1.1px",
+        fontSize: 12,
+        fontStyle: "normal",
+        fontWeight: 500,
+        letterSpacing: "0.96px",
+        textTransform: "uppercase",
       }}
     >
       {String(children).toUpperCase()}
@@ -197,11 +185,10 @@ function Buttons({ active, last, goTo }) {
 }
 
 export default function DialSegments() {
-  const [active, setActive] = useState(2); // chapter 03 (2005), as in Figma
+  const [active, setActive] = useState(2);
   const [scale, setScale] = useState(null);
 
   const rot = useMotionValue(-2 * STEP);
-  const sectionRef = useRef(null);
   const frameRef = useRef(null);
   const activeRef = useRef(2);
   const scaleRef = useRef(1);
@@ -241,25 +228,6 @@ export default function DialSegments() {
     return () => ro.disconnect();
   }, []);
 
-  /* Mouse wheel changes chapter (page scrolls normally at the first / last chapter) */
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    let locked = false;
-    const onWheel = (e) => {
-      if (Math.abs(e.deltaY) < 8) return;
-      const next = activeRef.current + (e.deltaY > 0 ? 1 : -1);
-      if (next < 0 || next > last) return;
-      e.preventDefault();
-      if (locked) return;
-      locked = true;
-      goTo(next);
-      setTimeout(() => (locked = false), 650);
-    };
-    el.addEventListener("wheel", onWheel, { passive: false });
-    return () => el.removeEventListener("wheel", onWheel);
-  }, [goTo, last]);
-
   /* Drag the wheel */
   const onPointerDown = (e) => {
     e.currentTarget.setPointerCapture(e.pointerId);
@@ -283,15 +251,12 @@ export default function DialSegments() {
     goTo(Math.round(-rot.get() / STEP));
   };
 
-
-
   const chapterLabel = (
     <p style={{ ...smallCaps, fontWeight: 500, color: SAGE }}>CHAPTER {chapter.no}</p>
   );
 
   return (
     <section
-      ref={sectionRef}
       id="about"
       className="relative w-full bg-[#22363A] overflow-hidden isolate lg:h-[812px] lg:min-h-[812px] lg:max-h-[812px]"
     >
@@ -326,8 +291,15 @@ export default function DialSegments() {
         >
           {/* Rotating wheel (nwwheel) */}
           <motion.div
-            className="absolute pointer-events-none"
-            style={{ left: CX - C, top: CY - C, width: BOX, height: BOX, rotate: rot }}
+            className="absolute pointer-events-none z-[1]"
+            style={{
+              left: CX - C,
+              top: CY - C,
+              width: BOX,
+              height: BOX,
+              rotate: rot,
+              overflow: "visible", // CHANGED
+            }}
             aria-hidden="true"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -350,6 +322,7 @@ export default function DialSegments() {
                 width={BOX}
                 height={BOX}
                 viewBox={`0 0 ${BOX} ${BOX}`}
+                style={{ overflow: "visible" }} // CHANGED: stops the label being cut off
               >
                 {chapters.map((c, i) => (
                   <DialLabel key={c.no} rot={rot} angle={i * STEP}>
@@ -360,26 +333,7 @@ export default function DialSegments() {
             )}
           </motion.div>
 
-          {/* Glow just above the wheel (nwglow): same square as the wheel, fixed, never rotates */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={GLOW_SRC}
-            alt=""
-            aria-hidden="true"
-            draggable={false}
-            className="absolute z-[1] pointer-events-none select-none"
-            style={{
-              left: CX - GLOW_SIZE / 2 + GLOW_OFFSET.x,
-              top: CY - GLOW_SIZE / 2 + GLOW_OFFSET.y,
-              width: GLOW_SIZE,
-              height: GLOW_SIZE,
-              objectFit: "contain",
-              opacity: GLOW_OPACITY,
-              mixBlendMode: GLOW_BLEND,
-            }}
-          />
-
-          {/* Big year in the hub: 125px height, centered at CY, with 10px gap to tag */}
+          {/* Big year in the hub */}
           <div className="absolute z-[2] pointer-events-none" style={{ left: 37, top: CY - 62.5 }}>
             <AnimatePresence mode="wait">
               <motion.div
@@ -431,7 +385,7 @@ export default function DialSegments() {
             onPointerCancel={onPointerUp}
           />
 
-          {/* Connector line: starts at the pointer's edge and runs to the text */}
+          {/* Connector line */}
           <div
             className="absolute z-[4] pointer-events-none"
             style={{
@@ -443,7 +397,7 @@ export default function DialSegments() {
             }}
           />
 
-          {/* Dotted ring around the pointer: fixed, same centre as the pointer */}
+          {/* Dotted ring around the pointer */}
           {USE_RING_IMAGE ? (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img
@@ -477,14 +431,15 @@ export default function DialSegments() {
                 cy={RING_SIZE / 2}
                 r={RING_SIZE / 2 - 1}
                 fill="none"
-                stroke="rgba(238,240,236,0.9)"
-                strokeWidth="1"
+                stroke="rgba(216,228,198,0.85)"
+                strokeWidth="1.2"
                 strokeDasharray="3 3.5"
+                strokeLinecap="round"
               />
             </svg>
           )}
 
-          {/* Pointer inside the wheel: accurately centered on (NODE_X, CY), clean circle with arrow removed */}
+          {/* Pointer inside the wheel */}
           <div
             className="absolute z-[5] pointer-events-none select-none rounded-full"
             style={{
@@ -494,7 +449,7 @@ export default function DialSegments() {
               height: POINTER_VISIBLE,
               background: SAGE,
               border: "6px solid #21363B",
-              boxShadow: "0 4px 16px rgba(0, 0, 0, 0.35)",
+              boxShadow: "0 4px 16px rgba(0, 0, 0, 0.45)",
             }}
           />
 
@@ -569,7 +524,7 @@ export default function DialSegments() {
             </div>
           </div>
 
-          {/* Timeline: 736 x 1px line + 5 milestones */}
+          {/* Timeline */}
           <div className="absolute z-[6]" style={{ left: TL_X, top: TL_Y, width: TL_W }}>
             <div className="w-full" style={{ height: 1, background: LIGHT }} />
             <div className="relative flex">
