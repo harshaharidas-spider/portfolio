@@ -99,7 +99,9 @@ export default function Hero() {
               {/* Secondary Button */}
               <motion.div whileHover={{ x: 3 }} whileTap={{ scale: 0.98 }}>
                 <Link
-                  href="#spiderworks"
+                  href="https://www.spiderworks.in/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-full sm:w-auto group inline-flex items-center justify-center sm:justify-start gap-3 text-[#dce6e3] hover:text-white font-medium text-[14px] uppercase transition-colors py-4 tracking-normal"
                   style={{ fontFamily: "Roboto, sans-serif" }}
                 >

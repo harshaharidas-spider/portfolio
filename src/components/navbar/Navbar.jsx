@@ -11,11 +11,22 @@ export default function Navbar() {
 
   const navLinks = [
     { num: "01", label: "About", href: "#about", desktopLabel: "ABOUT" },
-    { num: "02", label: "Services", href: "#services", desktopLabel: "SERVICES" },
+    { num: "02", label: "How I work", href: "#how-i-work", desktopLabel: "HOW I WORK" },
     { num: "03", label: "Expertise", href: "#expertise", desktopLabel: "EXPERTISE" },
     { num: "04", label: "Case studies", href: "#case-studies", desktopLabel: "CASE STUDIES" },
-    { num: "05", label: "Interviews", href: "#interviews", desktopLabel: "INTERVIEWS" },
+    { num: "05", label: "Ventures", href: "#ventures", desktopLabel: "VENTURES" },
   ];
+
+  // Sticky header is 49px tall — offset the scroll target so the section
+  // heading isn't tucked underneath it.
+  const NAV_OFFSET = 60;
+
+  const scrollToSection = (href) => {
+    const el = document.getElementById(href.replace("#", ""));
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY - NAV_OFFSET;
+    window.scrollTo({ top, behavior: "smooth" });
+  };
 
   return (
     <motion.header
@@ -39,6 +50,10 @@ export default function Navbar() {
             <Link
               key={item.label}
               href={item.href}
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection(item.href);
+              }}
               className="text-[12px] leading-[13px] font-medium tracking-[0.08em] text-[#333735] hover:text-[#000000] transition-colors uppercase whitespace-nowrap"
             >
               {item.desktopLabel}
@@ -122,7 +137,11 @@ export default function Navbar() {
                 >
                   <Link
                     href={item.href}
-                    onClick={() => setMobileMenuOpen(false)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setMobileMenuOpen(false);
+                      scrollToSection(item.href);
+                    }}
                     className="flex items-center gap-4 py-4 text-[19px] font-medium text-[#1c1f1d] hover:text-[#436156] transition-colors"
                   >
                     <span className="text-[12px] font-mono text-[#85a596] tracking-wider">
