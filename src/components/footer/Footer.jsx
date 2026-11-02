@@ -72,9 +72,9 @@ export default function Footer() {
   const socialLinks = [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/tonymjohn" },
     { label: "Facebook", href: "https://www.facebook.com/tonymjohn/" },
-    { label: "Facebook · Spiderworks", href: "https://www.facebook.com/tony.spiderworks" },
+    { label: "Facebook · SpiderWorks", href: "https://www.facebook.com/tony.spiderworks" },
     { label: "Instagram", href: "https://www.instagram.com/tonymjohn" },
-    { label: "Instagram · Spiderworks", href: "https://www.instagram.com/tonyspiderworks/" },
+    { label: "Instagram · SpiderWorks", href: "https://www.instagram.com/tonyspiderworks/" },
   ];
 
   const linkColumns = [
