@@ -19,7 +19,7 @@ const caseStudies = [
     description:
       "Digital marketing for Manorama Online, the digital home of the Malayala Manorama newspaper. Full write-up in progress.",
     status: "WRITE-UP IN PROGRESS",
-    href: "#contact",
+    href: "https://www.manoramaonline.com/",
     logo: logo6,
   },
   {
@@ -29,7 +29,7 @@ const caseStudies = [
     description:
       "Software architecture for North America's largest home-improvement retailer. Full write-up in progress.",
     status: "WRITE-UP IN PROGRESS",
-    href: "#contact",
+    href: "https://www.homedepot.com/",
     logo: logo4,
   },
   {
@@ -39,7 +39,7 @@ const caseStudies = [
     description:
       "End-to-end self-drive car rental e-commerce platform with real-time fleet synchronization and seamless mobile booking funnels.",
     status: "WRITE-UP SOON",
-    href: "#contact",
+    href: "https://www.indusgo.in/",
     logo: logo2,
   },
   {
@@ -49,7 +49,7 @@ const caseStudies = [
     description:
       "Full-funnel digital marketing and omnichannel lead generation systems for India's largest Maruti Suzuki automotive dealership network.",
     status: "WRITE-UP SOON",
-    href: "#contact",
+    href: "https://www.indusmotor.com/",
     logo: logo1,
   },
   {
@@ -69,12 +69,18 @@ const caseStudies = [
     description:
       "Comprehensive digital marketing, brand authority positioning, and corporate advisory lead capture for UAE business setup consultants.",
     status: "WRITE-UP SOON",
-    href: "#contact",
+    href: "https://kiltons.com/",
     logo: logo5,
   },
 ];
 
 const EASE = [0.21, 0.47, 0.32, 0.98];
+
+// External links (http...) open in a new tab; in-page anchors (#...) don't.
+const externalProps = (href) =>
+  href?.startsWith("http")
+    ? { target: "_blank", rel: "noopener noreferrer" }
+    : {};
 
 // Light card style from Figma: radius 12, 1px --line border, --white background
 const lightCardStyle = {
@@ -229,6 +235,7 @@ export default function CaseStudies() {
             >
               <Link
                 href={featured.href}
+                {...externalProps(featured.href)}
                 className="group relative w-full h-full min-h-[460px] lg:min-h-0 overflow-hidden isolate flex flex-col justify-between gap-6 p-6 sm:p-10 shadow-sm transition-shadow duration-300 hover:shadow-xl"
                 style={{
                   background: "#22363a",
@@ -338,6 +345,7 @@ export default function CaseStudies() {
             >
               <Link
                 href={secondary.href}
+                {...externalProps(secondary.href)}
                 className="group w-full h-full min-h-[280px] lg:min-h-0 p-5 sm:p-6 flex flex-col text-left shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden"
                 style={lightCardStyle}
               >
@@ -382,6 +390,7 @@ export default function CaseStudies() {
               >
                 <Link
                   href={item.href}
+                  {...externalProps(item.href)}
                   className="group w-full h-[231px] sm:h-[280px] lg:h-[320px] p-4 sm:p-6 flex flex-col text-left shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden"
                   style={lightCardStyle}
                 >
