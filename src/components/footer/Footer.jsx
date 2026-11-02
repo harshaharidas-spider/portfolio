@@ -67,11 +67,11 @@ export default function Footer() {
   ];
 
   const socialLinks = [
-    { label: "LinkedIn", href: "https://linkedin.com" },
-    { label: "X", href: "https://x.com" },
-    { label: "Facebook", href: "https://facebook.com" },
-    { label: "YouTube", href: "https://youtube.com" },
-    { label: "Instagram", href: "https://instagram.com" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/tonymjohn" },
+    { label: "Facebook", href: "https://www.facebook.com/tonymjohn/" },
+    { label: "Facebook · Spiderworks", href: "https://www.facebook.com/tony.spiderworks" },
+    { label: "Instagram", href: "https://www.instagram.com/tonymjohn" },
+    { label: "Instagram · Spiderworks", href: "https://www.instagram.com/tonyspiderworks/" },
   ];
 
   const linkColumns = [
@@ -334,13 +334,16 @@ export default function Footer() {
           >
             &copy; 2026 TONY JOHN. ALL RIGHTS RESERVED.
           </p>
-          <a
-            href="#hero"
-            className="text-[color:var(--on-dark-muted,#A3B1AE)] hover:text-white transition-colors"
+          <button
+            type="button"
+            onClick={() =>
+              window.scrollTo({ top: 0, behavior: "smooth" })
+            }
+            className="text-[color:var(--on-dark-muted,#A3B1AE)] hover:text-white transition-colors cursor-pointer"
             style={smallCaps}
           >
             BACK TO TOP &uarr;
-          </a>
+          </button>
         </motion.div>
       </div>
 
