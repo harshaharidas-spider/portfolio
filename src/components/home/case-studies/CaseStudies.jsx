@@ -59,7 +59,7 @@ const caseStudies = [
     description:
       "Direct-to-consumer e-commerce conversion optimization, landing page architecture, and subscription user experience for Eureka Forbes.",
     status: "WRITE-UP SOON",
-    href: "#contact",
+    href: "https://www.eurekaforbes.com/",
     logo: logo3,
   },
   {
