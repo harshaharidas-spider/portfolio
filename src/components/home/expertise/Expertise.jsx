@@ -203,6 +203,32 @@ export default function Expertise() {
     }
   };
 
+  // Highlight the hovered item; if it sits at the top/bottom visible edge,
+  // glide the list one item that way to reveal the next one (hands-free reveal).
+  const revealOnHover = (id) => {
+    setHoveredId(id);
+    const el = scrollContainerRef.current;
+    if (!el) return;
+
+    const { scrollTop, clientHeight, scrollHeight } = el;
+    const index = id - 1; // 0-based row index
+    const visibleCount = Math.floor(clientHeight / itemHeight);
+    const firstVisible = Math.round(scrollTop / itemHeight);
+    const lastVisible = firstVisible + visibleCount - 1;
+    const maxScroll = scrollHeight - clientHeight;
+
+    let target = null;
+    if (index >= lastVisible && scrollTop < maxScroll - 1) {
+      target = Math.min(maxScroll, scrollTop + itemHeight); // reveal below
+    } else if (index <= firstVisible && scrollTop > 0) {
+      target = Math.max(0, scrollTop - itemHeight); // reveal above
+    }
+
+    if (target !== null) {
+      el.scrollTo({ top: target, behavior: "smooth" });
+    }
+  };
+
   return (
     <section
       id="expertise"
@@ -425,10 +451,7 @@ export default function Expertise() {
                     <button
                       type="button"
                       onClick={() => scrollToItem(item.id)}
-                      onMouseEnter={() => {
-                        setHoveredId(item.id);
-                        scrollToItem(item.id);
-                      }}
+                      onMouseEnter={() => revealOnHover(item.id)}
                       className="group flex items-center text-left w-full h-full focus:outline-none cursor-pointer"
                     >
                       {/* Number */}
