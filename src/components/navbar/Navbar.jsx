@@ -3,9 +3,11 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { useConsultation } from "@/components/consultation";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { openConsultation } = useConsultation();
 
   const navLinks = [
     { num: "01", label: "About", href: "#about", desktopLabel: "ABOUT" },
@@ -47,12 +49,13 @@ export default function Navbar() {
         {/* Right Action Button with exact Figma dimensions (172px x 35px) */}
         <div className="hidden sm:flex items-center">
           <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-            <Link
-              href="#contact"
-              className="inline-flex items-center justify-center bg-[#1c1f1d] hover:bg-black text-white text-[12px] font-medium tracking-[0.02em] w-[172px] h-[35px] px-[22px] py-[16px] rounded-[2px] transition-colors leading-none"
+            <button
+              type="button"
+              onClick={openConsultation}
+              className="inline-flex items-center justify-center bg-[#1c1f1d] hover:bg-black text-white text-[12px] font-medium tracking-[0.02em] w-[172px] h-[35px] px-[22px] py-[16px] rounded-[2px] transition-colors leading-none cursor-pointer"
             >
               Book a consultation
-            </Link>
+            </button>
           </motion.div>
         </div>
 
@@ -133,13 +136,16 @@ export default function Navbar() {
 
             {/* Bottom Action Button & Footer Info */}
             <div className="pt-6 border-t border-[#ece9e3]">
-              <Link
-                href="#contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block text-center w-full bg-[#1c1f1d] hover:bg-black text-white text-[13.5px] font-medium py-3.5 rounded-none transition-colors"
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  openConsultation();
+                }}
+                className="block text-center w-full bg-[#1c1f1d] hover:bg-black text-white text-[13.5px] font-medium py-3.5 rounded-none transition-colors cursor-pointer"
               >
                 Book a consultation
-              </Link>
+              </button>
               <p className="text-center text-[11px] text-[#7a807d] mt-3 tracking-wide">
                 tony@spiderworks.in &middot; Kochi, Kerala
               </p>

@@ -1,5 +1,6 @@
 import { Roboto } from "next/font/google";
 import "./globals.css";
+import { ConsultationProvider } from "@/components/consultation";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700", "900"],
@@ -20,7 +21,7 @@ export default function RootLayout({ children }) {
         suppressHydrationWarning
         className={`${roboto.className} min-h-full flex flex-col bg-[#2b3d3f] text-white`}
       >
-        {children}
+        <ConsultationProvider>{children}</ConsultationProvider>
       </body>
     </html>
   );

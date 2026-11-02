@@ -4,8 +4,10 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useConsultation } from "@/components/consultation";
 
 export default function Hero() {
+  const { openConsultation } = useConsultation();
   const fullText = "Hi, I am Tony John";
   const [displayedText, setDisplayedText] = useState("");
   const [isTypingComplete, setIsTypingComplete] = useState(false);
@@ -84,13 +86,14 @@ export default function Hero() {
             >
               {/* Primary Button */}
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <Link
-                  href="#contact"
-                  className="w-full sm:w-auto inline-flex items-center justify-center bg-[#d8e4c6] hover:bg-[#c9d7b5] text-[#1c2825] font-medium text-[14px] uppercase px-7 py-4 transition-colors rounded-none shadow-sm text-center tracking-normal"
+                <button
+                  type="button"
+                  onClick={openConsultation}
+                  className="w-full sm:w-auto inline-flex items-center justify-center bg-[#d8e4c6] hover:bg-[#c9d7b5] text-[#1c2825] font-medium text-[14px] uppercase px-7 py-4 transition-colors rounded-none shadow-sm text-center tracking-normal cursor-pointer"
                   style={{ fontFamily: "Roboto, sans-serif" }}
                 >
                   Book a consultation
-                </Link>
+                </button>
               </motion.div>
 
               {/* Secondary Button */}

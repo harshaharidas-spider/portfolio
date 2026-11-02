@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { useConsultation } from "@/components/consultation";
 
 const expertiseData = [
   {
@@ -99,6 +99,7 @@ const expertiseData = [
 ];
 
 export default function Expertise() {
+  const { openConsultation } = useConsultation();
   const [selectedId, setSelectedId] = useState(3);
   const [hoveredId, setHoveredId] = useState(null);
 
@@ -347,9 +348,10 @@ export default function Expertise() {
           </div>
 
           <div className="w-full pt-1">
-            <Link
-              href="#contact"
-              className="group w-full inline-flex items-center justify-center gap-[12px] bg-[#AECFBF] hover:bg-[#9ec4b3] text-[#1C1F1D] rounded-[100px] transition-colors shadow-sm"
+            <button
+              type="button"
+              onClick={openConsultation}
+              className="group w-full inline-flex items-center justify-center gap-[12px] bg-[#AECFBF] hover:bg-[#9ec4b3] text-[#1C1F1D] rounded-[100px] transition-colors shadow-sm cursor-pointer"
               style={{
                 padding: "12px 16px 12px 20px",
                 borderRadius: "100px",
@@ -377,7 +379,7 @@ export default function Expertise() {
               >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
               </svg>
-            </Link>
+            </button>
           </div>
         </motion.div>
 
@@ -585,9 +587,10 @@ export default function Expertise() {
               }}
             >
               <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-                <Link
-                  href="#contact"
-                  className="group inline-flex items-center transition-all shadow-sm"
+                <button
+                  type="button"
+                  onClick={openConsultation}
+                  className="group inline-flex items-center transition-all shadow-sm cursor-pointer"
                   style={{
                     display: "inline-flex",
                     padding: "12px 16px 12px 20px",
@@ -622,7 +625,7 @@ export default function Expertise() {
                       d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
                     />
                   </svg>
-                </Link>
+                </button>
               </motion.div>
             </div>
           </div>

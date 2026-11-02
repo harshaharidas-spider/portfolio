@@ -1,9 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "framer-motion";
+import { useConsultation } from "@/components/consultation";
 
 export default function HowIWork() {
+  const { openConsultation } = useConsultation();
   const steps = [
     {
       number: "01.",
@@ -91,9 +92,10 @@ export default function HowIWork() {
             </p>
             <div className="mt-6">
               <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-                <Link
-                  href="#contact"
-                  className="group inline-flex items-center gap-2 bg-[#aecfbf] hover:bg-[#9ec4b3] text-[#1c1f1d] text-[13.5px] font-medium px-5 py-2.5 rounded-full transition-colors"
+                <button
+                  type="button"
+                  onClick={openConsultation}
+                  className="group inline-flex items-center gap-2 bg-[#aecfbf] hover:bg-[#9ec4b3] text-[#1c1f1d] text-[13.5px] font-medium px-5 py-2.5 rounded-full transition-colors cursor-pointer"
                 >
                   <span>Book a consultation</span>
                   <svg
@@ -109,7 +111,7 @@ export default function HowIWork() {
                       d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
                     />
                   </svg>
-                </Link>
+                </button>
               </motion.div>
             </div>
           </motion.div>
