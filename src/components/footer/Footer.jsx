@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useConsultation } from "@/components/consultation";
 
 const EASE = [0.21, 0.47, 0.32, 0.98];
 
@@ -45,25 +46,27 @@ const navLink = {
 };
 
 export default function Footer() {
+  const { openConsultation } = useConsultation();
+
   const exploreLinks = [
     { label: "About", href: "#about" },
     { label: "Services", href: "#services" },
     { label: "Expertise", href: "#expertise" },
     { label: "Case studies", href: "#case-studies" },
-    { label: "Clients", href: "#clients" },
+    { label: "FAQ", href: "#faq" },
   ];
 
   const moreLinks = [
-    { label: "Gallery", href: "#gallery" },
-    { label: "Interviews", href: "#interviews" },
+    { label: "How I work", href: "#how-i-work" },
+    { label: "Elsewhere", href: "#elsewhere" },
     { label: "Contact", href: "#contact" },
   ];
 
   const ventureLinks = [
-    { label: "SpiderWorks", href: "#spiderworks" },
-    { label: "IndiaStudyChannel", href: "#indiastudychannel" },
-    { label: "dotnetspider", href: "#dotnetspider" },
-    { label: "India Travel Blog", href: "#indiatravelblog" },
+    { label: "SpiderWorks", href: "https://www.spiderworks.in/" },
+    { label: "Brandaware", href: "https://brandaware.in/" },
+    { label: "HatchingWeb", href: "https://hatchingweb.com/" },
+    { label: "Digital Skill Master", href: "https://digitalskillmaster.com/" },
   ];
 
   const socialLinks = [
@@ -77,7 +80,7 @@ export default function Footer() {
   const linkColumns = [
     { title: "EXPLORE", links: exploreLinks, isExternal: false },
     { title: "MORE", links: moreLinks, isExternal: false },
-    { title: "VENTURES", links: ventureLinks, isExternal: false },
+    { title: "VENTURES", links: ventureLinks, isExternal: true },
     { title: "ELSEWHERE", links: socialLinks, isExternal: true },
   ];
 
@@ -168,18 +171,21 @@ export default function Footer() {
               className="w-full sm:w-auto"
             >
               {/* Padding 34 left/right, 19 top, 18 bottom (hugs to 222px) */}
-              <Link
-                href="#contact"
-                className="w-full sm:w-auto inline-flex items-center justify-center bg-[#D8E4C6] hover:bg-[#c9d7b5] px-[34px] pt-[19px] pb-[18px] transition-colors rounded-none shadow-sm"
+              <button
+                type="button"
+                onClick={openConsultation}
+                className="w-full sm:w-auto inline-flex items-center justify-center bg-[#D8E4C6] hover:bg-[#c9d7b5] px-[34px] pt-[19px] pb-[18px] transition-colors rounded-none shadow-sm cursor-pointer"
                 style={{ ...ctaLabel, color: "var(--ink, #1C1F1D)" }}
               >
                 BOOK A CONSULTATION
-              </Link>
+              </button>
             </motion.div>
 
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Link
-                href="#spiderworks"
+                href="https://www.spiderworks.in/?utm_source=tonyjohn.com&utm_medium=referral"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group inline-flex items-center gap-3 text-[color:var(--on-dark,#EEF0EC)] hover:text-white transition-colors"
                 style={ctaLabel}
               >

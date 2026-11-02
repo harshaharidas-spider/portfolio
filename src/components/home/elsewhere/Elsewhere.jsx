@@ -81,7 +81,7 @@ const LinkedInIcon = ({ light }) => (
 const socialCards = [
   {
     id: "facebook-spiderworks",
-    title: "Spiderworks",
+    title: "SpiderWorks",
     category: "FACEBOOK",
     mediaType: "image",
     mediaSrc: "/image/reel3.png",
@@ -105,7 +105,7 @@ const socialCards = [
   },
   {
     id: "instagram-spiderworks",
-    title: "Spiderworks",
+    title: "SpiderWorks",
     category: "INSTAGRAM",
     mediaType: "video",
     mediaSrc: "/video/reel2.mp4",

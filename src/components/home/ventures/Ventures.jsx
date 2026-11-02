@@ -6,10 +6,10 @@ import { motion } from "framer-motion";
 
 export default function Ventures() {
   const bottomVentures = [
-    { name: "SpiderWorks", meta: "Kochi · Nevada" },
-    { name: "Brandaware", meta: "sister concern" },
-    { name: "HatchingWeb", meta: "sister concern" },
-    { name: "Digital Skill Master", meta: "sister concern" },
+    { name: "SpiderWorks", meta: "Kochi · Nevada", url: "https://www.spiderworks.in/" },
+    { name: "Brandaware", meta: "sister concern", url: "https://brandaware.in/" },
+    { name: "HatchingWeb", meta: "sister concern", url: "https://hatchingweb.com/" },
+    { name: "Digital Skill Master", meta: "sister concern", url: "https://digitalskillmaster.com/" },
   ];
 
   return (
@@ -111,7 +111,14 @@ export default function Ventures() {
                 >
                   <div>
                     <h3 className="font-bold text-[28px] text-[#1c2825] leading-none tracking-tight">
-                      SpiderWorks
+                      <Link
+                        href="https://www.spiderworks.in/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:underline"
+                      >
+                        SpiderWorks
+                      </Link>
                     </h3>
                     <p className="uppercase text-[9.5px] tracking-[0.18em] font-semibold text-[#384e48] mt-2">
                       TECHNOLOGIES &middot; EST. 2005
@@ -152,25 +159,39 @@ export default function Ventures() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: idx * 0.1 }}
-        className={`flex flex-row items-center justify-center gap-[12px] px-[24px] py-[26px] border-white/[0.12] ${
+        className={`flex flex-col items-center justify-center text-center gap-[6px] px-[24px] py-[26px] border-white/[0.12] ${
           idx !== 0 ? "border-t sm:border-t-0 lg:border-l" : ""
         } ${idx === 2 ? "sm:border-t sm:max-lg:border-t" : ""} ${
           idx === 1 || idx === 3 ? "sm:border-l" : ""
         }`}
       >
-        <span
-          className="text-[#EEF0EC] text-[20px] font-medium not-italic leading-[normal] tracking-[-0.4px] whitespace-nowrap"
-          style={{ fontFamily: "Roboto, sans-serif" }}
-        >
-          {v.name}
-        </span>
+        <div className="flex flex-row items-center justify-center gap-[12px]">
+          {v.url ? (
+            <a
+              href={v.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#EEF0EC] hover:text-white hover:underline text-[20px] font-medium not-italic leading-[normal] tracking-[-0.4px] whitespace-nowrap transition-colors"
+              style={{ fontFamily: "Roboto, sans-serif" }}
+            >
+              {v.name}
+            </a>
+          ) : (
+            <span
+              className="text-[#EEF0EC] text-[20px] font-medium not-italic leading-[normal] tracking-[-0.4px] whitespace-nowrap"
+              style={{ fontFamily: "Roboto, sans-serif" }}
+            >
+              {v.name}
+            </span>
+          )}
 
-        <span
-          className="text-[#A3B1AE] text-[11px] font-normal not-italic leading-[normal] whitespace-nowrap"
-          style={{ fontFamily: "Roboto, sans-serif" }}
-        >
-          {v.meta}
-        </span>
+          <span
+            className="text-[#A3B1AE] text-[11px] font-normal not-italic leading-[normal] whitespace-nowrap"
+            style={{ fontFamily: "Roboto, sans-serif" }}
+          >
+            {v.meta}
+          </span>
+        </div>
       </motion.div>
     ))}
   </div>

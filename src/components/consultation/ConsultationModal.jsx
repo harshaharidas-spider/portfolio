@@ -2,6 +2,7 @@
 
 import { forwardRef, useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
 const VALUE_POINTS = [
@@ -17,9 +18,10 @@ const INITIAL = { name: "", email: "", phone: "", message: "" };
 export default function ConsultationModal({ open, onClose }) {
   const [values, setValues] = useState(INITIAL);
   const [errors, setErrors] = useState({});
-  const [status, setStatus] = useState("idle"); // idle | submitting | success | error
+  const [status, setStatus] = useState("idle"); // idle | submitting | error
   const dialogRef = useRef(null);
   const firstFieldRef = useRef(null);
+  const router = useRouter();
 
   // Lock body scroll + focus first field while open
   useEffect(() => {
@@ -88,7 +90,8 @@ export default function ConsultationModal({ open, onClose }) {
 
       const noEndpoint = !res || res.status === 404;
       if (!noEndpoint && !res.ok) throw new Error("Request failed");
-      setStatus("success");
+      onClose();
+      router.push("/thank-you");
     } catch {
       setStatus("error");
     }
@@ -194,28 +197,8 @@ export default function ConsultationModal({ open, onClose }) {
               </div>
             </div>
 
-            {/* ── Right: form / success ── */}
+            {/* ── Right: form ── */}
             <div className="relative max-h-[92vh] overflow-y-auto">
-            {status === "success" ? (
-              <div className="px-7 sm:px-9 py-14 text-center">
-                <div className="mx-auto mb-5 w-14 h-14 rounded-full bg-[#d8e4c6] flex items-center justify-center">
-                  <svg className="w-7 h-7 text-[#1c2825]" fill="none" stroke="currentColor" strokeWidth="2.2" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                  </svg>
-                </div>
-                <h2 className="text-[20px] font-semibold text-white">Thank you!</h2>
-                <p className="mt-2 text-[14px] text-white/70 leading-relaxed">
-                  Your request has been received. I&apos;ll get back to you within one business day.
-                </p>
-                <button
-                  type="button"
-                  onClick={onClose}
-                  className="mt-7 inline-flex items-center justify-center bg-[#d8e4c6] hover:bg-[#c9d7b5] text-[#1c2825] font-medium text-[14px] px-7 py-3 rounded-[2px] transition-colors cursor-pointer"
-                >
-                  Close
-                </button>
-              </div>
-            ) : (
               <div className="px-7 sm:px-9 pt-9 pb-8">
                 <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-[#85a596] md:hidden">
                   Let&apos;s talk
@@ -297,7 +280,6 @@ export default function ConsultationModal({ open, onClose }) {
                   </p>
                 </form>
               </div>
-            )}
             </div>
           </motion.div>
         </motion.div>
