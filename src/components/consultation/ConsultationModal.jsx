@@ -4,6 +4,12 @@ import { forwardRef, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import ReCAPTCHA from "react-google-recaptcha";
+
+const LEAD_URL =
+  "https://api.nexus.spiderworks.org/api/save_lead?client_token=0305ead9-fd5c-4bf4-b654-e454724620b0&form_id=36f8cf7b-30ab-4377-ae72-17fac2aa9cbc";
 
 const VALUE_POINTS = [
   "24 years in IT — engineering to e-commerce",
@@ -15,12 +21,62 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const INITIAL = { name: "", email: "", phone: "", message: "" };
 
+// Dark-theme phone input styles + hidden reCAPTCHA badge (kept here so no other file is needed)
+const PHONE_CSS = `
+.react-tel-input .rpi-input {
+  width: 100% !important;
+  height: auto !important;
+  padding: 10px 14px 10px 58px !important;
+  font-size: 14px !important;
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 3px !important;
+}
+.react-tel-input .rpi-input:focus {
+  background: rgba(255, 255, 255, 0.07) !important;
+  border-color: #aecfbf !important;
+  box-shadow: none !important;
+}
+.react-tel-input .rpi-button {
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-right: none !important;
+  border-radius: 3px 0 0 3px !important;
+}
+.react-tel-input .flag-dropdown.open .selected-flag,
+.react-tel-input .selected-flag:hover,
+.react-tel-input .selected-flag:focus {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+.react-tel-input .rpi-dropdown {
+  background: #1f2d2c !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+.react-tel-input .rpi-dropdown .country:hover,
+.react-tel-input .rpi-dropdown .country.highlight {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+.react-tel-input .rpi-dropdown .country .dial-code { color: rgba(255, 255, 255, 0.5) !important; }
+.react-tel-input .rpi-dropdown .search { background: #1f2d2c !important; }
+.react-tel-input .rpi-search {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+.grecaptcha-badge {
+  visibility: hidden !important;
+}
+`;
+
 export default function ConsultationModal({ open, onClose }) {
   const [values, setValues] = useState(INITIAL);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("idle"); // idle | submitting | error
   const dialogRef = useRef(null);
   const firstFieldRef = useRef(null);
+  const recaptchaRef = useRef(null);
   const router = useRouter();
 
   // Lock body scroll + focus first field while open
@@ -62,6 +118,13 @@ export default function ConsultationModal({ open, onClose }) {
     if (errors[name]) setErrors((err) => ({ ...err, [name]: undefined }));
   };
 
+  const handlePhoneChange = (value, country) => {
+    // value is digits only, e.g. "919876543210".
+    // If only the dial code is present, treat it as empty (phone is optional).
+    const onlyDialCode = value === country?.dialCode;
+    setValues((v) => ({ ...v, phone: onlyDialCode || !value ? "" : `+${value}` }));
+  };
+
   const validate = () => {
     const next = {};
     if (!values.name.trim()) next.name = "Please enter your name.";
@@ -79,20 +142,23 @@ export default function ConsultationModal({ open, onClose }) {
 
     setStatus("submitting");
     try {
-      // Wire this to your lead endpoint (API route, Formspree, HubSpot, etc.).
-      // Until that endpoint exists, a 404/network error is treated as a local
-      // success so the form works today; a real endpoint returning 4xx/5xx errors.
-      const res = await fetch("https://api.nexus.spiderworks.org/api/save_lead?client_token=0305ead9-fd5c-4bf4-b654-e454724620b0&form_id=36f8cf7b-30ab-4377-ae72-17fac2aa9cbc", {
+      // Invisible reCAPTCHA: runs automatically on submit and returns a token.
+      const token = await recaptchaRef.current.executeAsync();
+      recaptchaRef.current.reset(); // tokens are single-use
+
+      if (!token) throw new Error("Captcha failed");
+
+      const res = await fetch(LEAD_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      }).catch(() => null);
+        body: JSON.stringify({ ...values, recaptcha_token: token }),
+      });
 
-      const noEndpoint = !res || res.status === 404;
-      if (!noEndpoint && !res.ok) throw new Error("Request failed");
+      if (!res.ok) throw new Error("Request failed");
       onClose();
       router.push("/thank-you");
     } catch {
+      recaptchaRef.current?.reset();
       setStatus("error");
     }
   };
@@ -108,6 +174,8 @@ export default function ConsultationModal({ open, onClose }) {
           transition={{ duration: 0.2 }}
           aria-hidden={!open}
         >
+          <style>{PHONE_CSS}</style>
+
           {/* Backdrop */}
           <div
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
@@ -231,17 +299,24 @@ export default function ConsultationModal({ open, onClose }) {
                     placeholder="you@company.com"
                     autoComplete="email"
                   />
-                  <Field
-                    label="Phone"
-                    name="phone"
-                    type="tel"
-                    optional
-                    value={values.phone}
-                    onChange={handleChange}
-                    error={errors.phone}
-                    placeholder="+91 00000 00000"
-                    autoComplete="tel"
-                  />
+
+                  {/* Phone with country code */}
+                  <div>
+                    <FieldLabel htmlFor="phone" label="Phone" optional />
+                    <PhoneInput
+                      country="in"
+                      value={values.phone}
+                      onChange={handlePhoneChange}
+                      enableSearch
+                      inputProps={{ id: "phone", name: "phone", autoComplete: "tel" }}
+                      containerClass="!w-full"
+                      inputClass="rpi-input"
+                      buttonClass="rpi-button"
+                      dropdownClass="rpi-dropdown"
+                      searchClass="rpi-search"
+                    />
+                  </div>
+
                   <div>
                     <FieldLabel htmlFor="message" label="Project details" />
                     <textarea
@@ -257,6 +332,15 @@ export default function ConsultationModal({ open, onClose }) {
                     />
                     {errors.message && <ErrorText>{errors.message}</ErrorText>}
                   </div>
+
+                  {/* Invisible reCAPTCHA (no checkbox; runs on submit) */}
+                  <ReCAPTCHA
+                    ref={recaptchaRef}
+                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                    size="invisible"
+                    badge="bottomright"
+                    theme="dark"
+                  />
 
                   {status === "error" && (
                     <p className="text-[13px] text-red-300">
@@ -277,6 +361,29 @@ export default function ConsultationModal({ open, onClose }) {
                   </button>
                   <p className="text-center text-[11px] text-white/40">
                     Prefer email? Write to tony@spiderworks.in
+                  </p>
+
+                  {/* Google reCAPTCHA notice (required when the badge is hidden) */}
+                  <p className="text-center text-[10.5px] text-white/30 leading-snug">
+                    This site is protected by reCAPTCHA and the Google{" "}
+                    <a
+                      href="https://policies.google.com/privacy"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="underline hover:text-white/60"
+                    >
+                      Privacy Policy
+                    </a>{" "}
+                    and{" "}
+                    <a
+                      href="https://policies.google.com/terms"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="underline hover:text-white/60"
+                    >
+                      Terms of Service
+                    </a>{" "}
+                    apply.
                   </p>
                 </form>
               </div>
