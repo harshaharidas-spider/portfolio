@@ -63,10 +63,10 @@ export default function Footer() {
   ];
 
   const ventureLinks = [
-    { label: "SpiderWorks", href: "https://www.spiderworks.in/" },
-    { label: "Brandaware", href: "https://brandaware.in/" },
-    { label: "HatchingWeb", href: "https://hatchingweb.com/" },
-    { label: "Digital Skill Master", href: "https://digitalskillmaster.com/" },
+    { label: "SpiderWorks", href: "https://www.spiderworks.in/?utm_source=tonyjohn&utm_medium=referral" },
+    { label: "Brandaware", href: "https://brandaware.in/?utm_source=tonyjohn&utm_medium=referral" },
+    { label: "HatchingWeb", href: "https://hatchingweb.com/?utm_source=tonyjohn&utm_medium=referral" },
+    { label: "Digital Skill Master", href: "https://digitalskillmaster.com/?utm_source=tonyjohn&utm_medium=referral" },
   ];
 
   const socialLinks = [
@@ -183,7 +183,7 @@ export default function Footer() {
 
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Link
-                href="https://www.spiderworks.in/"
+                href="https://www.spiderworks.in/?utm_source=tonyjohn&utm_medium=referral"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-3 text-[color:var(--on-dark,#EEF0EC)] hover:text-white transition-colors"

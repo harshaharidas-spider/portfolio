@@ -6,10 +6,10 @@ import { motion } from "framer-motion";
 
 export default function Ventures() {
   const bottomVentures = [
-    { name: "SpiderWorks", meta: "Kochi · Nevada", url: "https://www.spiderworks.in/" },
-    { name: "Brandaware", meta: "sister concern", url: "https://brandaware.in/" },
-    { name: "HatchingWeb", meta: "sister concern", url: "https://hatchingweb.com/" },
-    { name: "Digital Skill Master", meta: "sister concern", url: "https://digitalskillmaster.com/" },
+    { name: "SpiderWorks", meta: "Kochi · Nevada", url: "https://www.spiderworks.in/?utm_source=tonyjohn&utm_medium=referral" },
+    { name: "Brandaware", meta: "sister concern", url: "https://brandaware.in/?utm_source=tonyjohn&utm_medium=referral" },
+    { name: "HatchingWeb", meta: "sister concern", url: "https://hatchingweb.com/?utm_source=tonyjohn&utm_medium=referral" },
+    { name: "Digital Skill Master", meta: "sister concern", url: "https://digitalskillmaster.com/?utm_source=tonyjohn&utm_medium=referral" },
   ];
 
   return (
@@ -112,7 +112,7 @@ export default function Ventures() {
                   <div>
                     <h3 className="font-bold text-[28px] text-[#1c2825] leading-none tracking-tight">
                       <Link
-                        href="https://www.spiderworks.in/"
+                        href="https://www.spiderworks.in/?utm_source=tonyjohn&utm_medium=referral"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="hover:underline"
