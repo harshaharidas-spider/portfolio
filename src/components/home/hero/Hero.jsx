@@ -71,7 +71,7 @@ export default function Hero() {
                 letterSpacing: "-0.03em",
               }}
             >
-              Twenty-four years in IT - engineer, e-commerce consultant, digital marketer.{" "}
+              3 Decades of Code, Clicks & Conversions | Software Architect & Digital Marketing Technologist.{" "}
               <span className="block sm:inline">
                 I bring an engineer&apos;s way of thinking to business, digital marketing and the people I mentor.
               </span>
