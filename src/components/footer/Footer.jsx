@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useConsultation } from "@/components/consultation";
-import { withUtm } from "@/lib/utm";
 
 const EASE = [0.21, 0.47, 0.32, 0.98];
 
@@ -184,7 +183,7 @@ export default function Footer() {
 
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Link
-                href={withUtm("https://www.spiderworks.in/", "footer")}
+                href="https://www.spiderworks.in/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-3 text-[color:var(--on-dark,#EEF0EC)] hover:text-white transition-colors"
@@ -301,7 +300,7 @@ export default function Footer() {
                       <li key={item.label}>
                         {col.isExternal ? (
                           <a
-                            href={withUtm(item.href, "footer")}
+                            href={item.href}
                             target="_blank"
                             rel="noopener noreferrer"
                             className={linkClass}

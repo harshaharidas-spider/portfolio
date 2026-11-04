@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
-import { withUtm } from "@/lib/utm";
 
 function AutoplayVideo({ src, className }) {
   const ref = useRef(null);
@@ -226,7 +225,7 @@ export default function Elsewhere() {
               className={`snap-start w-[259.2px] flex-none flex flex-col justify-between group focus:outline-none select-none ${card.offsetClass}`}
             >
               <a
-                href={withUtm(card.href, "elsewhere")}
+                href={card.href}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full flex flex-col"

@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { withUtm } from "@/lib/utm";
 
 export default function Ventures() {
   const bottomVentures = [
@@ -113,7 +112,7 @@ export default function Ventures() {
                   <div>
                     <h3 className="font-bold text-[28px] text-[#1c2825] leading-none tracking-tight">
                       <Link
-                        href={withUtm("https://www.spiderworks.in/", "ventures")}
+                        href="https://www.spiderworks.in/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="hover:underline"
@@ -169,7 +168,7 @@ export default function Ventures() {
         <div className="flex flex-row items-center justify-center gap-[12px]">
           {v.url ? (
             <a
-              href={withUtm(v.url, "ventures")}
+              href={v.url}
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#EEF0EC] hover:text-white hover:underline text-[20px] font-medium not-italic leading-[normal] tracking-[-0.4px] whitespace-nowrap transition-colors"

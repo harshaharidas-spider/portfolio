@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { withUtm } from "@/lib/utm";
 
 import logo1 from "../../../../public/image/logo1.jpg";
 import logo2 from "../../../../public/image/logo2_hires.png";
@@ -235,7 +234,7 @@ export default function CaseStudies() {
               className="flex"
             >
               <Link
-                href={withUtm(featured.href, "case_studies")}
+                href={featured.href}
                 {...externalProps(featured.href)}
                 className="group relative w-full h-full min-h-[460px] lg:min-h-0 overflow-hidden isolate flex flex-col justify-between gap-6 p-6 sm:p-10 shadow-sm transition-shadow duration-300 hover:shadow-xl"
                 style={{
@@ -345,7 +344,7 @@ export default function CaseStudies() {
               className="flex"
             >
               <Link
-                href={withUtm(secondary.href, "case_studies")}
+                href={secondary.href}
                 {...externalProps(secondary.href)}
                 className="group w-full h-full min-h-[280px] lg:min-h-0 p-5 sm:p-6 flex flex-col text-left shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden"
                 style={lightCardStyle}
@@ -390,7 +389,7 @@ export default function CaseStudies() {
                 className="flex"
               >
                 <Link
-                  href={withUtm(item.href, "case_studies")}
+                  href={item.href}
                   {...externalProps(item.href)}
                   className="group w-full h-[231px] sm:h-[280px] lg:h-[320px] p-4 sm:p-6 flex flex-col text-left shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden"
                   style={lightCardStyle}
